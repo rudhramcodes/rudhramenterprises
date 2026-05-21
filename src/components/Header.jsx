@@ -8,23 +8,27 @@ const AnimatedMenuIcon = memo(function AnimatedMenuIcon({ isOpen }) {
     <motion.svg
       viewBox="0 0 24 24"
       aria-hidden="true"
-      className="h-6 w-6 fill-none stroke-current stroke-[1.7]"
-      animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="h-6 w-6 fill-none stroke-current"
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
     >
       <motion.path
-        d="M4 8h16"
+        d="M4 9h16"
         strokeLinecap="round"
-        animate={isOpen ? { y: 4, rotate: 45 } : { y: 0, rotate: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        strokeWidth={1.7}
+        initial={false}
+        animate={isOpen ? { y: 3, rotate: 45 } : { y: 0, rotate: 0 }}
         style={{ transformOrigin: '12px 12px' }}
+        transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
       />
       <motion.path
-        d="M4 16h16"
+        d="M4 15h16"
         strokeLinecap="round"
-        animate={isOpen ? { y: -4, rotate: -45 } : { y: 0, rotate: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        strokeWidth={1.7}
+        initial={false}
+        animate={isOpen ? { y: -3, rotate: -45 } : { y: 0, rotate: 0 }}
         style={{ transformOrigin: '12px 12px' }}
+        transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
       />
     </motion.svg>
   )
