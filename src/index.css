@@ -1,0 +1,60 @@
+@import url("https://cdn.jsdelivr.net/npm/geomanist@0.0.3/geomanist.css");
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Goldenbook";
+  src: url("/fonts/Goldenbook Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Goldenbook";
+  src: url("/fonts/Goldenbook Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Goldenbook";
+  src: url("/fonts/Goldenbook Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-display: "Goldenbook", "Golden Book", Georgia, serif;
+  --font-body: "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  font-family: var(--font-body);
+  font-synthesis-weight: none;
+  text-rendering: geometricPrecision;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #f8f4ed;
+  color: #11100e;
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
