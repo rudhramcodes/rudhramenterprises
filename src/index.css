@@ -25,36 +25,69 @@
   font-display: swap;
 }
 
-:root {
+@theme {
   --font-display: "Goldenbook", "Golden Book", Georgia, serif;
-  --font-body: "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --color-bronze: #b37839;
+  --color-bronze-dark: #8f5f2e;
+  --color-bronze-soft: #f5e7d4;
+  --color-ink: #11100e;
+  --color-ink-soft: #2a2621;
+  --color-stone: #615a51;
+  --color-stone-soft: #e8e2d8;
+  --color-ivory: #f8f4ed;
+  --color-paper: #fffdf8;
+}
+
+:root {
+  color: #11100e;
+  background: #f8f4ed;
+  font-family: "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-synthesis-weight: none;
+  text-rendering: geometricPrecision;
 }
 
 html {
-  font-family: var(--font-body);
-  font-synthesis-weight: none;
-  text-rendering: geometricPrecision;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-width: 320px;
-  background: #f8f4ed;
-  color: #11100e;
-  font-family: var(--font-body);
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 86% 4%, rgba(179, 120, 57, 0.16), transparent 28rem),
+    linear-gradient(180deg, #fffdf8 0%, #f8f4ed 42%, #fffdf8 100%);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.font-display {
-  font-family: var(--font-display);
-  font-weight: 400;
+::selection {
+  background: #b37839;
+  color: #fffdf8;
 }
 
-.font-body {
-  font-family: var(--font-body);
+.reveal {
+  visibility: hidden;
+}
+
+.reduce-motion .reveal {
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

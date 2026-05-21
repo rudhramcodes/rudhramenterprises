@@ -6,6 +6,7 @@ Premium corporate website foundation for Rudhram Enterprises.
 
 - [PRD](./docs/PRD.md)
 - [Design System](./docs/DESIGN_SYSTEM.md)
+- [Homepage Content and Creative Direction](./docs/HOMEPAGE_CONTENT_AND_CREATIVE_DIRECTION.md)
 
 ## Source Inputs Analyzed
 
