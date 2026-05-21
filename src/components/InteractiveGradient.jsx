@@ -2,8 +2,13 @@ import { ShaderGradient, ShaderGradientCanvas } from '@shadergradient/react'
 
 export const InteractiveGradient = () => {
   return (
-    <div className="absolute inset-0 -z-10 pointer-events-none">
-      <ShaderGradientCanvas>
+    <div className="absolute inset-0 z-0 pointer-events-none">
+      <ShaderGradientCanvas
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+      >
         <ShaderGradient
           animate="on"
           axesHelper="off"
@@ -20,9 +25,8 @@ export const InteractiveGradient = () => {
           destination="onCanvas"
           embedMode="off"
           envPreset="city"
-          format="gif"
           fov={45}
-          frameRate={10}
+          frameRate={60}
           gizmoHelper="hide"
           grain="off"
           lightType="3d"

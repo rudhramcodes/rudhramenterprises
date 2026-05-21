@@ -20,55 +20,42 @@ const sectionLead = 'max-w-3xl text-lg leading-[1.7] text-stone sm:text-xl'
 
 const Hero = memo(function Hero() {
   return (
-<section id="top" className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden px-5 pb-8 pt-36 sm:px-8 lg:px-12">
-       {/* Live Interactive Canvas Gradient */}
-       <InteractiveGradient />
-      
-      {/* Centered vertical background line for elegant symmetry */}
-      <div className="absolute left-1/2 top-0 -z-10 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-bronze/20 to-transparent" />
+    <section id="top" className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden px-5 pb-8 pt-36 sm:px-8 lg:px-12">
+        {/* Live Interactive Canvas Gradient */}
+        <InteractiveGradient />
+       
+        {/* Centered vertical background line for elegant symmetry */}
+        <div className="absolute left-1/2 top-0 -z-10 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-bronze/20 to-transparent" />
 
-      {/* Center Heading & CTAs */}
-      <div className={`${maxWidth} flex flex-1 flex-col items-center justify-center text-center z-10 w-full`}>
-        <div className="max-w-4xl">
-          <motion.h1
-            className="font-display text-[clamp(3.8rem,9vw,9rem)] leading-[0.92] tracking-tight text-ink"
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.28, duration: 0.82, ease: [0.16, 1, 0.3, 1] }}
-          >
-            Leading, <span className="italic font-light text-bronze block sm:inline">What's Next.</span>
-          </motion.h1>
-          
-          <motion.div
-            className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.6, duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <MagneticButton href="#ventures">Explore the Ecosystem</MagneticButton>
-            <MagneticButton href="#contact" variant="ghost">
-              Start a Conversation
-            </MagneticButton>
-          </motion.div>
+        {/* Center Heading & CTAs */}
+        <div className={`${maxWidth} flex flex-1 flex-col items-center justify-center text-center z-10 w-full`}>
+          <div className="max-w-4xl">
+            <motion.h1
+              className="font-display font-bold text-[clamp(3.8rem,9vw,9rem)] leading-[0.9] tracking-tight text-ink"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.28, duration: 0.82, ease: [0.16, 1, 0.3, 1] }}
+            >
+              Leading, <span className="italic font-light text-bronze block sm:inline">What's Next.</span>
+            </motion.h1>
+          </div>
         </div>
-      </div>
 
-      {/* Bottom middle description and scroll indicator */}
-      <div className={`${maxWidth} z-10 w-full mt-auto flex flex-col items-center gap-8`}>
-        <motion.p
-          className="max-w-2xl text-center text-base leading-[1.65] text-stone sm:text-lg md:text-xl"
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.44, duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-        >
-          A purpose-driven enterprise ecosystem where culture, creativity, and innovation shape ventures built for lasting impact.
-        </motion.p>
-        
-      </div>
-    </section>
+        {/* Bottom middle description and scroll indicator */}
+        <div className={`${maxWidth} z-10 w-full mt-auto flex flex-col items-center gap-8`}>
+          <motion.p
+            className="max-w-2xl text-center text-base leading-[1.65] text-stone sm:text-lg md:text-xl"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.44, duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          >
+            A purpose-driven enterprise ecosystem where culture, creativity, and innovation shape ventures built for lasting impact.
+          </motion.p>
+          
+        </div>
+      </section>
   )
 })
 
