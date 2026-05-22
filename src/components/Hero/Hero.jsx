@@ -1,154 +1,483 @@
-import { useState, useRef, memo, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { heroCards } from '../../data/siteContent';
-import { MagneticButton } from '../ui';
+import { useState, useRef, memo, useEffect } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useMotionValue,
+  useMotionValueEvent,
+} from "framer-motion";
+import { heroCards } from "../../data/siteContent";
+import { MagneticButton } from "../ui";
 
-/**
- * Awwwards-Style Hero Card with Deep 3D Logic
- */
 const AwwwardsHeroCard = memo(({ card, index, scrollYProgress }) => {
-  const [isActive, setIsActive] = useState(false);
+  const [manualFace, setManualFace] = useState(null);
 
-  const springConfig = { stiffness: 40, damping: 18, mass: 1 };
-  const smoothProgress = useSpring(scrollYProgress, springConfig);
+  const cardRef = useRef(null);
 
-  // Position Transforms
-  // Cards start below text, converge to center, then drop staggered
-  const x = useTransform(smoothProgress, 
-    [0, 0.25, 0.45, 0.7, 0.9], 
-    [`${(index - 1) * 22}vw`, '0vw', '0vw', `${(index - 1) * 32}vw`, `${(index - 1) * 30}vw`]
-  );
-  
-  const y = useTransform(smoothProgress, 
-    [0, 0.25, 0.45, 0.75, 0.95], 
-    ['40vh', '45vh', '35vh', '45vh', '47vh']
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const manualRotate = useMotionValue(0);
+
+  useEffect(() => {
+    if (manualFace === null) return;
+    manualRotate.set(manualFace ? 180 : 0);
+  }, [manualFace, manualRotate]);
+
+  const tiltSpring = {
+    stiffness: 120,
+    damping: 22,
+    mass: 0.8,
+  };
+
+  const tiltX = useSpring(mouseY, tiltSpring);
+  const tiltY = useSpring(mouseX, tiltSpring);
+
+  const manualRotateSpring = useSpring(manualRotate, {
+    stiffness: 95,
+    damping: 19,
+    mass: 0.9,
+  });
+
+  const hoverRotateX = useTransform(tiltX, [-0.5, 0.5], [7, -7]);
+  const hoverRotateY = useTransform(tiltY, [-0.5, 0.5], [-7, 7]);
+
+  const innerX = useTransform(tiltY, [-0.5, 0.5], [-10, 10]);
+  const innerY = useTransform(tiltX, [-0.5, 0.5], [-10, 10]);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current || window.innerWidth < 1024) return;
+
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 42,
+    damping: 24,
+    mass: 1.25,
+  });
+
+  const x = useTransform(
+    smoothProgress,
+    [0, 0.25, 0.46, 0.72, 0.95],
+    [
+      `${(index - 1) * 22}vw`,
+      "0vw",
+      "0vw",
+      `${(index - 1) * 31}vw`,
+      `${(index - 1) * 29}vw`,
+    ]
   );
 
-  const scale = useTransform(smoothProgress, 
-    [0, 0.25, 0.45, 0.75, 0.95], 
-    [0.9, 0.8, 0.55, 1, 0.95]
+  const y = useTransform(
+    smoothProgress,
+    [0, 0.25, 0.46, 0.72, 0.95],
+    ["40vh", "45vh", "35vh", "40vh", "45vh"]
   );
 
-  const rotate = useTransform(smoothProgress, 
-    [0, 0.25, 0.45, 0.75, 0.95], 
-    [(index - 1) * 10, 0, (index - 1) * -20, 0, 0]
+  const scale = useTransform(
+    smoothProgress,
+    [0, 0.25, 0.46, 0.72, 0.95],
+    [0.9, 0.8, 0.55, 0.94, 0.91]
   );
 
-  // Staggered 3D Flip
-  const flipStart = 0.55 + index * 0.05;
-  const rotateY = useTransform(smoothProgress, 
-    [0, flipStart, flipStart + 0.15], 
-    [0, 0, 180]
+  const rotateZ = useTransform(
+    smoothProgress,
+    [0, 0.24, 0.46, 0.72, 0.95],
+    [
+      (index - 1) * 12,
+      0,
+      (index - 1) * -18,
+      (index - 1) * 4,
+      (index - 1) * 1.2,
+    ]
   );
+
+  const flipStart = 0.46 + index * 0.035;
+  const flipEnd = flipStart + 0.12;
+
+  const scrollRotateY = useTransform(
+    smoothProgress,
+    [0, flipStart, flipEnd, 1],
+    [0, 0, 180, 180]
+  );
+
+  useMotionValueEvent(smoothProgress, "change", (latest) => {
+    if (latest < flipStart - 0.08 && manualFace !== null) {
+      setManualFace(null);
+    }
+  });
+
+  const finalRotateY = useTransform(
+    [scrollRotateY, manualRotateSpring, hoverRotateY],
+    ([scroll, manual, hover]) => {
+      const baseRotation = manualFace === null ? scroll : manual;
+      return baseRotation + hover;
+    }
+  );
+
+  const finalRotateX = hoverRotateX;
+
+  const cardStyles = [
+    {
+      name: "Culture",
+      bg: "bg-[#F3CDA8]",
+      backBg: "bg-[#EABF91]",
+      text: "text-[#352414]",
+      muted: "text-[#6F5031]",
+      accent: "#9B4E23",
+      accentSoft: "bg-[#9B4E23]/12",
+      glow: "bg-[#C06632]/25",
+      border: "border-[#9B4E23]/25",
+      mark: "संस्कृति",
+      word: "ROOTS",
+      backWord: "BELIEF",
+      shadow: "shadow-[0_30px_80px_rgba(155,78,35,0.20)]",
+      hoverShadow: "group-hover:shadow-[0_42px_110px_rgba(155,78,35,0.30)]",
+    },
+    {
+      name: "Innovation",
+      bg: "bg-[#C7DCCF]",
+      backBg: "bg-[#B8D2C3]",
+      text: "text-[#182D24]",
+      muted: "text-[#486457]",
+      accent: "#2F6B55",
+      accentSoft: "bg-[#2F6B55]/12",
+      glow: "bg-[#4F8A72]/22",
+      border: "border-[#2F6B55]/25",
+      mark: "नवाचार",
+      word: "NEXT",
+      backWord: "BUILD",
+      shadow: "shadow-[0_30px_80px_rgba(47,107,85,0.18)]",
+      hoverShadow: "group-hover:shadow-[0_42px_110px_rgba(47,107,85,0.28)]",
+    },
+    {
+      name: "Excellence",
+      bg: "bg-[#E9C4BA]",
+      backBg: "bg-[#DFAFA6]",
+      text: "text-[#341D1C]",
+      muted: "text-[#744B48]",
+      accent: "#94433F",
+      accentSoft: "bg-[#94433F]/12",
+      glow: "bg-[#B75C56]/22",
+      border: "border-[#94433F]/25",
+      mark: "उत्कृष्टता",
+      word: "TRUST",
+      backWord: "CRAFT",
+      shadow: "shadow-[0_30px_80px_rgba(148,67,63,0.18)]",
+      hoverShadow: "group-hover:shadow-[0_42px_110px_rgba(148,67,63,0.28)]",
+    },
+  ];
+
+  const style = cardStyles[index] || cardStyles[0];
 
   return (
     <motion.div
       className="absolute left-1/2 top-0 pointer-events-none"
-      style={{ 
-        x, y, scale, rotate, 
-        translateX: '-50%',
+      style={{
+        x,
+        y,
+        scale,
+        rotate: rotateZ,
+        translateX: "-50%",
         zIndex: 10 + index,
-        perspective: 2000,
-        transformStyle: 'preserve-3d'
+        perspective: 2600,
+        transformStyle: "preserve-3d",
       }}
     >
-      <motion.div
-        className="pointer-events-auto cursor-pointer relative"
-        style={{ 
-          rotateY,
-          transformStyle: 'preserve-3d',
-          width: 'clamp(240px, 20vw, 380px)',
-          height: 'clamp(320px, 28vw, 480px)',
+      <motion.button
+        type="button"
+        onClick={() => {
+          const currentRotation =
+            manualFace === null ? scrollRotateY.get() : manualFace ? 180 : 0;
+
+          const currentlyBackSide = currentRotation > 90;
+
+          setManualFace(!currentlyBackSide);
         }}
-        whileHover={{ scale: 1.02, y: -5 }}
-        onClick={() => setIsActive(!isActive)}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="pointer-events-auto group relative block cursor-pointer text-left outline-none"
+        whileHover={{
+          y: -3,
+          scale: 1.006,
+        }}
+        whileTap={{
+          scale: 0.992,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 180,
+          damping: 22,
+        }}
       >
-        {/* FRONT FACE (Brand Title) */}
-        <div 
-          className="absolute inset-0 rounded-[2.5rem] bg-paper border border-ink/5 shadow-2xl p-8 flex flex-col justify-between overflow-hidden"
-          style={{ backfaceVisibility: 'hidden' }}
+        <motion.div
+          ref={cardRef}
+          className={`
+            relative h-[19.5rem] w-[14.5rem]
+            sm:h-[22.5rem] sm:w-[16.75rem]
+            md:h-[24rem] md:w-[18rem]
+            lg:h-[26rem] lg:w-[19.5rem]
+            rounded-[1.8rem] sm:rounded-[2.25rem]
+            ${style.shadow}
+            ${style.hoverShadow}
+            transition-shadow duration-700
+          `}
+          style={{
+            rotateX: finalRotateX,
+            rotateY: finalRotateY,
+            transformStyle: "preserve-3d",
+          }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-transparent to-bronze/5 opacity-50" />
-          <div className="relative flex justify-between">
-            <span className="text-[10px] font-bold tracking-[0.4em] text-bronze uppercase">{card.label}</span>
-            <span className="text-[10px] font-bold text-stone/40">{card.note}</span>
+          {/* FRONT FACE */}
+          <div
+            className={`
+              absolute inset-0 overflow-hidden rounded-[1.8rem] sm:rounded-[2.25rem]
+              ${style.bg}
+              ${style.text}
+              ${style.border}
+              border
+            `}
+            style={{
+              backfaceVisibility: "hidden",
+              transform: "rotateY(0deg)",
+            }}
+          >
+            <motion.div
+              className={`absolute -right-28 -top-28 h-72 w-72 rounded-full ${style.glow} blur-3xl`}
+              style={{
+                x: innerX,
+                y: innerY,
+                translateZ: 40,
+              }}
+            />
+
+            <motion.div
+              className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-white/25 blur-3xl"
+              style={{
+                x: innerY,
+                y: innerX,
+                translateZ: 30,
+              }}
+            />
+
+            <motion.div
+              className="pointer-events-none absolute -bottom-2 left-4 select-none text-[4.2rem] font-black leading-none tracking-tight opacity-[0.08] sm:text-[5.3rem]"
+              style={{ translateZ: 15 }}
+            >
+              {style.word}
+            </motion.div>
+
+            <div className="absolute inset-0 opacity-[0.085] bg-[radial-gradient(circle_at_1px_1px,rgba(20,20,20,0.45)_1px,transparent_0)] bg-[length:13px_13px]" />
+
+            <div className="absolute inset-0 -translate-x-[145%] skew-x-12 bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-[1100ms] ease-out group-hover:translate-x-[145%]" />
+
+            <div className="pointer-events-none absolute inset-[10px] rounded-[1.45rem] border border-white/35 sm:rounded-[1.9rem]" />
+
+            <motion.div
+              className={`
+                absolute right-5 top-5 z-20 rounded-full
+                ${style.accentSoft}
+                px-3 py-1.5 text-[10px] font-bold uppercase tracking-tight
+              `}
+              style={{
+                color: style.accent,
+                translateZ: 90,
+              }}
+            >
+              {String(index + 1).padStart(2, "0")}
+            </motion.div>
+
+            <motion.div
+              className="relative z-10 flex h-full w-full flex-col justify-between p-6 sm:p-7"
+              style={{ translateZ: 85 }}
+            >
+              <div>
+                <p
+                  className="mb-5 text-[10px] font-bold uppercase tracking-tight"
+                  style={{ color: style.accent }}
+                >
+                  {style.mark}
+                </p>
+
+                <h3 className="font-display text-[3rem] leading-[0.84] tracking-tighter sm:text-[3.2rem]">
+                  {card.title}
+                </h3>
+              </div>
+
+              <div>
+                {card.frontText && (
+                  <p
+                    className={`max-w-[14.5rem] text-[14px] leading-[1.55] ${style.muted}`}
+                  >
+                    {card.frontText}
+                  </p>
+                )}
+              </div>
+            </motion.div>
           </div>
-          <h3 className="relative font-display text-5xl leading-none text-ink">{card.title}</h3>
-          <div className="relative pt-6 border-t border-ink/5 flex justify-between items-center">
-            <span className="text-[9px] font-bold tracking-widest text-ink/20 uppercase">Rudhram Series</span>
-            <div className="h-8 w-8 rounded-full border border-ink/10 flex items-center justify-center text-bronze">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+
+          {/* BACK FACE */}
+          <div
+            className={`
+              absolute inset-0 overflow-hidden rounded-[1.8rem] sm:rounded-[2.25rem]
+              ${style.backBg}
+              ${style.text}
+              ${style.border}
+              border
+            `}
+            style={{
+              backfaceVisibility: "hidden",
+              transform: "rotateY(180deg)",
+            }}
+          >
+            <div
+              className={`absolute -right-24 -top-24 h-72 w-72 rounded-full ${style.glow} blur-3xl`}
+            />
+            <div className="absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-white/25 blur-3xl" />
+
+            <div className="absolute inset-0 opacity-[0.095] bg-[radial-gradient(circle_at_1px_1px,rgba(20,20,20,0.45)_1px,transparent_0)] bg-[length:13px_13px]" />
+
+            <div className="pointer-events-none absolute -bottom-3 left-4 select-none text-[4.3rem] font-black leading-none tracking-tighter opacity-[0.09] sm:text-[5.5rem]">
+              {style.backWord}
+            </div>
+
+            <div className="pointer-events-none absolute inset-[10px] rounded-[1.45rem] border border-white/35 sm:rounded-[1.9rem]" />
+
+            <div className="relative z-10 flex h-full flex-col justify-between p-6 sm:p-7">
+              <div className="flex items-start justify-between gap-5">
+                <p
+                  className="text-[10px] font-bold uppercase tracking-[0.42em]"
+                  style={{ color: style.accent }}
+                >
+                  {style.name}
+                </p>
+
+                <div
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/35 text-xs font-bold backdrop-blur-md"
+                  style={{ color: style.accent }}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </div>
+              </div>
+
+              <div>
+                <p className="mb-5 font-display text-[3rem] leading-[0.8] tracking-tighter opacity-90 sm:text-[3.2rem]">
+                  {style.name}
+                </p>
+
+                <p
+                  className={`max-w-[15rem] text-[15px] leading-[1.65] ${style.muted}`}
+                >
+                  “{card.backText}”
+                </p>
+              </div>
+
+              <p
+                className="text-[10px] font-bold uppercase tracking-[0.32em]"
+                style={{ color: style.accent }}
+              >
+                Click to flip back
+              </p>
             </div>
           </div>
-        </div>
-
-        {/* BACK FACE (Content Settle) */}
-        <div 
-          className="absolute inset-0 rounded-[2.5rem] bg-ink p-8 flex flex-col justify-between text-paper border border-paper/10 shadow-2xl overflow-hidden"
-          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(179,120,57,0.15),transparent_70%)]" />
-          <span className="relative text-[10px] font-bold tracking-[0.4em] text-bronze uppercase">Strategic Value</span>
-          <div className="relative">
-            <h4 className="font-display text-3xl mb-4 text-paper">{card.title}</h4>
-            <p className="text-sm leading-relaxed text-paper/60 italic">"{card.backText}"</p>
-          </div>
-          <div className="relative pt-6 border-t border-paper/10">
-            <span className="text-[10px] tracking-widest text-bronze uppercase font-bold">Impeccable Standard</span>
-          </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </motion.button>
     </motion.div>
   );
 });
 
 const Hero = () => {
   const containerRef = useRef(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end end'],
+    offset: ["start start", "end end"],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 50, damping: 20 });
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 50,
+    damping: 26,
+    mass: 1.2,
+  });
 
-  // Headline Transforms
-  const headOpacity = useTransform(smoothProgress, [0, 0.15, 0.25], [1, 0.5, 0]);
-  const headScale = useTransform(smoothProgress, [0, 0.25], [1, 0.85]);
-  const headY = useTransform(smoothProgress, [0, 0.25], ['0vh', '-10vh']);
+  const headOpacity = useTransform(
+    smoothProgress,
+    [0, 0.15, 0.25],
+    [1, 0.5, 0]
+  );
 
-  // Second Screen Text Transforms (Settles with flipped cards)
-  const settleTextOpacity = useTransform(smoothProgress, [0.7, 0.85], [0, 1]);
-  const settleTextY = useTransform(smoothProgress, [0.7, 0.85], ['50px', '0px']);
+  const headScale = useTransform(smoothProgress, [0, 0.25], [1, 0.86]);
+  const headY = useTransform(smoothProgress, [0, 0.25], ["0vh", "-10vh"]);
+
+  const settleTextOpacity = useTransform(smoothProgress, [0.72, 0.88], [0, 1]);
+  const settleTextY = useTransform(smoothProgress, [0.72, 0.88], ["42px", "0px"]);
+
+  const bgOrbY = useTransform(smoothProgress, [0, 1], ["0vh", "-18vh"]);
+  const bgOrbScale = useTransform(smoothProgress, [0, 1], [1, 1.25]);
 
   return (
-    <section 
-      ref={containerRef} 
-      className="relative h-[450vh] bg-paper"
+    <section
+      ref={containerRef}
+      className="relative h-[460vh] overflow-visible bg-[#F7F1E6]"
     >
-      <div className="sticky top-0 min-h-screen w-full flex flex-col items-center overflow-hidden">
-        
-        {/* PHASE 1: Center Top Headline */}
-        <motion.div 
-          className="relative z-20 mt-[15vh] text-center pointer-events-none px-5"
-          style={{ opacity: headOpacity, scale: headScale, y: headY }}
+      <div className="sticky top-0 min-h-screen w-full overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#FFFDF6_0%,#F7F1E6_42%,#EAD8BF_100%)]" />
+
+        {/* Soft texture grid */}
+        <div className="absolute inset-0 opacity-[0.045] bg-[linear-gradient(to_right,rgba(46,42,36,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(46,42,36,0.4)_1px,transparent_1px)] bg-[size:58px_58px]" />
+
+        {/* Background motion glow */}
+        <motion.div
+          className="absolute left-1/2 top-[15vh] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[#B37839]/10 blur-3xl"
+          style={{
+            y: bgOrbY,
+            scale: bgOrbScale,
+          }}
+        />
+
+        <div className="absolute -left-28 top-[30vh] h-[24rem] w-[24rem] rounded-full bg-[#9B4E23]/12 blur-3xl" />
+        <div className="absolute right-[-8rem] top-[38vh] h-[24rem] w-[24rem] rounded-full bg-[#2F6B55]/14 blur-3xl" />
+        <div className="absolute bottom-[8vh] left-1/2 h-[24rem] w-[24rem] -translate-x-1/2 rounded-full bg-[#94433F]/10 blur-3xl" />
+
+        {/* Phase 1 headline */}
+        <motion.div
+          className="relative z-20 mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-start px-5 pt-[15vh] text-center pointer-events-none"
+          style={{
+            opacity: headOpacity,
+            scale: headScale,
+            y: headY,
+          }}
         >
-          <h1 className="font-bold tracking-tighter text-[clamp(3.5rem,7vw,8rem)] leading-tight text-ink">
+          <div className="mb-5 inline-flex items-center rounded-full border border-[#B37839]/20 bg-white/30 px-4 py-2 backdrop-blur-md">
+            <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#6D5B43]">
+              Culture · Innovation · Excellence
+            </span>
+          </div>
+
+          <h1 className="max-w-5xl font-bold text-[clamp(3.5rem,7vw,8rem)] leading-[0.92] tracking-[-0.07em] text-[#2E2A24]">
             Leading, What's Next.
           </h1>
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 1 }}
-            className="mt-8 flex flex-col items-center gap-2"
-          >
-          </motion.div>
+
+          <p className="mt-7 max-w-2xl text-base leading-relaxed text-[#6D5B43]/80 md:text-lg">
+            Rooted in culture, driven by creativity, and sharpened by modern
+            innovation.
+          </p>
         </motion.div>
 
-        {/* THE CARDS ENGINE (Nested Layers) */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none">
+        {/* Cards */}
+        <div className="absolute inset-0 h-full w-full pointer-events-none">
           {heroCards.map((card, index) => (
             <AwwwardsHeroCard
               key={card.id}
@@ -159,20 +488,24 @@ const Hero = () => {
           ))}
         </div>
 
-        {/* PHASE 4: Final Settled Content (Centered above settled cards) */}
-        <motion.div 
-          className="absolute bottom-[58vh] z-10 w-full max-w-4xl text-center px-10"
-          style={{ opacity: settleTextOpacity, y: settleTextY }}
+        {/* Final settled content */}
+        <motion.div
+          className="absolute bottom-[60vh] left-1/2 z-10 w-full max-w-4xl -translate-x-1/2 px-8 text-center"
+          style={{
+            opacity: settleTextOpacity,
+            y: settleTextY,
+          }}
         >
-          {/* <span className="text-[10px] font-bold tracking-[0.4em] text-bronze uppercase block mb-6">The Rudhram Standard</span> */}
-          <h2 className="font-bold tracking-tight text-5xl lg:text-7xl leading-tighter text-ink mb-8">
-            Three standards.<br />One way forward.
+          <h2 className="mb-7 font-bold text-5xl leading-[0.95] tracking-[-0.05em] text-[#2E2A24] lg:text-7xl">
+            Three standards.
+            <br />
+            One way forward.
           </h2>
+
           <div className="flex justify-center">
             <MagneticButton href="#ventures">Explore the Ecosystem</MagneticButton>
           </div>
         </motion.div>
-
       </div>
     </section>
   );
