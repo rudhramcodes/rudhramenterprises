@@ -31,13 +31,13 @@ const Hero = memo(function Hero() {
         <div className={`${maxWidth} flex flex-1 flex-col items-center justify-center text-center z-10 w-full`}>
           <div className="max-w-4xl">
             <motion.h1
-              className="font-display font-bold text-[clamp(3.8rem,9vw,9rem)] leading-[0.9] tracking-tight text-ink"
+              className="font-display font-bold text-[clamp(3.8rem,9vw,9rem)] leading-[0.9] tracking-tighter text-white"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
               transition={{ delay: 0.28, duration: 0.82, ease: [0.16, 1, 0.3, 1] }}
             >
-              Leading, <span className="italic font-light text-bronze block sm:inline">What's Next.</span>
+              Leading, <span className="italic font-bold tracking-tight block sm:inline">What's Next.</span>
             </motion.h1>
           </div>
         </div>
@@ -45,7 +45,7 @@ const Hero = memo(function Hero() {
         {/* Bottom middle description and scroll indicator */}
         <div className={`${maxWidth} z-10 w-full mt-auto flex flex-col items-center gap-8`}>
           <motion.p
-            className="max-w-2xl text-center text-base leading-[1.65] text-stone sm:text-lg md:text-xl"
+            className="max-w-2xl text-center text-base leading-[1.65] text-white sm:text-lg md:text-xl"
             variants={fadeUp}
             initial="hidden"
             animate="visible"
