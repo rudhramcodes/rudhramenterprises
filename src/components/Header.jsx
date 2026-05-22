@@ -34,45 +34,6 @@ const AnimatedMenuIcon = memo(function AnimatedMenuIcon({ isOpen }) {
   )
 })
 
-const menuVariants = {
-  hidden: { opacity: 0, y: -16, filter: 'blur(10px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      type: 'spring',
-      stiffness: 150,
-      damping: 24,
-      mass: 0.65,
-      staggerChildren: 0.035,
-      delayChildren: 0.04
-    }
-  },
-  exit: {
-    opacity: 0,
-    y: -18,
-    filter: 'blur(8px)',
-    transition: { duration: 0.22, ease: [0.55, 0, 1, 0.45] }
-  },
-}
-
-const menuItemVariants = {
-  hidden: { opacity: 0, y: 10, filter: 'blur(7px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { type: 'spring', stiffness: 220, damping: 25, mass: 0.5 }
-  },
-  exit: {
-    opacity: 0,
-    y: -8,
-    filter: 'blur(7px)',
-    transition: { duration: 0.16 }
-  }
-}
-
 const navVariants = {
   hidden: { opacity: 0, y: -10, filter: 'blur(6px)' },
   visible: {
@@ -126,8 +87,13 @@ export const Header = memo(function Header() {
   const [compact, setCompact] = useState(false)
   const [smallScreen, setSmallScreen] = useState(false)
   const [hoveredNavIndex, setHoveredNavIndex] = useState(null)
+  const [navHovered, setNavHovered] = useState(false)
+  const [navPressed, setNavPressed] = useState(false)
   const resetHoverState = useCallback(() => {
     setHoveredNavIndex(null)
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
   }, [])
 
   const closeMenu = useCallback(() => {
@@ -137,7 +103,25 @@ export const Header = memo(function Header() {
 
   const toggleMenu = useCallback(() => {
     resetHoverState()
+    setNavPressed(true)
+    window.setTimeout(() => setNavPressed(false), 240)
     setMenuOpen((value) => !value)
+  }, [resetHoverState])
+
+  const navigateToSection = useCallback((event, href) => {
+    if (!href.startsWith('#')) return
+
+    event.preventDefault()
+    resetHoverState()
+    setMenuOpen(false)
+
+    window.setTimeout(() => {
+      const target = document.querySelector(href)
+      if (!target) return
+
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      window.history.pushState(null, '', href)
+    }, 120)
   }, [resetHoverState])
 
   useEffect(() => {
@@ -162,21 +146,33 @@ export const Header = memo(function Header() {
 
   const menuMode = compact || menuOpen || smallScreen
   const expandedItems = [...navItems, { label: 'Contact', href: '#contact' }]
+  const restingNavScale = navHovered ? 1.006 : 1
 
   return (
     <header className={`fixed left-0 top-0 z-50 w-full transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${compact ? 'px-3 pt-2 sm:px-4' : 'px-4 pt-4 sm:px-6'}`}>
       <motion.div
-        className={`ios-glass-nav mx-auto overflow-hidden rounded-[28px] px-5 ${
-          menuOpen ? '' : 'h-[4.5rem]'
-        }`}
+        className="ios-glass-nav mx-auto overflow-hidden rounded-[28px] px-5"
         animate={{
+          scale: navPressed ? [restingNavScale, 0.995, restingNavScale] : restingNavScale,
           maxWidth: menuMode ? 544 : 1280,
           borderRadius: 28,
           boxShadow: compact
               ? '0 24px 90px rgba(17,16,14,0.14)'
               : '0 18px 70px rgba(17,16,14,0.12)'
         }}
-        transition={{ type: 'spring', stiffness: 115, damping: 23, mass: 0.9 }}
+        transition={{
+          scale: navPressed
+            ? { duration: 0.24, ease: [0.16, 1, 0.3, 1] }
+            : { type: 'spring', stiffness: 115, damping: 23, mass: 0.9 },
+          maxWidth: { type: 'spring', stiffness: 115, damping: 23, mass: 0.9 },
+          borderRadius: { type: 'spring', stiffness: 115, damping: 23, mass: 0.9 },
+          boxShadow: { duration: 0.24 }
+        }}
+        onMouseEnter={() => setNavHovered(true)}
+        onMouseLeave={() => {
+          setNavHovered(false)
+          setHoveredNavIndex(null)
+        }}
         style={{
           transition: 'background-color 300ms, border-color 300ms, box-shadow 300ms'
         }}
@@ -206,6 +202,7 @@ export const Header = memo(function Header() {
                       transition: 'filter 280ms ease, color 260ms ease'
                     }}
                     href={item.href}
+                    onClick={(event) => navigateToSection(event, item.href)}
                     onMouseEnter={() => setHoveredNavIndex(index)}
                     onFocus={() => setHoveredNavIndex(index)}
                     onBlur={() => setHoveredNavIndex(null)}
@@ -240,72 +237,89 @@ export const Header = memo(function Header() {
           </AnimatePresence>
         </div>
 
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              className="overflow-hidden"
-              initial={{ height: 0 }}
-              animate={{ height: 'auto' }}
-              exit={{ height: 0 }}
-              transition={{ type: 'spring', stiffness: 155, damping: 27, mass: 0.68 }}
-            >
-              <motion.div
-                className="pb-4 pt-4 text-ink sm:pb-6 sm:pt-5"
-                variants={menuVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                {/* <motion.p variants={menuItemVariants} className="mb-3 text-sm font-medium text-stone/82">
-                  Menu
-                </motion.p> */}
-                <nav className="expanded-nav grid gap-0.5" aria-label="Expanded navigation">
-                  {expandedItems.map((item, index) => (
-                    <motion.a
-                      key={item.href}
-                      className="expanded-nav-link block font-sans text-[clamp(2.15rem,7.2vw,4rem)] font-medium leading-[0.98] tracking-normal text-ink outline-none will-change-[filter,transform]"
-                      href={item.href}
-                      onClick={closeMenu}
-                      variants={menuItemVariants}
-                      whileHover={{ x: 4 }}
-                      whileTap={{ scale: 0.985, x: 6 }}
-                    >
-                      {item.label}
-                    </motion.a>
-                  ))}
-                </nav>
-
-                <motion.div
-                  variants={menuItemVariants}
-                  className="mt-7 grid gap-6 border-t border-ink/10 pt-5 text-sm sm:grid-cols-2 sm:gap-10"
+        <motion.div
+          className="overflow-hidden"
+          aria-hidden={!menuOpen}
+          initial={false}
+          animate={{ height: menuOpen ? 'auto' : 0 }}
+          transition={{
+            height: {
+              duration: menuOpen ? 0.5 : 0.44,
+              ease: menuOpen ? [0.16, 1, 0.3, 1] : [0.55, 0, 0.2, 1]
+            }
+          }}
+        >
+          <motion.div
+            className={`pb-4 pt-4 text-ink sm:pb-6 sm:pt-5 ${menuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+            initial={false}
+            animate={{
+              opacity: menuOpen ? 1 : 0,
+              y: menuOpen ? 0 : -18,
+              filter: menuOpen ? 'blur(0px)' : 'blur(8px)'
+            }}
+            transition={{
+              opacity: { duration: menuOpen ? 0.2 : 0.28, ease: 'easeOut' },
+              y: { duration: menuOpen ? 0.46 : 0.34, ease: [0.16, 1, 0.3, 1] },
+              filter: { duration: menuOpen ? 0.34 : 0.3, ease: 'easeOut' }
+            }}
+          >
+            <nav className="expanded-nav grid gap-0.5" aria-label="Expanded navigation">
+              {expandedItems.map((item) => (
+                <motion.a
+                  key={item.href}
+                  className="expanded-nav-link block font-sans text-[clamp(2.15rem,7.2vw,4rem)] font-medium leading-[0.98] tracking-normal text-ink outline-none will-change-[filter,transform]"
+                  href={item.href}
+                  onClick={(event) => navigateToSection(event, item.href)}
+                  initial={false}
+                  animate={{
+                    opacity: menuOpen ? 1 : 0,
+                    y: menuOpen ? 0 : 10,
+                    filter: menuOpen ? 'blur(0px)' : 'blur(7px)'
+                  }}
+                  transition={{ type: 'spring', stiffness: 220, damping: 25, mass: 0.5 }}
+                  whileHover={{ x: 4 }}
+                  // whileTap={{ scale: 0.985, x: 6 }}
                 >
-                  <div>
-                    <p className="mb-2 text-sm font-semibold text-stone/72">Visit</p>
-                    <p className="max-w-[16rem] leading-[1.45] text-ink">Rudhram Enterprises. Culture, creativity, innovation, and impact.</p>
-                  </div>
-                  <div>
-                    <p className="mb-2 text-sm font-semibold text-stone/72">Work With Us</p>
-                    <motion.a
-                      className="block text-base font-semibold text-ink outline-none transition duration-200 hover:text-bronze focus-visible:text-bronze"
-                      href="mailto:hello@rudhram.com"
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      hello@rudhram.com
-                    </motion.a>
-                    <motion.a
-                      className="mt-1 block text-base font-semibold text-ink outline-none transition duration-200 hover:text-bronze focus-visible:text-bronze"
-                      href="#contact"
-                      onClick={closeMenu}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      Schedule a call
-                    </motion.a>
-                  </div>
-                </motion.div>
-              </motion.div>
+                  {item.label}
+                </motion.a>
+              ))}
+            </nav>
+
+            <motion.div
+              initial={false}
+              animate={{
+                opacity: menuOpen ? 1 : 0,
+                y: menuOpen ? 0 : 10,
+                filter: menuOpen ? 'blur(0px)' : 'blur(7px)'
+              }}
+              transition={{ type: 'spring', stiffness: 115, damping: 23, mass: 0.9 }}
+              className="mt-7 grid gap-6 border-t border-ink/10 pt-5 text-sm sm:grid-cols-2 sm:gap-10"
+            >
+              <div>
+                <p className="mb-2 text-sm font-semibold text-stone/72">Visit</p>
+                <p className="max-w-[16rem] leading-[1.45] text-ink">Rudhram Enterprises. Culture, creativity, innovation, and impact.</p>
+              </div>
+              <div>
+                <p className="mb-2 text-sm font-semibold text-stone/72">Work With Us</p>
+                <motion.a
+                  className="block text-base font-semibold text-ink outline-none transition duration-200 hover:text-bronze focus-visible:text-bronze"
+                  href="mailto:hello@rudhram.com"
+                  whileTap={{ scale: 0.98 }}
+                >
+                  hello@rudhram.com
+                </motion.a>
+                <motion.a
+                  className="mt-1 block text-base font-semibold text-ink outline-none transition duration-200 hover:text-bronze focus-visible:text-bronze"
+                  href="#contact"
+                  onClick={(event) => navigateToSection(event, '#contact')}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Schedule a call
+                </motion.a>
+              </div>
             </motion.div>
-          )}
-        </AnimatePresence>
+          </motion.div>
+        </motion.div>
       </motion.div>
     </header>
   )

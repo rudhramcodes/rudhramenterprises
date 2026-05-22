@@ -196,8 +196,7 @@ body {
   text-shadow: 0 8px 24px rgba(17, 16, 14, 0.08);
 }
 
-.expanded-nav:hover .expanded-nav-link:not(:hover),
-.expanded-nav:focus-within .expanded-nav-link:not(:focus-visible) {
+.expanded-nav:hover .expanded-nav-link:not(:hover) {
   opacity: 1 !important;
   filter: blur(3px) !important;
 }
