@@ -146,11 +146,11 @@ export const Header = memo(function Header() {
   return (
     <header className={`fixed left-0 top-0 z-50 w-full transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${compact ? 'px-3 pt-2 sm:px-4' : 'px-4 pt-4 sm:px-6'}`}>
       <motion.div
-        className="ios-glass-nav mx-auto overflow-hidden rounded-[28px] px-5"
+        className="ios-glass-nav mx-auto overflow-hidden rounded-[24px] px-4 sm:rounded-[28px] sm:px-5"
         animate={{
           scale: navPressed ? [restingNavScale, 0.995, restingNavScale] : restingNavScale,
-          maxWidth: menuMode ? 544 : 1280,
-          borderRadius: 28,
+          maxWidth: menuMode ? (smallScreen ? '100%' : 544) : 1280,
+          borderRadius: smallScreen ? 24 : 28,
           boxShadow: compact
               ? '0 24px 90px rgba(17,16,14,0.14)'
               : '0 18px 70px rgba(17,16,14,0.12)'
@@ -172,9 +172,9 @@ export const Header = memo(function Header() {
           transition: 'background-color 300ms, border-color 300ms, box-shadow 300ms'
         }}
       >
-        <div className="flex h-[4.5rem] w-full items-center justify-between">
-          <a className="group flex min-w-36 items-center" href="#top" aria-label="Rudhram Enterprises home" onClick={resetHoverState}>
-            <img className="h-9 w-auto transition duration-300 ease-out group-hover:opacity-75 group-active:scale-[0.98]" src="/images/logo.png" alt="Rudhram" />
+        <div className="flex h-[4.25rem] w-full items-center justify-between sm:h-[4.5rem]">
+          <a className="group flex min-w-32 items-center sm:min-w-36" href="#top" aria-label="Rudhram Enterprises home" onClick={resetHoverState}>
+            <img className="h-7.5 w-auto transition duration-300 ease-out group-hover:opacity-75 group-active:scale-[0.98] sm:h-9" src="/images/logo.png" alt="Rudhram" />
           </a>
 
           <AnimatePresence initial={false}>
@@ -211,10 +211,10 @@ export const Header = memo(function Header() {
             )}
           </AnimatePresence>
 
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {menuMode && (
               <motion.button
-                className="ios-glass-button inline-flex h-12 w-12 items-center justify-center rounded-[18px] text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze"
+                className="ios-glass-button inline-flex h-11 w-11 items-center justify-center rounded-[16px] text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze sm:h-12 sm:w-12 sm:rounded-[18px]"
                 type="button"
                 onClick={toggleMenu}
                 aria-label="Toggle menu"
@@ -245,7 +245,7 @@ export const Header = memo(function Header() {
           }}
         >
           <motion.div
-            className={`pb-4 pt-4 text-ink sm:pb-6 sm:pt-5 ${menuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+            className={`pb-6 pt-2 text-ink sm:pb-8 sm:pt-4 ${menuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
             initial={false}
             animate={{
               opacity: menuOpen ? 1 : 0,
@@ -258,11 +258,11 @@ export const Header = memo(function Header() {
               filter: { duration: menuOpen ? 0.34 : 0.3, ease: 'easeOut' }
             }}
           >
-            <nav className="expanded-nav grid gap-0.5" aria-label="Expanded navigation">
+            <nav className="expanded-nav grid gap-0.5 sm:gap-1" aria-label="Expanded navigation">
               {expandedItems.map((item) => (
                 <motion.a
                   key={item.href}
-                  className="expanded-nav-link block font-sans text-[clamp(2.15rem,7.2vw,4rem)] font-medium leading-[0.98] tracking-normal text-ink outline-none will-change-[filter,transform]"
+                  className="expanded-nav-link block font-sans text-[clamp(1.75rem,8vw,3.5rem)] font-medium leading-[1.05] tracking-tight text-ink outline-none will-change-[filter,transform] sm:text-[clamp(2.15rem,7.2vw,4rem)] sm:leading-[0.98] sm:tracking-normal"
                   href={item.href}
                   onClick={(event) => navigateToSection(event, item.href)}
                   initial={false}
@@ -288,23 +288,23 @@ export const Header = memo(function Header() {
                 filter: menuOpen ? 'blur(0px)' : 'blur(7px)'
               }}
               transition={{ type: 'spring', stiffness: 115, damping: 23, mass: 0.9 }}
-              className="mt-7 grid gap-6 border-t border-ink/10 pt-5 text-sm sm:grid-cols-2 sm:gap-10"
+              className="mt-8 grid gap-8 border-t border-ink/10 pt-6 text-sm sm:mt-10 sm:grid-cols-2 sm:gap-10 sm:pt-7"
             >
               <div>
-                <p className="mb-2 text-sm font-semibold text-stone/72">Visit</p>
-                <p className="max-w-[16rem] leading-[1.45] text-ink">Rudhram Enterprises. Culture, creativity, innovation, and impact.</p>
+                <p className="mb-2.5 text-xs font-bold uppercase tracking-widest text-stone/60 sm:text-sm sm:font-semibold sm:text-stone/72 sm:tracking-normal">Visit</p>
+                <p className="max-w-[18rem] text-[15px] leading-relaxed text-ink/80 sm:max-w-[16rem] sm:text-base sm:leading-[1.45] sm:text-ink">Rudhram Enterprises. Culture, creativity, innovation, and impact.</p>
               </div>
-              <div>
-                <p className="mb-2 text-sm font-semibold text-stone/72">Work With Us</p>
+              <div className="flex flex-col gap-1">
+                <p className="mb-1.5 text-xs font-bold uppercase tracking-widest text-stone/60 sm:mb-2 sm:text-sm sm:font-semibold sm:text-stone/72 sm:tracking-normal">Work With Us</p>
                 <motion.a
-                  className="block text-base font-semibold text-ink outline-none transition duration-200 hover:text-bronze focus-visible:text-bronze"
+                  className="text-lg font-semibold text-ink outline-none transition duration-200 hover:text-bronze focus-visible:text-bronze sm:text-base"
                   href="mailto:hello@rudhram.com"
                   whileTap={{ scale: 0.98 }}
                 >
                   hello@rudhram.com
                 </motion.a>
                 <motion.a
-                  className="mt-1 block text-base font-semibold text-ink outline-none transition duration-200 hover:text-bronze focus-visible:text-bronze"
+                  className="text-lg font-semibold text-ink outline-none transition duration-200 hover:text-bronze focus-visible:text-bronze sm:text-base"
                   href="#contact"
                   onClick={(event) => navigateToSection(event, '#contact')}
                   whileTap={{ scale: 0.98 }}
