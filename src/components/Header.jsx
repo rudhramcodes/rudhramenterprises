@@ -96,11 +96,6 @@ export const Header = memo(function Header() {
     }
   }, [])
 
-  const closeMenu = useCallback(() => {
-    resetHoverState()
-    setMenuOpen(false)
-  }, [resetHoverState])
-
   const toggleMenu = useCallback(() => {
     resetHoverState()
     setNavPressed(true)

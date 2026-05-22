@@ -66,17 +66,6 @@ export const useScrollAnimations = () => {
         )
       })
 
-      gsap.fromTo(
-        '.hero-mark',
-        { clipPath: 'inset(100% 0 0 0)', autoAlpha: 0.2 },
-        { clipPath: 'inset(0% 0 0 0)', autoAlpha: 1, duration: 1.2, ease: 'power4.out', delay: 0.15 },
-      )
-
-      gsap.fromTo(
-        '.hero-line',
-        { scaleY: 0, transformOrigin: 'top center' },
-        { scaleY: 1, duration: 1.4, ease: 'power4.out', delay: 0.8 },
-      )
     })
 
     return () => ctx.revert()

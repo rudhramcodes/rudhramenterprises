@@ -105,3 +105,30 @@ export const footerLinks = [
   'Impact',
   'Contact',
 ]
+
+export const heroCards = [
+  {
+    id: 'inspiring',
+    title: 'Inspiring',
+    label: 'RUD-001',
+    note: 'Purpose',
+    frontText: 'Culture, meaning, and emotional resonance.',
+    backText: 'We create ventures people feel connected to before they ever measure them. Rooted in tradition, built for the future.',
+  },
+  {
+    id: 'innovation',
+    title: 'Innovation',
+    label: 'RUD-002',
+    note: 'Momentum',
+    frontText: 'Modern systems, creative thinking, and execution.',
+    backText: 'We turn ambition into scalable momentum through ideas built to evolve. Systems that work when the world changes.',
+  },
+  {
+    id: 'impeccable',
+    title: 'Impeccable',
+    label: 'RUD-003',
+    note: 'Excellence',
+    frontText: 'Precision, trust, craft, and lasting impact.',
+    backText: 'We build with discipline, detail, and the quiet confidence of excellence. Every pixel, every process, every outcome.',
+  },
+]
