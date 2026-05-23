@@ -5,6 +5,11 @@ const maxWidth = 'mx-auto max-w-[1500px]'
 const displayTitle = 'text-[clamp(3.1rem,13vw,6rem)] leading-[0.92] tracking-tighter text-ink lg:text-8xl [&>span]:block'
 const sectionLead = 'max-w-3xl text-lg leading-[1.7] text-stone sm:text-xl'
 const sectionShell = 'px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-36'
+const thesisPoints = [
+  'Culture gives us roots.',
+  'Innovation gives us direction.',
+  'Excellence gives us trust.',
+]
 
 export const BrandThesis = memo(function BrandThesis() {
   return (
@@ -24,13 +29,11 @@ export const BrandThesis = memo(function BrandThesis() {
             momentum, and measurable impact.
           </p>
           <div className="mt-10 grid gap-4 text-lg text-ink sm:grid-cols-3">
-            {['Culture gives us roots.', 'Innovation gives us direction.', 'Excellence gives us trust.'].map(
-              (item) => (
-                <span key={item} className="border-l border-bronze/50 pl-4 leading-tight">
-                  {item}
-                </span>
-              ),
-            )}
+            {thesisPoints.map((item) => (
+              <span key={item} className="border-l border-bronze/50 pl-4 leading-tight">
+                {item}
+              </span>
+            ))}
           </div>
         </div>
       </div>

@@ -6,6 +6,19 @@ const maxWidth = 'mx-auto max-w-[1500px]'
 const displayTitle = 'font-display text-[clamp(3rem,7vw,7.75rem)] leading-[0.92] tracking-normal text-ink [&>span]:block'
 const sectionLead = 'max-w-3xl text-lg leading-[1.7] text-stone sm:text-xl'
 const sectionShell = 'px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-36'
+const contactFields = ['Name', 'Email']
+const contactOptions = ['Partnership', 'Venture enquiry', 'Collaboration', 'Social impact']
+const footerContactItems = ['Strategic enquiries', 'Partnerships', 'Collaborations', 'Social impact']
+const footerLinkMap = {
+  Home: '#top',
+  About: '#about',
+  Philosophy: '#philosophy',
+  Ventures: '#ventures',
+  Leadership: '#leadership',
+  Impact: '#impact',
+  Contact: '#contact',
+}
+const ventureNames = ventures.map((venture) => venture.name)
 
 export const VisionMission = memo(function VisionMission() {
   return (
@@ -77,7 +90,7 @@ export const Contact = memo(function Contact() {
             </div>
           </div>
           <form className="reveal relative z-10 grid gap-4">
-            {['Name', 'Email'].map((label) => (
+            {contactFields.map((label) => (
               <label
                 className="grid gap-2 text-xs font-bold uppercase tracking-[0.16em] text-paper/55"
                 key={label}
@@ -96,10 +109,9 @@ export const Contact = memo(function Contact() {
                 defaultValue=""
               >
                 <option value="" disabled>Select one</option>
-                <option>Partnership</option>
-                <option>Venture enquiry</option>
-                <option>Collaboration</option>
-                <option>Social impact</option>
+                {contactOptions.map((option) => (
+                  <option key={option}>{option}</option>
+                ))}
               </select>
             </label>
             <label className="grid gap-2 text-xs font-bold uppercase tracking-[0.16em] text-paper/55">
@@ -139,16 +151,6 @@ const FooterColumn = memo(function FooterColumn({ title, items, getHref }) {
 })
 
 export const Footer = memo(function Footer() {
-  const linkMap = {
-    Home: '#top',
-    About: '#about',
-    Philosophy: '#philosophy',
-    Ventures: '#ventures',
-    Leadership: '#leadership',
-    Impact: '#impact',
-    Contact: '#contact',
-  }
-
   return (
     <footer className="relative overflow-hidden bg-ink px-5 pb-10 pt-20 text-paper sm:px-8 lg:px-12">
       <LogoMark className="pointer-events-none absolute bottom-0 right-0 h-[34rem] translate-x-1/4 translate-y-1/4 opacity-[0.045]" />
@@ -168,16 +170,16 @@ export const Footer = memo(function Footer() {
             <FooterColumn
               title="Navigation"
               items={footerLinks}
-              getHref={(item) => linkMap[item]}
+              getHref={(item) => footerLinkMap[item]}
             />
             <FooterColumn
               title="Ventures"
-              items={ventures.map((v) => v.name)}
+              items={ventureNames}
               getHref={() => '#ventures'}
             />
             <FooterColumn
               title="Contact"
-              items={['Strategic enquiries', 'Partnerships', 'Collaborations', 'Social impact']}
+              items={footerContactItems}
               getHref={(item) => (item === 'Social impact' ? '#impact' : '#contact')}
             />
           </div>

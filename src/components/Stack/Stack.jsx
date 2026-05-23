@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import "./Stack.css";
 
+const defaultAnimationConfig = { stiffness: 260, damping: 20 };
 const getRotation = (index) => ((index * 37) % 10) - 5;
 
 const createStack = (cards, randomRotation) =>
@@ -55,7 +56,7 @@ export default function Stack({
   randomRotation = false,
   sensitivity = 200,
   cards = [],
-  animationConfig = { stiffness: 260, damping: 20 },
+  animationConfig = defaultAnimationConfig,
   sendToBackOnClick = false,
   autoplay = false,
   autoplayDelay = 3000,
@@ -69,19 +70,26 @@ export default function Stack({
   const [stack, setStack] = useState(() => createStack(cards, randomRotation));
 
   useEffect(() => {
+    if (!mobileClickOnly) {
+      return undefined;
+    }
+
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < mobileBreakpoint);
+      setIsMobile((current) => {
+        const next = window.innerWidth < mobileBreakpoint;
+        return current === next ? current : next;
+      });
     };
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
-  }, [mobileBreakpoint]);
+  }, [mobileBreakpoint, mobileClickOnly]);
 
   const shouldDisableDrag = mobileClickOnly && isMobile;
   const shouldEnableClick = sendToBackOnClick || shouldDisableDrag;
 
-  const sendToBack = (id) => {
+  const sendToBack = useCallback((id) => {
     setStack((prev) => {
       const newStack = [...prev];
       const index = newStack.findIndex((card) => card.id === id);
@@ -89,7 +97,7 @@ export default function Stack({
       newStack.unshift(card);
       return newStack;
     });
-  };
+  }, []);
 
   useEffect(() => {
     if (autoplay && stack.length > 1 && !isPaused) {
@@ -100,7 +108,7 @@ export default function Stack({
 
       return () => clearInterval(interval);
     }
-  }, [autoplay, autoplayDelay, stack, isPaused]);
+  }, [autoplay, autoplayDelay, stack, isPaused, sendToBack]);
 
   return (
     <div

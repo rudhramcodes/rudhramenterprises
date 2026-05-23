@@ -11,6 +11,57 @@ import { heroCards } from "../../data/siteContent";
 import { MagneticButton } from "../ui";
 import MobileStackHero from "./MobileStackHero";
 
+const desktopHeroCardStyles = [
+  {
+    name: "Culture",
+    bg: "bg-[#F3CDA8]",
+    backBg: "bg-[#EABF91]",
+    text: "text-[#352414]",
+    muted: "text-[#6F5031]",
+    accent: "#9B4E23",
+    accentSoft: "bg-[#9B4E23]/12",
+    glow: "bg-[#C06632]/25",
+    border: "border-[#9B4E23]/25",
+    mark: "संस्कृति",
+    word: "ROOTS",
+    backWord: "BELIEF",
+    shadow: "shadow-[0_30px_80px_rgba(155,78,35,0.20)]",
+    hoverShadow: "group-hover:shadow-[0_42px_110px_rgba(155,78,35,0.30)]",
+  },
+  {
+    name: "Innovation",
+    bg: "bg-[#C7DCCF]",
+    backBg: "bg-[#B8D2C3]",
+    text: "text-[#182D24]",
+    muted: "text-[#486457]",
+    accent: "#2F6B55",
+    accentSoft: "bg-[#2F6B55]/12",
+    glow: "bg-[#4F8A72]/22",
+    border: "border-[#2F6B55]/25",
+    mark: "नवाचार",
+    word: "NEXT",
+    backWord: "BUILD",
+    shadow: "shadow-[0_30px_80px_rgba(47,107,85,0.18)]",
+    hoverShadow: "group-hover:shadow-[0_42px_110px_rgba(47,107,85,0.28)]",
+  },
+  {
+    name: "Excellence",
+    bg: "bg-[#E9C4BA]",
+    backBg: "bg-[#DFAFA6]",
+    text: "text-[#341D1C]",
+    muted: "text-[#744B48]",
+    accent: "#94433F",
+    accentSoft: "bg-[#94433F]/12",
+    glow: "bg-[#B75C56]/22",
+    border: "border-[#94433F]/25",
+    mark: "उत्कृष्टता",
+    word: "TRUST",
+    backWord: "CRAFT",
+    shadow: "shadow-[0_30px_80px_rgba(148,67,63,0.18)]",
+    hoverShadow: "group-hover:shadow-[0_42px_110px_rgba(148,67,63,0.28)]",
+  },
+];
+
 const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTablet }) => {
   const [manualFace, setManualFace] = useState(null);
 
@@ -146,58 +197,7 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTable
 
   const finalRotateX = hoverRotateX;
 
-  const cardStyles = [
-    {
-      name: "Culture",
-      bg: "bg-[#F3CDA8]",
-      backBg: "bg-[#EABF91]",
-      text: "text-[#352414]",
-      muted: "text-[#6F5031]",
-      accent: "#9B4E23",
-      accentSoft: "bg-[#9B4E23]/12",
-      glow: "bg-[#C06632]/25",
-      border: "border-[#9B4E23]/25",
-      mark: "संस्कृति",
-      word: "ROOTS",
-      backWord: "BELIEF",
-      shadow: "shadow-[0_30px_80px_rgba(155,78,35,0.20)]",
-      hoverShadow: "group-hover:shadow-[0_42px_110px_rgba(155,78,35,0.30)]",
-    },
-    {
-      name: "Innovation",
-      bg: "bg-[#C7DCCF]",
-      backBg: "bg-[#B8D2C3]",
-      text: "text-[#182D24]",
-      muted: "text-[#486457]",
-      accent: "#2F6B55",
-      accentSoft: "bg-[#2F6B55]/12",
-      glow: "bg-[#4F8A72]/22",
-      border: "border-[#2F6B55]/25",
-      mark: "नवाचार",
-      word: "NEXT",
-      backWord: "BUILD",
-      shadow: "shadow-[0_30px_80px_rgba(47,107,85,0.18)]",
-      hoverShadow: "group-hover:shadow-[0_42px_110px_rgba(47,107,85,0.28)]",
-    },
-    {
-      name: "Excellence",
-      bg: "bg-[#E9C4BA]",
-      backBg: "bg-[#DFAFA6]",
-      text: "text-[#341D1C]",
-      muted: "text-[#744B48]",
-      accent: "#94433F",
-      accentSoft: "bg-[#94433F]/12",
-      glow: "bg-[#B75C56]/22",
-      border: "border-[#94433F]/25",
-      mark: "उत्कृष्टता",
-      word: "TRUST",
-      backWord: "CRAFT",
-      shadow: "shadow-[0_30px_80px_rgba(148,67,63,0.18)]",
-      hoverShadow: "group-hover:shadow-[0_42px_110px_rgba(148,67,63,0.28)]",
-    },
-  ];
-
-  const style = cardStyles[index] || cardStyles[0];
+  const style = desktopHeroCardStyles[index] || desktopHeroCardStyles[0];
 
   return (
     <motion.div
@@ -417,16 +417,16 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTable
 
 const Hero = () => {
   const containerRef = useRef(null);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1280);
+  const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    const mediaQuery = window.matchMedia("(min-width: 640px) and (max-width: 1023px)");
+    const handleChange = () => setIsTablet(mediaQuery.matches);
 
-  const isMobile = windowWidth < 640;
-  const isTablet = windowWidth >= 640 && windowWidth < 1024;
+    handleChange();
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -515,7 +515,7 @@ const Hero = () => {
               card={card}
               index={index}
               scrollYProgress={scrollYProgress}
-              isMobile={isMobile}
+              isMobile={false}
               isTablet={isTablet}
             />
           ))}

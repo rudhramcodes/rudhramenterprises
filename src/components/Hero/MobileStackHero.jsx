@@ -71,8 +71,8 @@ const MobileStackHero = () => {
     () =>
       [...heroCards]
         .reverse()
-        .map((card) => {
-          const originalIndex = heroCards.findIndex((item) => item.id === card.id);
+        .map((card, reversedIndex) => {
+          const originalIndex = heroCards.length - 1 - reversedIndex;
 
           return (
             <MobileValueCard

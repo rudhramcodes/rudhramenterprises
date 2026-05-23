@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { navItems } from '../data/siteContent'
 
@@ -89,6 +89,7 @@ export const Header = memo(function Header() {
   const [hoveredNavIndex, setHoveredNavIndex] = useState(null)
   const [navHovered, setNavHovered] = useState(false)
   const [navPressed, setNavPressed] = useState(false)
+  const pressTimerRef = useRef(null)
   const resetHoverState = useCallback(() => {
     setHoveredNavIndex(null)
     if (document.activeElement instanceof HTMLElement) {
@@ -99,7 +100,8 @@ export const Header = memo(function Header() {
   const toggleMenu = useCallback(() => {
     resetHoverState()
     setNavPressed(true)
-    window.setTimeout(() => setNavPressed(false), 240)
+    window.clearTimeout(pressTimerRef.current)
+    pressTimerRef.current = window.setTimeout(() => setNavPressed(false), 240)
     setMenuOpen((value) => !value)
   }, [resetHoverState])
 
@@ -139,14 +141,15 @@ export const Header = memo(function Header() {
     if (menuOpen) resetHoverState()
   }, [menuOpen, resetHoverState])
 
+  useEffect(() => () => window.clearTimeout(pressTimerRef.current), [])
+
   const menuMode = compact || menuOpen || smallScreen
-  const expandedItems = [...navItems, { label: 'Contact', href: '#contact' }]
+  const expandedItems = useMemo(() => [...navItems, { label: 'Contact', href: '#contact' }], [])
   const restingNavScale = navHovered ? 1.006 : 1
 
   return (
     <header className={`fixed left-0 top-0 z-50 w-full transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${compact ? 'px-2 pt-2 sm:px-4' : 'px-3 pt-3 sm:px-6 sm:pt-4'}`}>
       <motion.div
-        className="ios-glass-nav mx-auto overflow-hidden rounded-[24px] px-4 sm:rounded-[28px] sm:px-5"
         className="ios-glass-nav mx-auto overflow-hidden rounded-[24px] px-4 sm:rounded-[28px] sm:px-5"
         animate={{
           scale: navPressed ? [restingNavScale, 0.995, restingNavScale] : restingNavScale,
@@ -215,7 +218,6 @@ export const Header = memo(function Header() {
           <AnimatePresence mode="wait">
             {menuMode && (
               <motion.button
-                className="ios-glass-button inline-flex h-11 w-11 items-center justify-center rounded-[16px] text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze sm:h-12 sm:w-12 sm:rounded-[18px]"
                 className="ios-glass-button inline-flex h-11 w-11 items-center justify-center rounded-[16px] text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze sm:h-12 sm:w-12 sm:rounded-[18px]"
                 type="button"
                 onClick={toggleMenu}
