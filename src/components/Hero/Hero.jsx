@@ -9,8 +9,9 @@ import {
 } from "framer-motion";
 import { heroCards } from "../../data/siteContent";
 import { MagneticButton } from "../ui";
+import MobileStackHero from "./MobileStackHero";
 
-const AwwwardsHeroCard = memo(({ card, index, scrollYProgress }) => {
+const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTablet }) => {
   const [manualFace, setManualFace] = useState(null);
 
   const cardRef = useRef(null);
@@ -67,37 +68,54 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress }) => {
     mass: 1.25,
   });
 
+  // Responsive offsets
+  const xOffset = isMobile ? 32 : isTablet ? 26 : 22;
+  const spreadOffset = isMobile ? 42 : isTablet ? 36 : 31;
+  const settleOffset = isMobile ? 38 : isTablet ? 32 : 29;
+
   const x = useTransform(
     smoothProgress,
     [0, 0.25, 0.46, 0.72, 0.95],
     [
-      `${(index - 1) * 22}vw`,
+      `${(index - 1) * xOffset}vw`,
       "0vw",
       "0vw",
-      `${(index - 1) * 31}vw`,
-      `${(index - 1) * 29}vw`,
+      `${(index - 1) * spreadOffset}vw`,
+      `${(index - 1) * settleOffset}vw`,
     ]
   );
 
   const y = useTransform(
     smoothProgress,
     [0, 0.25, 0.46, 0.72, 0.95],
-    ["40vh", "45vh", "35vh", "40vh", "45vh"]
+    [
+      isMobile ? "42vh" : "42vh",
+      isMobile ? "48vh" : "45vh",
+      isMobile ? "38vh" : "35vh",
+      isMobile ? "42vh" : "40vh",
+      isMobile ? "48vh" : "45vh"
+    ]
   );
 
   const scale = useTransform(
     smoothProgress,
     [0, 0.25, 0.46, 0.72, 0.95],
-    [0.9, 0.8, 0.55, 0.94, 0.91]
+    [
+      isMobile ? 0.8 : 0.9,
+      isMobile ? 0.7 : 0.8,
+      isMobile ? 0.48 : 0.55,
+      isMobile ? 0.82 : 0.94,
+      isMobile ? 0.78 : 0.91
+    ]
   );
 
   const rotateZ = useTransform(
     smoothProgress,
     [0, 0.24, 0.46, 0.72, 0.95],
     [
-      (index - 1) * 12,
+      (index - 1) * (isMobile ? 8 : 12),
       0,
-      (index - 1) * -18,
+      (index - 1) * (isMobile ? -12 : -18),
       (index - 1) * 4,
       (index - 1) * 1.2,
     ]
@@ -399,6 +417,16 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress }) => {
 
 const Hero = () => {
   const containerRef = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1280);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = windowWidth < 640;
+  const isTablet = windowWidth >= 640 && windowWidth < 1024;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -413,27 +441,30 @@ const Hero = () => {
 
   const headOpacity = useTransform(
     smoothProgress,
-    [0, 0.15, 0.25],
+    [0, 0.12, 0.22],
     [1, 0.5, 0]
   );
 
-  const headScale = useTransform(smoothProgress, [0, 0.25], [1, 0.86]);
-  const headY = useTransform(smoothProgress, [0, 0.25], ["0vh", "-10vh"]);
-
-  const settleTextOpacity = useTransform(smoothProgress, [0.72, 0.88], [0, 1]);
-  const settleTextY = useTransform(smoothProgress, [0.72, 0.88], ["42px", "0px"]);
+  const headScale = useTransform(smoothProgress, [0, 0.22], [1, 0.9]);
+  const headY = useTransform(smoothProgress, [0, 0.22], ["0vh", "-8vh"]);
+  
+  const settleTextOpacity = useTransform(smoothProgress, [0.58, 0.72], [0, 1]);
+  const settleTextY = useTransform(smoothProgress, [0.58, 0.72], ["32px", "0px"]);
 
   const bgOrbY = useTransform(smoothProgress, [0, 1], ["0vh", "-18vh"]);
   const bgOrbScale = useTransform(smoothProgress, [0, 1], [1, 1.25]);
 
   return (
-    <section
-      ref={containerRef}
-      className="relative h-[460vh] overflow-visible bg-[#F7F1E6]"
-    >
-      <div className="sticky top-0 min-h-screen w-full overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#FFFDF6_0%,#F7F1E6_42%,#EAD8BF_100%)]" />
+    <>
+      <MobileStackHero />
+      <section
+        ref={containerRef}
+        id="top"
+        className="relative hidden h-[460vh] overflow-visible bg-[#F7F1E6] md:block"
+      >
+        <div className="sticky top-0 min-h-screen w-full overflow-hidden">
+          {/* Background */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#FFFDF6_0%,#F7F1E6_42%,#EAD8BF_100%)]" />
 
         {/* Soft texture grid */}
         <div className="absolute inset-0 opacity-[0.045] bg-[linear-gradient(to_right,rgba(46,42,36,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(46,42,36,0.4)_1px,transparent_1px)] bg-[size:58px_58px]" />
@@ -453,24 +484,24 @@ const Hero = () => {
 
         {/* Phase 1 headline */}
         <motion.div
-          className="relative z-20 mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-start px-5 pt-[15vh] text-center pointer-events-none"
+          className="relative z-20 mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-start px-5 pt-[18vh] text-center pointer-events-none sm:pt-[15vh]"
           style={{
             opacity: headOpacity,
             scale: headScale,
             y: headY,
           }}
         >
-          <div className="mb-5 inline-flex items-center rounded-full border border-[#B37839]/20 bg-white/30 px-4 py-2 backdrop-blur-md">
-            <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#6D5B43]">
+          <div className="mb-6 inline-flex items-center rounded-full border border-[#B37839]/20 bg-white/30 px-4 py-2 backdrop-blur-md sm:mb-5">
+            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#6D5B43] sm:text-[10px] sm:tracking-[0.35em]">
               Culture · Innovation · Excellence
             </span>
           </div>
 
-          <h1 className="max-w-5xl font-bold text-[clamp(3.5rem,7vw,8rem)] leading-[0.92] tracking-[-0.07em] text-[#2E2A24]">
+          <h1 className="max-w-5xl font-bold text-[clamp(2.75rem,9vw,8rem)] leading-[0.94] tracking-[-0.06em] text-[#2E2A24] sm:leading-[0.92] sm:tracking-[-0.07em]">
             Leading, What's Next.
           </h1>
 
-          <p className="mt-7 max-w-2xl text-base leading-relaxed text-[#6D5B43]/80 md:text-lg">
+          <p className="mt-7 max-w-xl text-[15px] leading-relaxed text-[#6D5B43]/85 sm:max-w-2xl sm:text-base md:text-lg">
             Rooted in culture, driven by creativity, and sharpened by modern
             innovation.
           </p>
@@ -484,19 +515,21 @@ const Hero = () => {
               card={card}
               index={index}
               scrollYProgress={scrollYProgress}
+              isMobile={isMobile}
+              isTablet={isTablet}
             />
           ))}
         </div>
 
         {/* Final settled content */}
         <motion.div
-          className="absolute bottom-[60vh] left-1/2 z-10 w-full max-w-4xl -translate-x-1/2 px-8 text-center"
+          className="absolute bottom-[52vh] left-1/2 z-10 w-full max-w-4xl -translate-x-1/2 px-6 text-center sm:bottom-[60vh] sm:px-8"
           style={{
             opacity: settleTextOpacity,
             y: settleTextY,
           }}
         >
-          <h2 className="mb-7 font-bold text-5xl leading-[0.95] tracking-[-0.05em] text-[#2E2A24] lg:text-7xl">
+          <h2 className="mb-7 font-bold text-4xl leading-[1] tracking-[-0.04em] text-[#2E2A24] sm:text-5xl sm:leading-[0.95] sm:tracking-[-0.05em] lg:text-7xl">
             Three standards.
             <br />
             One way forward.
@@ -506,8 +539,9 @@ const Hero = () => {
             <MagneticButton href="#ventures">Explore the Ecosystem</MagneticButton>
           </div>
         </motion.div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 };
 

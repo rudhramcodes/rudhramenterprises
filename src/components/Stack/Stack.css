@@ -1,0 +1,39 @@
+.rb-stack-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 600px;
+  touch-action: pan-y;
+}
+
+.rb-card-rotate,
+.rb-card-rotate-disabled {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.rb-card-rotate {
+  cursor: grab;
+}
+
+.rb-card-rotate-disabled {
+  cursor: pointer;
+}
+
+.rb-stack-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 1.35rem;
+  box-shadow: 0 26px 70px rgba(46, 42, 36, 0.2);
+}
+
+.rb-stack-card img {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
