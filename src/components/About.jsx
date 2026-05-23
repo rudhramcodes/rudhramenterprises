@@ -2,7 +2,7 @@ import { memo } from 'react'
 import { SectionKicker } from './ui'
 
 const maxWidth = 'mx-auto max-w-[1500px]'
-const displayTitle = 'text-8xl leading-[0.92] tracking-tighter text-ink [&>span]:block'
+const displayTitle = 'text-[clamp(3.1rem,13vw,6rem)] leading-[0.92] tracking-tighter text-ink lg:text-8xl [&>span]:block'
 const sectionLead = 'max-w-3xl text-lg leading-[1.7] text-stone sm:text-xl'
 const sectionShell = 'px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-36'
 
@@ -35,15 +35,15 @@ export const BrandThesis = memo(function BrandThesis() {
         </div>
       </div>
       <div
-        className="reveal pointer-events-none mx-auto mt-24 grid max-w-5xl grid-cols-3 gap-3 opacity-60"
+        className="reveal pointer-events-none mx-auto mt-16 grid max-w-5xl grid-cols-3 gap-2 opacity-60 sm:mt-24 sm:gap-3"
         aria-hidden="true"
       >
         {/* <span className="h-40 border border-bronze/30 bg-bronze/5" />
         <span className="h-40 translate-y-8 border border-bronze/40 bg-paper" />
         <span className="h-40 border border-bronze/30 bg-bronze/5" /> */}
-        <img src="https://images.unsplash.com/photo-1463592177119-bab2a00f3ccb?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="h-46 w-60 rounded-lg object-cover" />
-        <img src="https://images.unsplash.com/photo-1605647540924-852290f6b0d5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fGlubm92YXRpb258ZW58MHx8MHx8fDA%3D" alt="" className="h-46 w-60 translate-y-8 rounded-lg object-cover" />
-        <img src="https://images.unsplash.com/photo-1611075384322-731537ad7971?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZXhjZWxsZW5jZXxlbnwwfHwwfHx8MA%3D%3D" alt="" className="h-46 w-60 rounded-lg object-cover" />
+        <img src="https://images.unsplash.com/photo-1463592177119-bab2a00f3ccb?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="h-28 w-full rounded-lg object-cover sm:h-46 lg:w-60" />
+        <img src="https://images.unsplash.com/photo-1605647540924-852290f6b0d5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fGlubm92YXRpb258ZW58MHx8MHx8fDA%3D" alt="" className="h-28 w-full translate-y-5 rounded-lg object-cover sm:h-46 sm:translate-y-8 lg:w-60" />
+        <img src="https://images.unsplash.com/photo-1611075384322-731537ad7971?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZXhjZWxsZW5jZXxlbnwwfHwwfHx8MA%3D%3D" alt="" className="h-28 w-full rounded-lg object-cover sm:h-46 lg:w-60" />
       </div>
     </section>
   )
@@ -68,7 +68,7 @@ export const OriginSymbol = memo(function OriginSymbol() {
             Rudhram carries the energy of courage, creation, and purpose. The trishul-inspired mark
             represents upward movement, clarity, and the balance of body, mind, and soul.
           </p>
-          <blockquote className="mt-10 border-l border-bronze pl-6 font-display text-4xl leading-none text-paper sm:text-5xl">
+          <blockquote className="mt-10 border-l border-bronze pl-6 font-display text-3xl leading-none text-paper sm:text-5xl">
             From culture to creation, from vision to reality.
           </blockquote>
         </div>

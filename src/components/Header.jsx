@@ -144,9 +144,9 @@ export const Header = memo(function Header() {
   const restingNavScale = navHovered ? 1.006 : 1
 
   return (
-    <header className={`fixed left-0 top-0 z-50 w-full transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${compact ? 'px-3 pt-2 sm:px-4' : 'px-4 pt-4 sm:px-6'}`}>
+    <header className={`fixed left-0 top-0 z-50 w-full transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${compact ? 'px-2 pt-2 sm:px-4' : 'px-3 pt-3 sm:px-6 sm:pt-4'}`}>
       <motion.div
-        className="ios-glass-nav mx-auto overflow-hidden rounded-[28px] px-5"
+        className="ios-glass-nav mx-auto overflow-hidden rounded-[24px] px-4 sm:rounded-[28px] sm:px-5"
         animate={{
           scale: navPressed ? [restingNavScale, 0.995, restingNavScale] : restingNavScale,
           maxWidth: menuMode ? 544 : 1280,
@@ -172,9 +172,9 @@ export const Header = memo(function Header() {
           transition: 'background-color 300ms, border-color 300ms, box-shadow 300ms'
         }}
       >
-        <div className="flex h-[4.5rem] w-full items-center justify-between">
-          <a className="group flex min-w-36 items-center" href="#top" aria-label="Rudhram Enterprises home" onClick={resetHoverState}>
-            <img className="h-9 w-auto transition duration-300 ease-out group-hover:opacity-75 group-active:scale-[0.98]" src="/images/logo.png" alt="Rudhram" />
+        <div className="flex h-16 w-full items-center justify-between sm:h-[4.5rem]">
+          <a className="group flex min-w-28 items-center sm:min-w-36" href="#top" aria-label="Rudhram Enterprises home" onClick={resetHoverState}>
+            <img className="h-8 w-auto transition duration-300 ease-out group-hover:opacity-75 group-active:scale-[0.98] sm:h-9" src="/images/logo.png" alt="Rudhram" />
           </a>
 
           <AnimatePresence initial={false}>
@@ -214,7 +214,7 @@ export const Header = memo(function Header() {
           <AnimatePresence>
             {menuMode && (
               <motion.button
-                className="ios-glass-button inline-flex h-12 w-12 items-center justify-center rounded-[18px] text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze"
+                className="ios-glass-button inline-flex h-11 w-11 items-center justify-center rounded-[16px] text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze sm:h-12 sm:w-12 sm:rounded-[18px]"
                 type="button"
                 onClick={toggleMenu}
                 aria-label="Toggle menu"

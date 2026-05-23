@@ -39,7 +39,7 @@ export const VentureConstellation = memo(function VentureConstellation() {
 
         <div 
           ref={containerRef}
-          className="chapter relative mt-16 grid min-h-[800px] gap-8 overflow-hidden border border-ink/10 bg-ivory p-5 sm:p-8 lg:grid-cols-[1.1fr_1fr] lg:p-12"
+          className="chapter relative mt-12 grid min-h-0 gap-8 overflow-hidden border border-ink/10 bg-ivory p-4 sm:mt-16 sm:p-8 lg:min-h-[800px] lg:grid-cols-[1.1fr_1fr] lg:p-12"
         >
           {/* Grid Background */}
           <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#11100e_1px,transparent_1px),linear-gradient(90deg,#11100e_1px,transparent_1px)] [background-size:64px_64px]" />
@@ -83,7 +83,7 @@ export const VentureConstellation = memo(function VentureConstellation() {
               {ventures.map((venture, index) => (
                 <button
                   key={venture.name}
-                  className={`group relative overflow-hidden border px-5 py-5 text-left transition-all duration-500 ease-out ${
+                  className={`group relative overflow-hidden border px-4 py-4 text-left transition-all duration-500 ease-out sm:px-5 sm:py-5 ${
                     index === activeIndex
                       ? 'border-bronze bg-bronze text-paper shadow-[0_20px_60px_rgba(179,120,57,0.2)]'
                       : 'border-ink/5 bg-paper/60 text-ink hover:border-bronze/30 hover:bg-paper'
@@ -93,7 +93,7 @@ export const VentureConstellation = memo(function VentureConstellation() {
                   onFocus={() => setActiveIndex(index)}
                   onClick={() => setActiveIndex(index)}
                 >
-                  <span className="relative z-10 block font-display text-2xl leading-tight sm:text-3xl">
+                  <span className="relative z-10 block font-display text-[1.55rem] leading-tight sm:text-3xl">
                     {venture.name}
                   </span>
                   {index === activeIndex && (
@@ -114,7 +114,7 @@ export const VentureConstellation = memo(function VentureConstellation() {
                 animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, x: -20, filter: 'blur(10px)' }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col border border-ink/10 bg-ink p-8 text-paper shadow-[0_40px_100px_rgba(17,16,14,0.3)] sm:p-12"
+                className="flex flex-col border border-ink/10 bg-ink p-5 text-paper shadow-[0_40px_100px_rgba(17,16,14,0.3)] sm:p-12"
               >
                 <div className="mb-8 flex items-center gap-4">
                   <span className="h-px w-8 bg-bronze" />
@@ -123,16 +123,16 @@ export const VentureConstellation = memo(function VentureConstellation() {
                   </span>
                 </div>
                 
-                <h3 className="font-display text-5xl leading-none text-paper sm:text-7xl">
+                <h3 className="font-display text-[clamp(3rem,14vw,4.5rem)] leading-none text-paper sm:text-7xl">
                   {active.name}
                 </h3>
                 
-                <p className="mt-8 max-w-xl text-lg leading-relaxed text-paper/70 sm:text-xl">
+                <p className="mt-6 max-w-xl text-base leading-relaxed text-paper/70 sm:mt-8 sm:text-xl">
                   {active.line}
                 </p>
                 
-                <div className="mt-12 flex items-center justify-between border-t border-paper/10 pt-8">
-                  <small className="text-[10px] font-bold uppercase tracking-[0.3em] text-paper/40">
+                <div className="mt-10 flex flex-col gap-5 border-t border-paper/10 pt-6 sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:pt-8">
+                  <small className="text-[10px] font-bold uppercase tracking-[0.24em] text-paper/40 sm:tracking-[0.3em]">
                     {active.motif}
                   </small>
                   <a

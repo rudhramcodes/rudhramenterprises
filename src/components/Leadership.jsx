@@ -28,12 +28,12 @@ export const Leadership = memo(function Leadership() {
               >
                 <div className="flex items-start justify-between gap-6">
                   <div>
-                    <h3 className="font-display text-5xl leading-none sm:text-6xl">{person.name}</h3>
+                    <h3 className="font-display text-[clamp(2.65rem,12vw,3.75rem)] leading-none sm:text-6xl">{person.name}</h3>
                     <p className="mt-4 text-sm font-bold uppercase tracking-[0.14em] text-bronze">
                       {person.role}
                     </p>
                   </div>
-                  <span className="grid h-16 w-16 shrink-0 place-items-center border border-bronze font-display text-2xl text-bronze transition-colors group-hover:border-paper group-hover:text-paper">
+                  <span className="grid h-14 w-14 shrink-0 place-items-center border border-bronze font-display text-xl text-bronze transition-colors group-hover:border-paper group-hover:text-paper sm:h-16 sm:w-16 sm:text-2xl">
                     {person.initials}
                   </span>
                 </div>

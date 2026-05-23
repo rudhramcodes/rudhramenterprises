@@ -12,14 +12,14 @@ export const VisionMission = memo(function VisionMission() {
     <section className="chapter grid lg:grid-cols-2">
       <div className="reveal bg-ivory px-5 py-24 sm:px-10 lg:px-16 lg:py-36">
         <span className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">Vision</span>
-        <h2 className="mt-8 font-display text-5xl leading-[1.02] text-ink sm:text-7xl">
+        <h2 className="mt-8 font-display text-[clamp(2.65rem,11vw,4.5rem)] leading-[1.02] text-ink lg:text-7xl">
           To pioneer the future through innovation, empower communities, and redefine excellence
           with lasting impact.
         </h2>
       </div>
       <div className="reveal bg-ink px-5 py-24 text-paper sm:px-10 lg:px-16 lg:py-36">
         <span className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">Mission</span>
-        <h2 className="mt-8 font-display text-5xl leading-[1.02] text-paper sm:text-7xl">
+        <h2 className="mt-8 font-display text-[clamp(2.65rem,11vw,4.5rem)] leading-[1.02] text-paper lg:text-7xl">
           To inspire ideas, innovate with purpose, and deliver excellence through ventures that
           empower communities, transform experiences, and create legacy.
         </h2>
@@ -32,7 +32,7 @@ export const Impact = memo(function Impact() {
   return (
     <section id="impact" className={`${sectionShell} bg-paper`}>
       <div className={`${maxWidth} grid gap-12 lg:grid-cols-[0.7fr_1fr] lg:items-center`}>
-        <div className="reveal font-display text-[clamp(9rem,24vw,24rem)] leading-none text-bronze">
+        <div className="reveal font-display text-[clamp(7rem,34vw,16rem)] leading-none text-bronze lg:text-[clamp(9rem,24vw,24rem)]">
           3%
         </div>
         <div>
@@ -43,7 +43,7 @@ export const Impact = memo(function Impact() {
             our social vision, we are committed to dedicating 3% of our value toward social
             development and upliftment.
           </p>
-          <blockquote className="reveal mt-10 border-l border-bronze pl-6 font-display text-4xl leading-tight text-ink sm:text-5xl">
+          <blockquote className="reveal mt-10 border-l border-bronze pl-6 font-display text-3xl leading-tight text-ink sm:text-5xl">
             We grow not just to succeed, but to give back, uplift, and create lasting impact.
           </blockquote>
         </div>
@@ -58,13 +58,13 @@ export const Contact = memo(function Contact() {
       <div
         className={`${maxWidth} chapter relative overflow-hidden border border-paper/10 p-6 sm:p-10 lg:p-14`}
       >
-        <LogoMark className="pointer-events-none absolute -right-8 -top-8 h-[34rem] opacity-[0.055]" />
+        <LogoMark className="pointer-events-none absolute -right-28 -top-16 h-[28rem] opacity-[0.055] sm:-right-8 sm:-top-8 sm:h-[34rem]" />
         <div className="grid gap-12 lg:grid-cols-[0.9fr_0.75fr]">
           <div className="reveal relative z-10">
-            <h2 className="font-display text-[clamp(3.8rem,9vw,9rem)] leading-[0.86] text-paper">
+            <h2 className="font-display text-[clamp(3rem,14vw,6rem)] leading-[0.88] text-paper lg:text-[clamp(3.8rem,9vw,9rem)]">
               Let's shape what comes next.
             </h2>
-            <p className="mt-8 max-w-2xl text-xl leading-[1.65] text-paper/70">
+            <p className="mt-8 max-w-2xl text-lg leading-[1.65] text-paper/70 sm:text-xl">
               For partnerships, ventures, collaborations, and strategic enquiries, connect with Rudhram.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -155,7 +155,7 @@ export const Footer = memo(function Footer() {
       <div className={`${maxWidth} relative z-10`}>
         <div className="grid gap-12 border-t border-paper/10 pt-12 lg:grid-cols-[1.1fr_1fr]">
           <div>
-            <h2 className="font-display text-5xl leading-none text-paper sm:text-7xl">
+            <h2 className="font-display text-[clamp(3rem,13vw,4.5rem)] leading-none text-paper lg:text-7xl">
               RUDHRAM ENTERPRISES
             </h2>
             <p className="mt-5 text-xl text-bronze">Leading, What's Next.</p>

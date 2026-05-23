@@ -30,7 +30,7 @@ export const Pillars = memo(function Pillars() {
                 className="group flex h-full min-h-[27rem] flex-col border border-ink/10 bg-paper p-6 transition duration-500 hover:border-bronze hover:shadow-[0_30px_100px_rgba(179,120,57,0.16)] sm:p-8"
               >
                 <span className="text-sm font-semibold text-bronze">0{index + 1}</span>
-                <h3 className="mt-16 font-display text-6xl leading-none text-ink sm:text-7xl">
+                <h3 className="mt-12 font-display text-5xl leading-none text-ink sm:mt-16 sm:text-7xl">
                   {pillar.title}
                 </h3>
                 <p className="mt-8 text-lg leading-[1.65] text-stone">{pillar.copy}</p>
@@ -48,7 +48,7 @@ export const Pillars = memo(function Pillars() {
             </TiltCard>
           ))}
         </div>
-        <p className="reveal mt-16 max-w-4xl font-display text-5xl leading-[1.02] text-bronze sm:text-7xl">
+        <p className="reveal mt-16 max-w-4xl font-display text-[clamp(2.7rem,12vw,4.5rem)] leading-[1.02] text-bronze lg:text-7xl">
           We inspire ideas, innovate the future, and deliver with excellence.
         </p>
       </div>
