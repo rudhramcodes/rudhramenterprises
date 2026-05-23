@@ -173,9 +173,9 @@ export const Header = memo(function Header() {
           transition: 'background-color 300ms, border-color 300ms, box-shadow 300ms'
         }}
       >
-        <div className="flex h-[4.5rem] w-full items-center justify-between">
-          <a className="group flex min-w-36 items-center" href="#top" aria-label="Rudhram Enterprises home" onClick={resetHoverState}>
-            <img className="h-9 w-auto transition duration-300 ease-out group-hover:opacity-75 group-active:scale-[0.98]" src="/images/logo.png" alt="Rudhram" />
+        <div className="flex h-16 w-full items-center justify-between sm:h-[4.5rem]">
+          <a className="group flex min-w-28 items-center sm:min-w-36" href="#top" aria-label="Rudhram Enterprises home" onClick={resetHoverState}>
+            <img className="h-8 w-auto transition duration-300 ease-out group-hover:opacity-75 group-active:scale-[0.98] sm:h-9" src="/images/logo.png" alt="Rudhram" />
           </a>
 
           <AnimatePresence initial={false}>
@@ -215,6 +215,7 @@ export const Header = memo(function Header() {
           <AnimatePresence mode="wait">
             {menuMode && (
               <motion.button
+                className="ios-glass-button inline-flex h-11 w-11 items-center justify-center rounded-[16px] text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze sm:h-12 sm:w-12 sm:rounded-[18px]"
                 className="ios-glass-button inline-flex h-11 w-11 items-center justify-center rounded-[16px] text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze sm:h-12 sm:w-12 sm:rounded-[18px]"
                 type="button"
                 onClick={toggleMenu}

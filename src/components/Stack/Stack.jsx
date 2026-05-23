@@ -14,8 +14,8 @@ const createStack = (cards, randomRotation) =>
 function CardRotate({ children, onSendToBack, sensitivity, disableDrag = false }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const rotateX = useTransform(y, [-100, 100], [60, -60]);
-  const rotateY = useTransform(x, [-100, 100], [-60, 60]);
+  const rotateX = useTransform(y, [-120, 120], [28, -28]);
+  const rotateY = useTransform(x, [-120, 120], [-34, 34]);
 
   function handleDragEnd(_, info) {
     if (Math.abs(info.offset.x) > sensitivity || Math.abs(info.offset.y) > sensitivity) {
@@ -40,7 +40,9 @@ function CardRotate({ children, onSendToBack, sensitivity, disableDrag = false }
       style={{ x, y, rotateX, rotateY }}
       drag
       dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
-      dragElastic={0.6}
+      dragElastic={0.72}
+      dragTransition={{ bounceStiffness: 220, bounceDamping: 20 }}
+      whileDrag={{ scale: 1.025 }}
       whileTap={{ cursor: "grabbing" }}
       onDragEnd={handleDragEnd}
     >
@@ -60,6 +62,7 @@ export default function Stack({
   pauseOnHover = false,
   mobileClickOnly = false,
   mobileBreakpoint = 768,
+  peekSide = "right",
 }) {
   const [isMobile, setIsMobile] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -106,6 +109,9 @@ export default function Stack({
       onMouseLeave={() => pauseOnHover && setIsPaused(false)}
     >
       {stack.map((card, index) => {
+        const depth = stack.length - index - 1;
+        const direction = peekSide === "left" ? -1 : 1;
+
         return (
           <CardRotate
             key={card.id}
@@ -117,9 +123,11 @@ export default function Stack({
               className="rb-stack-card"
               onClick={() => shouldEnableClick && sendToBack(card.id)}
               animate={{
-                rotateZ: (stack.length - index - 1) * 4 + card.randomRotate,
+                rotateZ: depth * 3.2 * direction + card.randomRotate,
                 scale: 1 + index * 0.06 - stack.length * 0.06,
-                transformOrigin: "90% 90%",
+                x: depth * 8 * direction,
+                y: depth * 3,
+                transformOrigin: peekSide === "left" ? "10% 90%" : "90% 90%",
               }}
               initial={false}
               transition={{
