@@ -1,5 +1,4 @@
-import { memo, useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { memo } from 'react'
 import { SectionKicker } from './ui'
 import { pillars } from '../data/siteContent'
 import { TiltCard } from './TiltCard'

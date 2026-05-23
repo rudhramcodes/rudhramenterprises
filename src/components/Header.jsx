@@ -223,8 +223,8 @@ export const Header = memo(function Header() {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                whileHover={{ scale: 1.035 }}
-                whileTap={{ scale: 0.9 }}
+                // whileHover={{ scale: 1.035 }}
+                // whileTap={{ scale: 0.9 }}
               >
                 <AnimatedMenuIcon isOpen={menuOpen} />
               </motion.button>
