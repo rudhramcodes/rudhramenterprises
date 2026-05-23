@@ -1,4 +1,4 @@
-import { useState, useRef, memo, useEffect, useMemo } from "react";
+import { useState, useRef, memo, useEffect } from "react";
 import {
   motion,
   useScroll,
