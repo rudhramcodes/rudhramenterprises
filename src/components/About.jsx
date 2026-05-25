@@ -16,7 +16,7 @@ const thesisItems = [
     description:
       'We draw strength from heritage, rituals, craft, and the values that keep every venture grounded.',
     image:
-      'https://images.unsplash.com/photo-1463592177119-bab2a00f3ccb?q=80&w=1469&auto=format&fit=crop',
+      '/images/culture.png',
     cursorText: 'Culture'
   },
   {
@@ -25,7 +25,7 @@ const thesisItems = [
     description:
       'We turn creative courage, modern systems, and emerging possibilities into ventures built for tomorrow.',
     image:
-      'https://images.unsplash.com/photo-1605647540924-852290f6b0d5?w=900&auto=format&fit=crop&q=80',
+      '/images/innovation.png',
     cursorText: 'Innovation'
   },
   {
@@ -34,7 +34,7 @@ const thesisItems = [
     description:
       'We build trust through discipline, precision, and the kind of details people remember.',
     image:
-      'https://images.unsplash.com/photo-1611075384322-731537ad7971?w=900&auto=format&fit=crop&q=80',
+      '/images/excellence.png',
     cursorText: 'Excellence'
   },
 ]
@@ -55,20 +55,23 @@ const MobileBrandThesis = memo(function MobileBrandThesis() {
           />
 
           {/* Text Content Overlay in a Glass Container */}
-          <div className="absolute inset-x-4 bottom-8 z-30">
-            <div className="ios-glass-menu reveal rounded-2xl p-6 sm:p-8">
-              <div className="flex items-center gap-3 border-b border-ink/10 pb-4 mb-4">
-                <span className="text-[10px] font-bold uppercase tracking-[0.26em] text-bronze">
+          <div className="absolute inset-0 z-30 flex flex-col justify-end px-4 pb-12">
+            {/* Soft dark vignette at bottom to help the white glass pop */}
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/20 to-transparent pointer-events-none" />
+
+            <div className="ios-glass-menu reveal relative rounded-[2.5rem] p-8 shadow-[0_30px_60px_rgba(0,0,0,0.12)]">
+              <div className="flex items-center gap-3 border-b border-ink/5 pb-4 mb-5">
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-bronze">
                   Thesis 0{index + 1}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-stone/60">
+                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-ink/40">
                   {item.subtitle}
                 </span>
               </div>
-              <h3 className="font-display font-semibold text-4xl text-ink tracking-tight mb-2">
+              <h3 className="font-display font-bold text-[3rem] text-ink leading-[0.88] tracking-tighter mb-4">
                 {item.title}
               </h3>
-              <p className="text-sm leading-relaxed text-stone">
+              <p className="text-[15px] leading-relaxed font-medium text-ink/80">
                 {item.description}
               </p>
             </div>
