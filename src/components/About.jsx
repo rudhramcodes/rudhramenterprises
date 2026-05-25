@@ -79,13 +79,13 @@ export const BrandThesis = memo(function BrandThesis() {
       <div className={`${maxWidth} pt-8 pb-8 sm:pt-10 sm:pb-10 lg:pt-20 lg:pb-12`}>
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
           <div>
-            <SectionKicker>About Rudhram</SectionKicker>
+            <SectionKicker>About Rudhram Group</SectionKicker>
             <h2 className="mt-3 font-display font-bold text-[clamp(2.1rem,7vw,4.2rem)] leading-[0.92] tracking-tighter text-ink [&>span]:block reveal">
-              We lead today, <span>and we lead what comes next.</span>
+              A venture-building institution, not a company - a system that creates companies.
             </h2>
           </div>
-          <p className="max-w-xl text-base leading-[1.7] text-stone sm:text-lg reveal">
-            Rudhram exists to bridge tradition and transformation. Rooted in culture, driven by creativity, and sharpened by modern innovation, we build ventures that create meaning, momentum, and measurable impact.
+          <p className="max-w-xl text-base text-ink/60 sm:text-lg reveal">
+            Rudhram Group is a structured venture-building organization focused on identifying real-life challenges and turning them into impactful businesses. It combines strong values, disciplined systems, and modern thinking to build brands that create long-term value across industries.
           </p>
         </div>
       </div>
