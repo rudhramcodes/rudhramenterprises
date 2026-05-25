@@ -172,9 +172,6 @@ export const Header = memo(function Header() {
           setNavHovered(false)
           setHoveredNavIndex(null)
         }}
-        style={{
-          transition: 'background-color 300ms, border-color 300ms, box-shadow 300ms'
-        }}
       >
         <div className="flex h-16 w-full items-center justify-between sm:h-[4.5rem]">
           <a className="group flex min-w-28 items-center sm:min-w-36" href="#top" aria-label="Rudhram Enterprises home" onClick={resetHoverState}>
