@@ -49,25 +49,22 @@ const MobileBrandThesis = memo(function MobileBrandThesis() {
             alt={item.title}
             className="absolute inset-0 h-full w-full object-cover"
           />
-          
-          {/* Darker Overlay for readability */}
-          <div className="absolute inset-0 bg-ink/30" />
 
-          {/* Text Content Overlay */}
-          <div className="absolute inset-0 flex flex-col justify-end p-8 pb-16 z-30">
-            <div className="reveal space-y-2">
-              <div className="flex items-center gap-3 border-b border-paper/20 pb-4 mb-4">
-                <span className="text-[10px] font-bold uppercase tracking-[0.26em] text-bronze-soft">
+          {/* Text Content Overlay in a Glass Container */}
+          <div className="absolute inset-x-4 bottom-8 z-30">
+            <div className="ios-glass-menu reveal rounded-2xl p-6 sm:p-8">
+              <div className="flex items-center gap-3 border-b border-ink/10 pb-4 mb-4">
+                <span className="text-[10px] font-bold uppercase tracking-[0.26em] text-bronze">
                   Thesis 0{index + 1}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-paper/60">
+                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-stone/60">
                   {item.subtitle}
                 </span>
               </div>
-              <h3 className="font-display text-5xl text-paper tracking-tighter">
+              <h3 className="font-display text-4xl text-ink tracking-tighter mb-2">
                 {item.title}
               </h3>
-              <p className="max-w-md text-base leading-relaxed text-paper/80">
+              <p className="text-sm leading-relaxed text-stone">
                 {item.description}
               </p>
             </div>
