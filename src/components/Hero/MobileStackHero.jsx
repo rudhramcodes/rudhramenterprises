@@ -88,10 +88,8 @@ const MobileStackHero = () => {
   return (
     <section
       id="top"
-      className="relative min-h-[100svh] w-full overflow-hidden bg-[#F8F4ED] px-[var(--page-gutter)] pb-7 pt-[7rem] md:hidden"
+      className="relative min-h-[100svh] w-full overflow-hidden bg-paper px-[var(--page-gutter)] pb-7 pt-[7rem] md:hidden"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#FFFDF8_0%,#F8F4ED_48%,#EAD8BF_100%)]" />
-
       <div className="relative z-10 mx-auto flex min-h-[calc(100svh-8.75rem)] w-full max-w-[24rem] flex-col">
         <motion.div
           initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}

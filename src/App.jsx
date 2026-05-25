@@ -2,7 +2,7 @@ import { Header } from './components/Header'
 import { useLenisScroll } from './hooks/useLenisScroll'
 import { useScrollAnimations } from './hooks/useScrollAnimations'
 import Hero from './components/Hero/Hero'
-import { BrandThesis, OriginSymbol } from './components/About'
+import { BrandThesis } from './components/About'
 import { Pillars } from './components/Pillars'
 import { VentureConstellation } from './components/VentureConstellation'
 import { VisionMission, Impact, Contact, Footer } from './components/Sections'
@@ -18,7 +18,7 @@ const App = () => {
       <main>
         <Hero />
         <BrandThesis />
-        <OriginSymbol />
+        {/* <OriginSymbol /> */}
         <Pillars />
         <VentureConstellation />
         <VisionMission />

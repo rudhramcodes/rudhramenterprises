@@ -135,7 +135,7 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTable
       `${(index - 1) * settleOffset}vw`,
     ]
   );
-{/* Soft texture grid */}
+  {/* Soft texture grid */ }
   const y = useTransform(
     smoothProgress,
     [0, 0.25, 0.46, 0.72, 0.95],
@@ -322,7 +322,7 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTable
             >
               <div>
                 <p
-                  className="mb-5 text-[10px] font-bold uppercase tracking-tight"
+                  className="mb-6 text-[16px] font-semibold uppercase tracking-tight"
                   style={{ color: style.accent }}
                 >
                   {style.mark}
@@ -447,7 +447,7 @@ const Hero = () => {
 
   const headScale = useTransform(smoothProgress, [0, 0.22], [1, 0.9]);
   const headY = useTransform(smoothProgress, [0, 0.22], ["0vh", "-8vh"]);
-  
+
   const settleTextOpacity = useTransform(smoothProgress, [0.58, 0.72], [0, 1]);
   const settleTextY = useTransform(smoothProgress, [0.58, 0.72], ["32px", "0px"]);
 
@@ -460,85 +460,82 @@ const Hero = () => {
       <section
         ref={containerRef}
         id="top"
-        className="relative hidden h-[460vh] overflow-visible bg-[#F7F1E6] md:block"
+        className="relative hidden h-[460vh] overflow-visible bg-paper md:block"
       >
         <div className="sticky top-0 min-h-screen w-full overflow-hidden">
-          {/* Background */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#FFFDF6_0%,#F7F1E6_42%,#EAD8BF_100%)]" />
+          {/* Soft texture grid */}
+          {/* <div className="absolute inset-0 opacity-[0.045] bg-[linear-gradient(to_right,rgba(46,42,36,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(46,42,36,0.4)_1px,transparent_1px)] bg-[size:58px_58px]" /> */}
 
-        {/* Soft texture grid */}
-        {/* <div className="absolute inset-0 opacity-[0.045] bg-[linear-gradient(to_right,rgba(46,42,36,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(46,42,36,0.4)_1px,transparent_1px)] bg-[size:58px_58px]" /> */}
+          {/* Background motion glow */}
+          <motion.div
+            className="absolute left-1/2 top-[15vh] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[#B37839]/10 blur-3xl"
+            style={{
+              y: bgOrbY,
+              scale: bgOrbScale,
+            }}
+          />
 
-        {/* Background motion glow */}
-        <motion.div
-          className="absolute left-1/2 top-[15vh] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[#B37839]/10 blur-3xl"
-          style={{
-            y: bgOrbY,
-            scale: bgOrbScale,
-          }}
-        />
+          <div className="absolute -left-28 top-[30vh] h-[24rem] w-[24rem] rounded-full bg-[#9B4E23]/12 blur-3xl" />
+          <div className="absolute right-[-8rem] top-[38vh] h-[24rem] w-[24rem] rounded-full bg-[#2F6B55]/14 blur-3xl" />
+          <div className="absolute bottom-[8vh] left-1/2 h-[24rem] w-[24rem] -translate-x-1/2 rounded-full bg-[#94433F]/10 blur-3xl" />
 
-        <div className="absolute -left-28 top-[30vh] h-[24rem] w-[24rem] rounded-full bg-[#9B4E23]/12 blur-3xl" />
-        <div className="absolute right-[-8rem] top-[38vh] h-[24rem] w-[24rem] rounded-full bg-[#2F6B55]/14 blur-3xl" />
-        <div className="absolute bottom-[8vh] left-1/2 h-[24rem] w-[24rem] -translate-x-1/2 rounded-full bg-[#94433F]/10 blur-3xl" />
+          {/* Phase 1 headline */}
+          <motion.div
+            className="relative z-20 mx-auto flex min-h-screen max-w-[calc(72rem+var(--page-gutter)*2)] flex-col items-center justify-start px-[var(--page-gutter)] pt-[18vh] text-center pointer-events-none sm:pt-[15vh]"
+            style={{
+              opacity: headOpacity,
+              scale: headScale,
+              y: headY,
+            }}
+          >
+            <div className="mb-6 inline-flex items-center rounded-full border border-[#B37839]/20 bg-white/30 px-4 py-2 backdrop-blur-md sm:mb-5">
+              <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#6D5B43] sm:text-[10px] sm:tracking-[0.35em]">
+                Culture · Innovation · Excellence
+              </span>
+            </div>
 
-        {/* Phase 1 headline */}
-        <motion.div
-          className="relative z-20 mx-auto flex min-h-screen max-w-[calc(72rem+var(--page-gutter)*2)] flex-col items-center justify-start px-[var(--page-gutter)] pt-[18vh] text-center pointer-events-none sm:pt-[15vh]"
-          style={{
-            opacity: headOpacity,
-            scale: headScale,
-            y: headY,
-          }}
-        >
-          <div className="mb-6 inline-flex items-center rounded-full border border-[#B37839]/20 bg-white/30 px-4 py-2 backdrop-blur-md sm:mb-5">
-            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#6D5B43] sm:text-[10px] sm:tracking-[0.35em]">
-              Culture · Innovation · Excellence
-            </span>
+            <h1 className="max-w-5xl font-display font-bold text-[clamp(2.75rem,9vw,8rem)] leading-[0.94] tracking-[-0.06em] text-[#2E2A24] sm:leading-[0.92] sm:tracking-[-0.07em]">
+              Leading, &quot; What&apos;s Next.&quot;
+            </h1>
+
+            <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#6D5B43]/85 sm:max-w-2xl sm:text-base md:text-base">
+              Rooted in culture, driven by creativity, and sharpened by modern
+              innovation.
+            </p>
+          </motion.div>
+
+          {/* Cards */}
+          <div className="absolute inset-0 h-full w-full pointer-events-none">
+            {heroCards.map((card, index) => (
+              <AwwwardsHeroCard
+                key={card.id}
+                card={card}
+                index={index}
+                scrollYProgress={scrollYProgress}
+                isMobile={false}
+                isTablet={isTablet}
+              />
+            ))}
           </div>
 
-          <h1 className="max-w-5xl font-bold text-[clamp(2.75rem,9vw,8rem)] leading-[0.94] tracking-[-0.06em] text-[#2E2A24] sm:leading-[0.92] sm:tracking-[-0.07em]">
-            Leading, What's Next.
-          </h1>
+          {/* Final settled content */}
+          <motion.div
+            className="absolute bottom-[52vh] left-1/2 z-10 w-full max-w-[calc(56rem+var(--page-gutter)*2)] -translate-x-1/2 px-[var(--page-gutter)] text-center sm:bottom-[60vh]"
+            style={{
+              opacity: settleTextOpacity,
+              y: settleTextY,
+            }}
+          >
+            <h2 className="mb-7 font-display font-bold text-4xl leading-[1] tracking-[-0.04em] text-[#2E2A24] sm:text-5xl sm:leading-[0.95] sm:tracking-[-0.05em] lg:text-7xl">
+              Three standards.
+              <br />
+              One way forward.
+            </h2>
 
-          <p className="mt-7 max-w-xl text-[15px] leading-relaxed text-[#6D5B43]/85 sm:max-w-2xl sm:text-base md:text-lg">
-            Rooted in culture, driven by creativity, and sharpened by modern
-            innovation.
-          </p>
-        </motion.div>
-
-        {/* Cards */}
-        <div className="absolute inset-0 h-full w-full pointer-events-none">
-          {heroCards.map((card, index) => (
-            <AwwwardsHeroCard
-              key={card.id}
-              card={card}
-              index={index}
-              scrollYProgress={scrollYProgress}
-              isMobile={false}
-              isTablet={isTablet}
-            />
-          ))}
-        </div>
-
-        {/* Final settled content */}
-        <motion.div
-          className="absolute bottom-[52vh] left-1/2 z-10 w-full max-w-[calc(56rem+var(--page-gutter)*2)] -translate-x-1/2 px-[var(--page-gutter)] text-center sm:bottom-[60vh]"
-          style={{
-            opacity: settleTextOpacity,
-            y: settleTextY,
-          }}
-        >
-          <h2 className="mb-7 font-bold text-4xl leading-[1] tracking-[-0.04em] text-[#2E2A24] sm:text-5xl sm:leading-[0.95] sm:tracking-[-0.05em] lg:text-7xl">
-            Three standards.
-            <br />
-            One way forward.
-          </h2>
-
-          <div className="flex justify-center">
-            <MagneticButton href="#ventures">Explore the Ecosystem</MagneticButton>
-          </div>
-        </motion.div>
+            <div className="flex justify-center">
+              <MagneticButton href="#ventures">Explore the Ecosystem</MagneticButton>
+            </div>
+          </motion.div>
         </div>
       </section>
     </>

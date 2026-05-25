@@ -23,7 +23,7 @@ const ventureNames = ventures.map((venture) => venture.name)
 export const VisionMission = memo(function VisionMission() {
   return (
     <section className="chapter grid lg:grid-cols-2">
-      <div className="reveal bg-ivory px-[var(--page-gutter)] py-24 lg:py-36">
+      <div className="reveal bg-paper px-[var(--page-gutter)] py-24 lg:py-36">
         <span className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">Vision</span>
         <h2 className="mt-8 font-display text-[clamp(2.65rem,11vw,4.5rem)] leading-[1.02] text-ink lg:text-7xl">
           To pioneer the future through innovation, empower communities, and redefine excellence

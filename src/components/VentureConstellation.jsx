@@ -39,7 +39,7 @@ export const VentureConstellation = memo(function VentureConstellation() {
 
         <div 
           ref={containerRef}
-          className="chapter relative mt-12 grid min-h-0 gap-8 overflow-hidden border border-ink/10 bg-ivory p-4 sm:mt-16 sm:p-8 lg:min-h-[800px] lg:grid-cols-[1.1fr_1fr] lg:p-12"
+          className="chapter relative mt-12 grid min-h-0 gap-8 overflow-hidden border border-ink/10 bg-paper p-4 sm:mt-16 sm:p-8 lg:min-h-[800px] lg:grid-cols-[1.1fr_1fr] lg:p-12"
         >
           {/* Grid Background */}
           <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#11100e_1px,transparent_1px),linear-gradient(90deg,#11100e_1px,transparent_1px)] [background-size:64px_64px]" />

@@ -2,6 +2,7 @@ import { memo, useRef, useState } from 'react'
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import { SectionKicker } from './ui'
 import GradualBlur from './GradualBlur'
+import { CursorFollow } from './CursorFollow'
 
 const maxWidth = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
 const displayTitle =
@@ -16,6 +17,7 @@ const thesisItems = [
       'We draw strength from heritage, rituals, craft, and the values that keep every venture grounded.',
     image:
       'https://images.unsplash.com/photo-1463592177119-bab2a00f3ccb?q=80&w=1469&auto=format&fit=crop',
+    cursorText: 'Culture'
   },
   {
     title: 'Innovation',
@@ -24,6 +26,7 @@ const thesisItems = [
       'We turn creative courage, modern systems, and emerging possibilities into ventures built for tomorrow.',
     image:
       'https://images.unsplash.com/photo-1605647540924-852290f6b0d5?w=900&auto=format&fit=crop&q=80',
+    cursorText: 'Innovation'
   },
   {
     title: 'Excellence',
@@ -32,6 +35,7 @@ const thesisItems = [
       'We build trust through discipline, precision, and the kind of details people remember.',
     image:
       'https://images.unsplash.com/photo-1611075384322-731537ad7971?w=900&auto=format&fit=crop&q=80',
+    cursorText: 'Excellence'
   },
 ]
 
@@ -61,7 +65,7 @@ const MobileBrandThesis = memo(function MobileBrandThesis() {
                   {item.subtitle}
                 </span>
               </div>
-              <h3 className="font-display text-4xl text-ink tracking-tighter mb-2">
+              <h3 className="font-display font-semibold text-4xl text-ink tracking-tight mb-2">
                 {item.title}
               </h3>
               <p className="text-sm leading-relaxed text-stone">
@@ -89,6 +93,7 @@ const MobileBrandThesis = memo(function MobileBrandThesis() {
 
 export const BrandThesis = memo(function BrandThesis() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isHoveringImage, setIsHoveringImage] = useState(false)
   const scrollRef = useRef(null)
 
   const { scrollYProgress } = useScroll({
@@ -111,12 +116,16 @@ export const BrandThesis = memo(function BrandThesis() {
   return (
     <section id="about" className="relative bg-paper">
 
+      <CursorFollow show={isHoveringImage}>
+        {thesisItems[activeIndex].cursorText}
+      </CursorFollow>
+
       {/* ── Header ── */}
       <div className={`${maxWidth} pt-8 pb-8 sm:pt-10 sm:pb-10 lg:pt-20 lg:pb-12`}>
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
           <div>
-            {/* <SectionKicker>About Rudhram</SectionKicker> */}
-            <h2 className="mt-3 text-[clamp(2.1rem,7vw,4.2rem)] leading-[0.92] tracking-tighter text-ink [&>span]:block reveal">
+            <SectionKicker>About Rudhram</SectionKicker>
+            <h2 className="mt-3 font-display font-bold text-[clamp(2.1rem,7vw,4.2rem)] leading-[0.92] tracking-tighter text-ink [&>span]:block reveal">
               We lead today,
               <span>and we lead what comes next.</span>
             </h2>
@@ -172,7 +181,7 @@ export const BrandThesis = memo(function BrandThesis() {
                           {item.subtitle}
                         </span>
                         <span
-                          className={`font-display text-[clamp(1.35rem,2.5vw,2.2rem)] leading-[0.95] transition-colors duration-500 ${isActive ? 'text-ink' : 'text-stone/22'
+                          className={`font-display font-semibold tracking-tight text-[clamp(1.35rem,2.5vw,2.2rem)] leading-[0.95] transition-colors duration-500 ${isActive ? 'text-ink' : 'text-stone/22'
                             }`}
                         >
                           {item.title}
@@ -199,6 +208,8 @@ export const BrandThesis = memo(function BrandThesis() {
               <div
                 className="reveal relative overflow-hidden border border-ink/10 shadow-[0_34px_100px_rgba(17,16,14,0.11)]"
                 style={{ height: '100%' }}
+                onMouseEnter={() => setIsHoveringImage(true)}
+                onMouseLeave={() => setIsHoveringImage(false)}
               >
                 <motion.div
                   style={{
@@ -241,7 +252,6 @@ export const BrandThesis = memo(function BrandThesis() {
           </div>
         </div>
       </div>
-
     </section>
   )
 })

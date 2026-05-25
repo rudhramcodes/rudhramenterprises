@@ -10,7 +10,7 @@ const sectionShell = 'py-24 sm:py-28 lg:py-36'
 
 export const Leadership = memo(function Leadership() {
   return (
-    <section id="leadership" className={sectionShell}>
+    <section id="leadership" className={`${sectionShell} bg-paper`}>
       <div className={maxWidth}>
         <div className="max-w-5xl">
           <SectionKicker>Leadership</SectionKicker>
