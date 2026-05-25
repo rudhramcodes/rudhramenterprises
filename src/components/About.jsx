@@ -115,7 +115,7 @@ export const BrandThesis = memo(function BrandThesis() {
     <section id="about" className="relative bg-paper">
 
       {/* ── Header ── */}
-      <div className={`${maxWidth} pt-8 pb-8 sm:pt-10 sm:pb-10 lg:pt-12 lg:pb-12`}>
+      <div className={`${maxWidth} pt-8 pb-8 sm:pt-10 sm:pb-10 lg:pt-20 lg:pb-12`}>
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
           <div>
             {/* <SectionKicker>About Rudhram</SectionKicker> */}
