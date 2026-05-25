@@ -6,7 +6,6 @@ import GradualBlur from './GradualBlur'
 const maxWidth = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
 const displayTitle =
   'text-[clamp(3.1rem,13vw,6rem)] leading-[0.92] tracking-tighter text-ink lg:text-8xl [&>span]:block'
-const sectionLead = 'max-w-3xl text-lg leading-[1.7] text-stone sm:text-xl'
 const sectionShell = 'py-24 sm:py-28 lg:py-36'
 
 const thesisItems = [
@@ -37,9 +36,6 @@ const thesisItems = [
 ]
 
 const ITEM_COUNT = thesisItems.length
-
-// Panel height — portrait feel, capped so it never overflows viewport
-// Both left & right share this so heights match exactly
 const PANEL_H = 'clamp(460px, calc(100vh - 10rem), 680px)'
 
 export const BrandThesis = memo(function BrandThesis() {
@@ -51,7 +47,6 @@ export const BrandThesis = memo(function BrandThesis() {
     offset: ['start start', 'end end'],
   })
 
-  // Strip translates -(n-1)/n of its own height = exactly (n-1) panel heights
   const stripPct = ((ITEM_COUNT - 1) / ITEM_COUNT) * 100
   const stripY = useTransform(
     scrollYProgress,
@@ -65,13 +60,13 @@ export const BrandThesis = memo(function BrandThesis() {
   })
 
   return (
-    // NO overflow-hidden on section — breaks sticky
     <section id="about" className="relative bg-paper">
 
-      {/* ── Header — tighter bottom padding ── */}
-      <div className={`${maxWidth} pt-20 pb-10 sm:pt-24 sm:pb-12 lg:pt-32 lg:pb-14`}>
+      {/* ── Header ── */}
+      <div className={`${maxWidth} pt-8 pb-8 sm:pt-10 sm:pb-10 lg:pt-12 lg:pb-12`}>
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
           <div>
+            {/* <SectionKicker>About Rudhram</SectionKicker> */}
             <h2 className="mt-3 text-[clamp(2.1rem,7vw,4.2rem)] leading-[0.92] tracking-tighter text-ink [&>span]:block reveal">
               We lead today,
               <span>and we lead what comes next.</span>
@@ -85,25 +80,21 @@ export const BrandThesis = memo(function BrandThesis() {
         </div>
       </div>
 
-      {/* ── Scroll zone — 300vh, sticky lives inside ── */}
+      {/* ── Scroll zone: ITEM_COUNT × 100vh ── */}
       <div
         ref={scrollRef}
         style={{ height: `${ITEM_COUNT * 100}vh` }}
         className="relative"
       >
         <div className="sticky top-0 h-screen overflow-hidden">
+          <div className={`${maxWidth} flex h-full items-stretch`}>
+            <div className="grid w-full h-full items-stretch gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:gap-10">
 
-          {/* Vertically center the two-col layout inside h-screen */}
-          <div className={`${maxWidth} flex h-full items-center`}>
-
-            <div className="grid w-full items-stretch gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:gap-10">
-
-              {/* ── LEFT PANEL — same height as image via items-stretch ── */}
+              {/* ── LEFT PANEL desktop ── */}
               <div
-                className="hidden flex-col justify-between lg:flex reveal"
+                className="hidden flex-col justify-between lg:flex reveal self-center"
                 style={{ height: PANEL_H }}
               >
-                {/* Counter + divider */}
                 <div className="flex items-center justify-between border-b border-ink/10 pb-4">
                   <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-bronze">
                     Thesis
@@ -113,35 +104,30 @@ export const BrandThesis = memo(function BrandThesis() {
                   </span>
                 </div>
 
-                {/* Items — flex-1 so they fill the panel height */}
                 <div className="flex flex-1 flex-col divide-y divide-ink/8 overflow-hidden">
                   {thesisItems.map((item, index) => {
                     const isActive = index === activeIndex
                     return (
                       <article
                         key={item.title}
-                        className={`flex flex-1 flex-col justify-center gap-1.5 px-4 py-3 transition-colors duration-500 ${
-                          isActive ? 'bg-ivory' : 'bg-paper'
-                        }`}
+                        className={`flex flex-1 flex-col justify-center gap-1.5 px-4 py-3 transition-colors duration-500 ${isActive ? 'bg-ivory' : 'bg-paper'
+                          }`}
                       >
                         <span
-                          className={`text-[9px] font-bold uppercase tracking-[0.22em] transition-colors duration-500 ${
-                            isActive ? 'text-bronze' : 'text-stone/35'
-                          }`}
+                          className={`text-[9px] font-bold uppercase tracking-[0.22em] transition-colors duration-500 ${isActive ? 'text-bronze' : 'text-stone/35'
+                            }`}
                         >
                           {item.subtitle}
                         </span>
                         <span
-                          className={`font-display text-[clamp(1.35rem,2.5vw,2.2rem)] leading-[0.95] transition-colors duration-500 ${
-                            isActive ? 'text-ink' : 'text-stone/22'
-                          }`}
+                          className={`font-display text-[clamp(1.35rem,2.5vw,2.2rem)] leading-[0.95] transition-colors duration-500 ${isActive ? 'text-ink' : 'text-stone/22'
+                            }`}
                         >
                           {item.title}
                         </span>
                         <span
-                          className={`max-w-sm text-sm leading-[1.6] transition-colors duration-500 ${
-                            isActive ? 'text-stone' : 'text-stone/35'
-                          }`}
+                          className={`max-w-sm text-sm leading-[1.6] transition-colors duration-500 ${isActive ? 'text-stone' : 'text-stone/35'
+                            }`}
                         >
                           {item.description}
                         </span>
@@ -150,7 +136,6 @@ export const BrandThesis = memo(function BrandThesis() {
                   })}
                 </div>
 
-                {/* Bottom label */}
                 <div className="border-t border-ink/10 pt-4">
                   <span className="text-[9px] uppercase tracking-[0.2em] text-stone/40">
                     Scroll to explore
@@ -158,7 +143,7 @@ export const BrandThesis = memo(function BrandThesis() {
                 </div>
               </div>
 
-              {/* ── MOBILE: left panel simplified ── */}
+              {/* ── LEFT PANEL mobile ── */}
               <div className="flex flex-col gap-2 lg:hidden">
                 <div className="flex items-center gap-3 border-b border-ink/10 pb-3">
                   <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-bronze">Thesis</span>
@@ -170,12 +155,15 @@ export const BrandThesis = memo(function BrandThesis() {
                     return (
                       <div
                         key={item.title}
-                        className={`px-3 py-3 transition-colors duration-500 ${isActive ? 'bg-ivory' : 'bg-paper'}`}
+                        className={`px-3 py-3 transition-colors duration-500 ${isActive ? 'bg-ivory' : 'bg-paper'
+                          }`}
                       >
-                        <span className={`block text-[9px] font-bold uppercase tracking-widest ${isActive ? 'text-bronze' : 'text-stone/35'}`}>
+                        <span className={`block text-[9px] font-bold uppercase tracking-widest ${isActive ? 'text-bronze' : 'text-stone/35'
+                          }`}>
                           {item.subtitle}
                         </span>
-                        <span className={`block font-display text-xl leading-tight ${isActive ? 'text-ink' : 'text-stone/25'}`}>
+                        <span className={`block font-display text-xl leading-tight ${isActive ? 'text-ink' : 'text-stone/25'
+                          }`}>
                           {item.title}
                         </span>
                       </div>
@@ -184,12 +172,11 @@ export const BrandThesis = memo(function BrandThesis() {
                 </div>
               </div>
 
-              {/* ── RIGHT PANEL — portrait image strip ── */}
+              {/* ── RIGHT PANEL — film strip ── */}
               <div
                 className="reveal relative overflow-hidden border border-ink/10 shadow-[0_34px_100px_rgba(17,16,14,0.11)]"
-                style={{ height: PANEL_H }}
+                style={{ height: '100%' }}
               >
-                {/* Film strip — total height = ITEM_COUNT × container */}
                 <motion.div
                   style={{
                     y: stripY,
@@ -214,7 +201,6 @@ export const BrandThesis = memo(function BrandThesis() {
                   ))}
                 </motion.div>
 
-                {/* Bottom blur only */}
                 <GradualBlur
                   target="parent"
                   position="bottom"
@@ -233,8 +219,6 @@ export const BrandThesis = memo(function BrandThesis() {
         </div>
       </div>
 
-      {/* Breathing room before next section */}
-      <div className="h-16 sm:h-20 lg:h-24" />
     </section>
   )
 })
