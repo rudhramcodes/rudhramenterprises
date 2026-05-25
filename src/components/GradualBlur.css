@@ -1,0 +1,30 @@
+/* GradualBlur component styling */
+
+/* Base container prevents pointer events unless hover interaction is enabled */
+.gradual-blur {
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+}
+
+/* When applied to the parent element, ensure overflow is hidden */
+.gradual-blur-parent {
+  overflow: hidden;
+}
+
+/* Inner wrapper to position blur layers */
+.gradual-blur-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Page-level overlay for full-screen blur effects */
+.gradual-blur-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
