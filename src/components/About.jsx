@@ -38,6 +38,58 @@ const thesisItems = [
 const ITEM_COUNT = thesisItems.length
 const PANEL_H = 'clamp(460px, calc(100vh - 10rem), 680px)'
 
+const MobileBrandThesis = memo(function MobileBrandThesis() {
+  return (
+    <div className="lg:hidden flex flex-col w-full">
+      {thesisItems.map((item, index) => (
+        <div key={item.title} className="relative h-screen w-full overflow-hidden border-b border-paper/10">
+          {/* Background Image */}
+          <img
+            src={item.image}
+            alt={item.title}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          
+          {/* Darker Overlay for readability */}
+          <div className="absolute inset-0 bg-ink/30" />
+
+          {/* Text Content Overlay */}
+          <div className="absolute inset-0 flex flex-col justify-end p-8 pb-16 z-30">
+            <div className="reveal space-y-2">
+              <div className="flex items-center gap-3 border-b border-paper/20 pb-4 mb-4">
+                <span className="text-[10px] font-bold uppercase tracking-[0.26em] text-bronze-soft">
+                  Thesis 0{index + 1}
+                </span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-paper/60">
+                  {item.subtitle}
+                </span>
+              </div>
+              <h3 className="font-display text-5xl text-paper tracking-tighter">
+                {item.title}
+              </h3>
+              <p className="max-w-md text-base leading-relaxed text-paper/80">
+                {item.description}
+              </p>
+            </div>
+          </div>
+
+          <GradualBlur
+            target="parent"
+            position="bottom"
+            height="12rem"
+            strength={3}
+            divCount={8}
+            curve="bezier"
+            exponential
+            opacity={0.6}
+            zIndex={20}
+          />
+        </div>
+      ))}
+    </div>
+  )
+})
+
 export const BrandThesis = memo(function BrandThesis() {
   const [activeIndex, setActiveIndex] = useState(0)
   const scrollRef = useRef(null)
@@ -80,11 +132,14 @@ export const BrandThesis = memo(function BrandThesis() {
         </div>
       </div>
 
-      {/* ── Scroll zone: ITEM_COUNT × 100vh ── */}
+      {/* ── Mobile specific experience ── */}
+      <MobileBrandThesis />
+
+      {/* ── Scroll zone: ITEM_COUNT × 100vh (Desktop Only) ── */}
       <div
         ref={scrollRef}
         style={{ height: `${ITEM_COUNT * 100}vh` }}
-        className="relative"
+        className="relative hidden lg:block"
       >
         <div className="sticky top-0 h-screen overflow-hidden">
           <div className={`${maxWidth} flex h-full items-stretch`}>
@@ -140,35 +195,6 @@ export const BrandThesis = memo(function BrandThesis() {
                   <span className="text-[9px] uppercase tracking-[0.2em] text-stone/40">
                     Scroll to explore
                   </span>
-                </div>
-              </div>
-
-              {/* ── LEFT PANEL mobile ── */}
-              <div className="flex flex-col gap-2 lg:hidden">
-                <div className="flex items-center gap-3 border-b border-ink/10 pb-3">
-                  <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-bronze">Thesis</span>
-                  <span className="font-display text-sm text-bronze/65">0{activeIndex + 1}</span>
-                </div>
-                <div className="grid gap-px overflow-hidden bg-ink/10">
-                  {thesisItems.map((item, index) => {
-                    const isActive = index === activeIndex
-                    return (
-                      <div
-                        key={item.title}
-                        className={`px-3 py-3 transition-colors duration-500 ${isActive ? 'bg-ivory' : 'bg-paper'
-                          }`}
-                      >
-                        <span className={`block text-[9px] font-bold uppercase tracking-widest ${isActive ? 'text-bronze' : 'text-stone/35'
-                          }`}>
-                          {item.subtitle}
-                        </span>
-                        <span className={`block font-display text-xl leading-tight ${isActive ? 'text-ink' : 'text-stone/25'
-                          }`}>
-                          {item.title}
-                        </span>
-                      </div>
-                    )
-                  })}
                 </div>
               </div>
 
