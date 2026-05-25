@@ -16,7 +16,7 @@ export const BrandThesis = memo(function BrandThesis() {
     <section id="about" className={`${sectionShell} relative overflow-hidden`}>
       <div className={`${maxWidth} grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-end`}>
         <div>
-          <SectionKicker>About Rudhram</SectionKicker>
+          {/* <SectionKicker>About Rudhram</SectionKicker> */}
           <h2 className={`${displayTitle} reveal`}>
             We lead today,
             <span>and we lead what comes next.</span>
