@@ -115,7 +115,6 @@ export const Header = memo(function Header() {
                     onMouseEnter={() => setHoveredNavIndex(index)}
                     onFocus={() => setHoveredNavIndex(index)}
                     onBlur={() => setHoveredNavIndex(null)}
-                    // whileTap={{ scale: 0.96 }}
                   >
                     {item.label}
                   </motion.a>
@@ -126,7 +125,7 @@ export const Header = memo(function Header() {
 
           <AnimatePresence mode="wait">
             {menuMode && (
-              <motion.button className="ios-glass-button inline-flex h-11 w-11 items-center justify-center rounded-[16px] cursor-pointer text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze sm:h-12 sm:w-12 sm:rounded-[18px]" type="button" onClick={toggleMenu} aria-label="Toggle menu" aria-expanded={menuOpen} variants={buttonVariants} initial="hidden" animate="visible" exit="exit">
+              <motion.button className="glassmorhism-button inline-flex h-11 w-11 items-center justify-center rounded-[16px] sm:rounded-[16px] cursor-pointer text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus-visible:text-bronze" type="button" onClick={toggleMenu} aria-label="Toggle menu" aria-expanded={menuOpen} variants={buttonVariants} initial="hidden" animate="visible" exit="exit">
                 <AnimatedMenuIcon isOpen={menuOpen} />
               </motion.button>
             )}
