@@ -16,7 +16,7 @@ const thesisItems = [
     description:
       'We draw strength from heritage, rituals, craft, and the values that keep every venture grounded.',
     image:
-      '/images/culture.png',
+      '/images/culture.webp',
     cursorText: 'Culture'
   },
   {
@@ -25,7 +25,7 @@ const thesisItems = [
     description:
       'We turn creative courage, modern systems, and emerging possibilities into ventures built for tomorrow.',
     image:
-      '/images/innovation.png',
+      '/images/innovation.webp',
     cursorText: 'Innovation'
   },
   {
@@ -34,7 +34,7 @@ const thesisItems = [
     description:
       'We build trust through discipline, precision, and the kind of details people remember.',
     image:
-      '/images/excellence.png',
+      '/images/excellence.webp',
     cursorText: 'Excellence'
   },
 ]
@@ -61,14 +61,14 @@ const MobileBrandThesis = memo(function MobileBrandThesis() {
 
             <div className="ios-glass-menu reveal relative rounded-[2.5rem] p-8 shadow-[0_30px_60px_rgba(0,0,0,0.12)]">
               <div className="flex items-center gap-3 border-b border-ink/5 pb-4 mb-5">
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-bronze">
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-ink">
                   Thesis 0{index + 1}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-ink/40">
+                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-ink/80">
                   {item.subtitle}
                 </span>
               </div>
-              <h3 className="font-display font-bold text-[3rem] text-ink leading-[0.88] tracking-tighter mb-4">
+              <h3 className="font-display font-semibold text-[3rem] text-ink leading-[0.88] tracking-tighter mb-4">
                 {item.title}
               </h3>
               <p className="text-[15px] leading-relaxed font-medium text-ink/80">
