@@ -40,11 +40,30 @@
 }
 
 :root {
+  --page-gutter: 1rem;
   color: #11100e;
   background: #f8f4ed;
   font-family: "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
   font-synthesis-weight: none;
   text-rendering: geometricPrecision;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --page-gutter: 4rem;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --page-gutter: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-gutter: 6rem;
+  }
 }
 
 html {

@@ -135,15 +135,15 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTable
       `${(index - 1) * settleOffset}vw`,
     ]
   );
-
+{/* Soft texture grid */}
   const y = useTransform(
     smoothProgress,
     [0, 0.25, 0.46, 0.72, 0.95],
     [
-      isMobile ? "42vh" : "42vh",
+      isMobile ? "42vh" : "45vh",
       isMobile ? "48vh" : "45vh",
       isMobile ? "38vh" : "35vh",
-      isMobile ? "42vh" : "40vh",
+      isMobile ? "42vh" : "42vh",
       isMobile ? "48vh" : "45vh"
     ]
   );
@@ -467,7 +467,7 @@ const Hero = () => {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#FFFDF6_0%,#F7F1E6_42%,#EAD8BF_100%)]" />
 
         {/* Soft texture grid */}
-        <div className="absolute inset-0 opacity-[0.045] bg-[linear-gradient(to_right,rgba(46,42,36,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(46,42,36,0.4)_1px,transparent_1px)] bg-[size:58px_58px]" />
+        {/* <div className="absolute inset-0 opacity-[0.045] bg-[linear-gradient(to_right,rgba(46,42,36,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(46,42,36,0.4)_1px,transparent_1px)] bg-[size:58px_58px]" /> */}
 
         {/* Background motion glow */}
         <motion.div
@@ -484,7 +484,7 @@ const Hero = () => {
 
         {/* Phase 1 headline */}
         <motion.div
-          className="relative z-20 mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-start px-5 pt-[18vh] text-center pointer-events-none sm:pt-[15vh]"
+          className="relative z-20 mx-auto flex min-h-screen max-w-[calc(72rem+var(--page-gutter)*2)] flex-col items-center justify-start px-[var(--page-gutter)] pt-[18vh] text-center pointer-events-none sm:pt-[15vh]"
           style={{
             opacity: headOpacity,
             scale: headScale,
@@ -523,7 +523,7 @@ const Hero = () => {
 
         {/* Final settled content */}
         <motion.div
-          className="absolute bottom-[52vh] left-1/2 z-10 w-full max-w-4xl -translate-x-1/2 px-6 text-center sm:bottom-[60vh] sm:px-8"
+          className="absolute bottom-[52vh] left-1/2 z-10 w-full max-w-[calc(56rem+var(--page-gutter)*2)] -translate-x-1/2 px-[var(--page-gutter)] text-center sm:bottom-[60vh]"
           style={{
             opacity: settleTextOpacity,
             y: settleTextY,

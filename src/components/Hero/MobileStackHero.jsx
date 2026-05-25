@@ -88,7 +88,7 @@ const MobileStackHero = () => {
   return (
     <section
       id="top"
-      className="relative min-h-[100svh] w-full overflow-hidden bg-[#F8F4ED] px-4 pb-7 pt-[7rem] md:hidden"
+      className="relative min-h-[100svh] w-full overflow-hidden bg-[#F8F4ED] px-[var(--page-gutter)] pb-7 pt-[7rem] md:hidden"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#FFFDF8_0%,#F8F4ED_48%,#EAD8BF_100%)]" />
 

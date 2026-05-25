@@ -148,7 +148,7 @@ export const Header = memo(function Header() {
   const restingNavScale = navHovered ? 1.006 : 1
 
   return (
-    <header className={`fixed left-0 top-0 z-50 w-full transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${compact ? 'px-2 pt-2 sm:px-4' : 'px-3 pt-3 sm:px-6 sm:pt-4'}`}>
+    <header className={`fixed left-0 top-0 z-50 w-full px-[var(--page-gutter)] transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${compact ? 'pt-2' : 'pt-3 sm:pt-4'}`}>
       <motion.div
         className="ios-glass-nav mx-auto overflow-hidden rounded-[24px] px-4 sm:rounded-[28px] sm:px-5"
         animate={{
@@ -218,7 +218,7 @@ export const Header = memo(function Header() {
           <AnimatePresence mode="wait">
             {menuMode && (
               <motion.button
-                className="ios-glass-button inline-flex h-11 w-11 items-center justify-center rounded-[16px] text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze sm:h-12 sm:w-12 sm:rounded-[18px]"
+                className="ios-glass-button inline-flex h-11 w-11 items-center justify-center rounded-[16px] cursor-pointer text-ink outline-none transition-colors duration-300 ease-out hover:text-bronze focus:outline-none focus-visible:text-bronze sm:h-12 sm:w-12 sm:rounded-[18px]"
                 type="button"
                 onClick={toggleMenu}
                 aria-label="Toggle menu"

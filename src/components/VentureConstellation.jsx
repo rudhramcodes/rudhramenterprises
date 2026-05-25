@@ -3,10 +3,10 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { SectionKicker, LogoMark } from './ui'
 import { ventures } from '../data/siteContent'
 
-const maxWidth = 'mx-auto max-w-[1500px]'
+const maxWidth = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
 const displayTitle = 'font-display text-[clamp(3rem,7vw,7.75rem)] leading-[0.92] tracking-normal text-ink [&>span]:block'
 const sectionLead = 'max-w-3xl text-lg leading-[1.7] text-stone sm:text-xl'
-const sectionShell = 'px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-36'
+const sectionShell = 'py-24 sm:py-28 lg:py-36'
 
 export const VentureConstellation = memo(function VentureConstellation() {
   const [activeIndex, setActiveIndex] = useState(0)

@@ -1,10 +1,10 @@
 import { memo } from 'react'
 import { SectionKicker } from './ui'
 
-const maxWidth = 'mx-auto max-w-[1500px]'
+const maxWidth = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
 const displayTitle = 'text-[clamp(3.1rem,13vw,6rem)] leading-[0.92] tracking-tighter text-ink lg:text-8xl [&>span]:block'
 const sectionLead = 'max-w-3xl text-lg leading-[1.7] text-stone sm:text-xl'
-const sectionShell = 'px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-36'
+const sectionShell = 'py-24 sm:py-28 lg:py-36'
 const thesisPoints = [
   'Culture gives us roots.',
   'Innovation gives us direction.',
@@ -38,7 +38,7 @@ export const BrandThesis = memo(function BrandThesis() {
         </div>
       </div>
       <div
-        className="reveal pointer-events-none mx-auto mt-16 grid max-w-5xl grid-cols-3 gap-2 opacity-60 sm:mt-24 sm:gap-3"
+        className="reveal pointer-events-none mx-auto mt-16 grid max-w-[calc(64rem+var(--page-gutter)*2)] grid-cols-3 gap-2 px-[var(--page-gutter)] opacity-60 sm:mt-24 sm:gap-3"
         aria-hidden="true"
       >
         {/* <span className="h-40 border border-bronze/30 bg-bronze/5" />
