@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useIsMobile } from "../../hooks/useMediaQuery";
 import "./Stack.css";
 
 const defaultAnimationConfig = { stiffness: 260, damping: 20 };
@@ -22,31 +23,14 @@ function CardRotate({ children, onSendToBack, sensitivity, disableDrag = false }
     if (Math.abs(info.offset.x) > sensitivity || Math.abs(info.offset.y) > sensitivity) {
       onSendToBack();
     } else {
-      x.set(0);
-      y.set(0);
+      x.set(0); y.set(0);
     }
   }
 
-  if (disableDrag) {
-    return (
-      <motion.div className="rb-card-rotate-disabled" style={{ x: 0, y: 0 }}>
-        {children}
-      </motion.div>
-    );
-  }
+  if (disableDrag) return <motion.div className="rb-card-rotate-disabled" style={{ x: 0, y: 0 }}>{children}</motion.div>;
 
   return (
-    <motion.div
-      className="rb-card-rotate"
-      style={{ x, y, rotateX, rotateY }}
-      drag
-      dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
-      dragElastic={0.72}
-      dragTransition={{ bounceStiffness: 220, bounceDamping: 20 }}
-      whileDrag={{ scale: 1.025 }}
-      whileTap={{ cursor: "grabbing" }}
-      onDragEnd={handleDragEnd}
-    >
+    <motion.div className="rb-card-rotate" style={{ x, y, rotateX, rotateY }} drag dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }} dragElastic={0.72} dragTransition={{ bounceStiffness: 220, bounceDamping: 20 }} whileDrag={{ scale: 1.025 }} whileTap={{ cursor: "grabbing" }} onDragEnd={handleDragEnd}>
       {children}
     </motion.div>
   );
@@ -62,29 +46,11 @@ export default function Stack({
   autoplayDelay = 3000,
   pauseOnHover = false,
   mobileClickOnly = false,
-  mobileBreakpoint = 768,
   peekSide = "right",
 }) {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
   const [isPaused, setIsPaused] = useState(false);
   const [stack, setStack] = useState(() => createStack(cards, randomRotation));
-
-  useEffect(() => {
-    if (!mobileClickOnly) {
-      return undefined;
-    }
-
-    const checkMobile = () => {
-      setIsMobile((current) => {
-        const next = window.innerWidth < mobileBreakpoint;
-        return current === next ? current : next;
-      });
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, [mobileBreakpoint, mobileClickOnly]);
 
   const shouldDisableDrag = mobileClickOnly && isMobile;
   const shouldEnableClick = sendToBackOnClick || shouldDisableDrag;
@@ -93,6 +59,7 @@ export default function Stack({
     setStack((prev) => {
       const newStack = [...prev];
       const index = newStack.findIndex((card) => card.id === id);
+      if (index === -1) return prev;
       const [card] = newStack.splice(index, 1);
       newStack.unshift(card);
       return newStack;
@@ -105,45 +72,18 @@ export default function Stack({
         const topCardId = stack[stack.length - 1].id;
         sendToBack(topCardId);
       }, autoplayDelay);
-
       return () => clearInterval(interval);
     }
   }, [autoplay, autoplayDelay, stack, isPaused, sendToBack]);
 
   return (
-    <div
-      className="rb-stack-container"
-      onMouseEnter={() => pauseOnHover && setIsPaused(true)}
-      onMouseLeave={() => pauseOnHover && setIsPaused(false)}
-    >
+    <div className="rb-stack-container" onMouseEnter={() => pauseOnHover && setIsPaused(true)} onMouseLeave={() => pauseOnHover && setIsPaused(false)}>
       {stack.map((card, index) => {
         const depth = stack.length - index - 1;
         const direction = peekSide === "left" ? -1 : 1;
-
         return (
-          <CardRotate
-            key={card.id}
-            onSendToBack={() => sendToBack(card.id)}
-            sensitivity={sensitivity}
-            disableDrag={shouldDisableDrag}
-          >
-            <motion.div
-              className="rb-stack-card"
-              onClick={() => shouldEnableClick && sendToBack(card.id)}
-              animate={{
-                rotateZ: depth * 3.2 * direction + card.randomRotate,
-                scale: 1 + index * 0.06 - stack.length * 0.06,
-                x: depth * 8 * direction,
-                y: depth * 3,
-                transformOrigin: peekSide === "left" ? "10% 90%" : "90% 90%",
-              }}
-              initial={false}
-              transition={{
-                type: "spring",
-                stiffness: animationConfig.stiffness,
-                damping: animationConfig.damping,
-              }}
-            >
+          <CardRotate key={card.id} onSendToBack={() => sendToBack(card.id)} sensitivity={sensitivity} disableDrag={shouldDisableDrag}>
+            <motion.div className="rb-stack-card" onClick={() => shouldEnableClick && sendToBack(card.id)} animate={{ rotateZ: depth * 3.2 * direction + card.randomRotate, scale: 1 + index * 0.06 - stack.length * 0.06, x: depth * 8 * direction, y: depth * 3, transformOrigin: peekSide === "left" ? "10% 90%" : "90% 90%" }} initial={false} transition={{ type: "spring", stiffness: animationConfig.stiffness, damping: animationConfig.damping }}>
               {card.content}
             </motion.div>
           </CardRotate>

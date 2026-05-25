@@ -115,21 +115,26 @@ function GradualBlur(props) {
 
   const blurDivs = useMemo(() => {
     const divs = [];
-    const increment = 100 / config.divCount;
+    
+    // Performance optimization: cap div count on mobile to reduce GPU layers
+    const isSmall = typeof window !== 'undefined' && window.innerWidth < 1024;
+    const effectiveDivCount = isSmall ? Math.min(config.divCount, 5) : config.divCount;
+    
+    const increment = 100 / effectiveDivCount;
     const currentStrength =
       isHovered && config.hoverIntensity ? config.strength * config.hoverIntensity : config.strength;
 
     const curveFunc = CURVE_FUNCTIONS[config.curve] || CURVE_FUNCTIONS.linear;
 
-    for (let i = 1; i <= config.divCount; i++) {
-      let progress = i / config.divCount;
+    for (let i = 1; i <= effectiveDivCount; i++) {
+      let progress = i / effectiveDivCount;
       progress = curveFunc(progress);
 
       let blurValue;
       if (config.exponential) {
         blurValue = Math.pow(2, progress * 4) * 0.0625 * currentStrength;
       } else {
-        blurValue = 0.0625 * (progress * config.divCount + 1) * currentStrength;
+        blurValue = 0.0625 * (progress * effectiveDivCount + 1) * currentStrength;
       }
 
       const p1 = Math.round((increment * i - increment) * 10) / 10;
@@ -143,21 +148,24 @@ function GradualBlur(props) {
 
       const direction = getGradientDirection(config.position);
 
-      const divStyle = {
-        position: 'absolute',
-        inset: '0',
-        maskImage: `linear-gradient(${direction}, ${gradient})`,
-        WebkitMaskImage: `linear-gradient(${direction}, ${gradient})`,
-        backdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
-        WebkitBackdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
-        opacity: config.opacity,
-        transition:
-          config.animated && config.animated !== 'scroll'
-            ? `backdrop-filter ${config.duration} ${config.easing}`
-            : undefined
-      };
-
-      divs.push(<div key={i} style={divStyle} />);
+      divs.push(
+        <div 
+          key={i} 
+          style={{
+            position: 'absolute',
+            inset: '0',
+            maskImage: `linear-gradient(${direction}, ${gradient})`,
+            WebkitMaskImage: `linear-gradient(${direction}, ${gradient})`,
+            backdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
+            WebkitBackdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
+            opacity: config.opacity,
+            transition:
+              config.animated && config.animated !== 'scroll'
+                ? `backdrop-filter ${config.duration} ${config.easing}`
+                : undefined
+          }} 
+        />
+      );
     }
 
     return divs;

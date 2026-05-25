@@ -10,6 +10,7 @@ import {
 import { heroCards } from "../../data/siteContent";
 import { MagneticButton } from "../ui";
 import MobileStackHero from "./MobileStackHero";
+import { useIsTablet } from "../../hooks/useMediaQuery";
 
 const desktopHeroCardStyles = [
   {
@@ -62,9 +63,8 @@ const desktopHeroCardStyles = [
   },
 ];
 
-const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTablet }) => {
+const AwwwardsHeroCard = memo(({ card, index, scrollProgress, isTablet }) => {
   const [manualFace, setManualFace] = useState(null);
-
   const cardRef = useRef(null);
 
   const mouseX = useMotionValue(0);
@@ -76,36 +76,22 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTable
     manualRotate.set(manualFace ? 180 : 0);
   }, [manualFace, manualRotate]);
 
-  const tiltSpring = {
-    stiffness: 120,
-    damping: 22,
-    mass: 0.8,
-  };
-
+  const tiltSpring = { stiffness: 120, damping: 22, mass: 0.8 };
   const tiltX = useSpring(mouseY, tiltSpring);
   const tiltY = useSpring(mouseX, tiltSpring);
 
-  const manualRotateSpring = useSpring(manualRotate, {
-    stiffness: 95,
-    damping: 19,
-    mass: 0.9,
-  });
+  const manualRotateSpring = useSpring(manualRotate, { stiffness: 95, damping: 19, mass: 0.9 });
 
   const hoverRotateX = useTransform(tiltX, [-0.5, 0.5], [7, -7]);
   const hoverRotateY = useTransform(tiltY, [-0.5, 0.5], [-7, 7]);
-
   const innerX = useTransform(tiltY, [-0.5, 0.5], [-10, 10]);
   const innerY = useTransform(tiltX, [-0.5, 0.5], [-10, 10]);
 
   const handleMouseMove = (e) => {
-    if (!cardRef.current || window.innerWidth < 1024) return;
-
+    if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-    mouseX.set(x);
-    mouseY.set(y);
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
   const handleMouseLeave = () => {
@@ -113,19 +99,12 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTable
     mouseY.set(0);
   };
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 42,
-    damping: 24,
-    mass: 1.25,
-  });
-
-  // Responsive offsets
-  const xOffset = isMobile ? 32 : isTablet ? 26 : 22;
-  const spreadOffset = isMobile ? 42 : isTablet ? 36 : 31;
-  const settleOffset = isMobile ? 38 : isTablet ? 32 : 29;
+  const xOffset = isTablet ? 26 : 22;
+  const spreadOffset = isTablet ? 36 : 31;
+  const settleOffset = isTablet ? 32 : 29;
 
   const x = useTransform(
-    smoothProgress,
+    scrollProgress,
     [0, 0.25, 0.46, 0.72, 0.95],
     [
       `${(index - 1) * xOffset}vw`,
@@ -135,278 +114,84 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTable
       `${(index - 1) * settleOffset}vw`,
     ]
   );
-  {/* Soft texture grid */ }
-  const y = useTransform(
-    smoothProgress,
-    [0, 0.25, 0.46, 0.72, 0.95],
-    [
-      isMobile ? "42vh" : "45vh",
-      isMobile ? "48vh" : "45vh",
-      isMobile ? "38vh" : "35vh",
-      isMobile ? "42vh" : "42vh",
-      isMobile ? "48vh" : "45vh"
-    ]
-  );
 
-  const scale = useTransform(
-    smoothProgress,
-    [0, 0.25, 0.46, 0.72, 0.95],
-    [
-      isMobile ? 0.8 : 0.9,
-      isMobile ? 0.7 : 0.8,
-      isMobile ? 0.48 : 0.55,
-      isMobile ? 0.82 : 0.94,
-      isMobile ? 0.78 : 0.91
-    ]
-  );
-
-  const rotateZ = useTransform(
-    smoothProgress,
-    [0, 0.24, 0.46, 0.72, 0.95],
-    [
-      (index - 1) * (isMobile ? 8 : 12),
-      0,
-      (index - 1) * (isMobile ? -12 : -18),
-      (index - 1) * 4,
-      (index - 1) * 1.2,
-    ]
-  );
+  const y = useTransform(scrollProgress, [0, 0.25, 0.46, 0.72, 0.95], ["45vh", "45vh", "35vh", "42vh", "45vh"]);
+  const scale = useTransform(scrollProgress, [0, 0.25, 0.46, 0.72, 0.95], [0.9, 0.8, 0.55, 0.94, 0.91]);
+  const rotateZ = useTransform(scrollProgress, [0, 0.24, 0.46, 0.72, 0.95], [(index - 1) * 12, 0, (index - 1) * -18, (index - 1) * 4, (index - 1) * 1.2]);
 
   const flipStart = 0.46 + index * 0.035;
   const flipEnd = flipStart + 0.12;
+  const scrollRotateY = useTransform(scrollProgress, [0, flipStart, flipEnd, 1], [0, 0, 180, 180]);
 
-  const scrollRotateY = useTransform(
-    smoothProgress,
-    [0, flipStart, flipEnd, 1],
-    [0, 0, 180, 180]
-  );
-
-  useMotionValueEvent(smoothProgress, "change", (latest) => {
-    if (latest < flipStart - 0.08 && manualFace !== null) {
-      setManualFace(null);
-    }
+  useMotionValueEvent(scrollProgress, "change", (latest) => {
+    if (latest < flipStart - 0.08 && manualFace !== null) setManualFace(null);
   });
 
-  const finalRotateY = useTransform(
-    [scrollRotateY, manualRotateSpring, hoverRotateY],
-    ([scroll, manual, hover]) => {
-      const baseRotation = manualFace === null ? scroll : manual;
-      return baseRotation + hover;
-    }
-  );
-
-  const finalRotateX = hoverRotateX;
+  const finalRotateY = useTransform([scrollRotateY, manualRotateSpring, hoverRotateY], ([scroll, manual, hover]) => (manualFace === null ? scroll : manual) + hover);
 
   const style = desktopHeroCardStyles[index] || desktopHeroCardStyles[0];
 
   return (
     <motion.div
       className="absolute left-1/2 top-0 pointer-events-none"
-      style={{
-        x,
-        y,
-        scale,
-        rotate: rotateZ,
-        translateX: "-50%",
-        zIndex: 10 + index,
-        perspective: 2600,
-        transformStyle: "preserve-3d",
-      }}
+      style={{ x, y, scale, rotate: rotateZ, translateX: "-50%", zIndex: 10 + index, perspective: 2600, transformStyle: "preserve-3d" }}
     >
       <motion.button
         type="button"
-        onClick={() => {
-          const currentRotation =
-            manualFace === null ? scrollRotateY.get() : manualFace ? 180 : 0;
-
-          const currentlyBackSide = currentRotation > 90;
-
-          setManualFace(!currentlyBackSide);
-        }}
+        onClick={() => setManualFace(f => !(f === null ? scrollRotateY.get() > 90 : f))}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         className="pointer-events-auto group relative block cursor-pointer text-left outline-none"
-        whileHover={{
-          y: -3,
-          scale: 1.006,
-        }}
-        whileTap={{
-          scale: 0.992,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 180,
-          damping: 22,
-        }}
+        whileHover={{ y: -3, scale: 1.006 }}
+        whileTap={{ scale: 0.992 }}
+        transition={{ type: "spring", stiffness: 180, damping: 22 }}
       >
         <motion.div
           ref={cardRef}
-          className={`
-            relative h-[19.5rem] w-[14.5rem]
-            sm:h-[22.5rem] sm:w-[16.75rem]
-            md:h-[24rem] md:w-[18rem]
-            lg:h-[26rem] lg:w-[19.5rem]
-            rounded-[1.8rem] sm:rounded-[2.25rem]
-            ${style.shadow}
-            ${style.hoverShadow}
-            transition-shadow duration-700
-          `}
-          style={{
-            rotateX: finalRotateX,
-            rotateY: finalRotateY,
-            transformStyle: "preserve-3d",
-          }}
+          className={`relative h-[19.5rem] w-[14.5rem] sm:h-[22.5rem] sm:w-[16.75rem] md:h-[24rem] md:w-[18rem] lg:h-[26rem] lg:w-[19.5rem] rounded-[1.8rem] sm:rounded-[2.25rem] ${style.shadow} ${style.hoverShadow} transition-shadow duration-700`}
+          style={{ rotateX: hoverRotateX, rotateY: finalRotateY, transformStyle: "preserve-3d" }}
         >
           {/* FRONT FACE */}
           <div
-            className={`
-              absolute inset-0 overflow-hidden rounded-[1.8rem] sm:rounded-[2.25rem]
-              ${style.bg}
-              ${style.text}
-              ${style.border}
-              border
-            `}
-            style={{
-              backfaceVisibility: "hidden",
-              transform: "rotateY(0deg)",
-            }}
+            className={`absolute inset-0 overflow-hidden rounded-[1.8rem] sm:rounded-[2.25rem] ${style.bg} ${style.text} ${style.border} border`}
+            style={{ backfaceVisibility: "hidden", transform: "rotateY(0deg)" }}
           >
-            <motion.div
-              className={`absolute -right-28 -top-28 h-72 w-72 rounded-full ${style.glow} blur-3xl`}
-              style={{
-                x: innerX,
-                y: innerY,
-                translateZ: 40,
-              }}
-            />
-
-            <motion.div
-              className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-white/25 blur-3xl"
-              style={{
-                x: innerY,
-                y: innerX,
-                translateZ: 30,
-              }}
-            />
-
-            <motion.div
-              className="pointer-events-none absolute -bottom-2 left-4 select-none text-[4.2rem] font-black leading-none tracking-tight opacity-[0.08] sm:text-[5.3rem]"
-              style={{ translateZ: 15 }}
-            >
-              {style.word}
-            </motion.div>
-
+            <motion.div className={`absolute -right-28 -top-28 h-72 w-72 rounded-full ${style.glow} blur-3xl`} style={{ x: innerX, y: innerY, translateZ: 40 }} />
+            <motion.div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-white/25 blur-3xl" style={{ x: innerY, y: innerX, translateZ: 30 }} />
+            <motion.div className="pointer-events-none absolute -bottom-2 left-4 select-none text-[4.2rem] font-black leading-none tracking-tight opacity-[0.08] sm:text-[5.3rem]" style={{ translateZ: 15 }}>{style.word}</motion.div>
             <div className="absolute inset-0 opacity-[0.085] bg-[radial-gradient(circle_at_1px_1px,rgba(20,20,20,0.45)_1px,transparent_0)] bg-[length:13px_13px]" />
-
             <div className="absolute inset-0 -translate-x-[145%] skew-x-12 bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-[1100ms] ease-out group-hover:translate-x-[145%]" />
-
             <div className="pointer-events-none absolute inset-[10px] rounded-[1.45rem] border border-white/35 sm:rounded-[1.9rem]" />
-
-            <motion.div
-              className={`
-                absolute right-5 top-5 z-20 rounded-full
-                ${style.accentSoft}
-                px-3 py-1.5 text-[10px] font-bold uppercase tracking-tight
-              `}
-              style={{
-                color: style.accent,
-                translateZ: 90,
-              }}
-            >
-              {String(index + 1).padStart(2, "0")}
-            </motion.div>
-
-            <motion.div
-              className="relative z-10 flex h-full w-full flex-col justify-between p-6 sm:p-7"
-              style={{ translateZ: 85 }}
-            >
+            <motion.div className={`absolute right-5 top-5 z-20 rounded-full ${style.accentSoft} px-3 py-1.5 text-[10px] font-bold uppercase tracking-tight`} style={{ color: style.accent, translateZ: 90 }}>{String(index + 1).padStart(2, "0")}</motion.div>
+            <motion.div className="relative z-10 flex h-full w-full flex-col justify-between p-6 sm:p-7" style={{ translateZ: 85 }}>
               <div>
-                <p
-                  className="mb-6 text-[16px] font-semibold uppercase tracking-tight"
-                  style={{ color: style.accent }}
-                >
-                  {style.mark}
-                </p>
-
-                <h3 className="font-display text-[3rem] leading-[0.84] tracking-tighter sm:text-[3.2rem]">
-                  {card.title}
-                </h3>
+                <p className="mb-6 text-[16px] font-semibold uppercase tracking-tight" style={{ color: style.accent }}>{style.mark}</p>
+                <h3 className="font-display text-[3rem] leading-[0.84] tracking-tighter sm:text-[3.2rem]">{card.title}</h3>
               </div>
-
-              <div>
-                {card.frontText && (
-                  <p
-                    className={`max-w-[14.5rem] text-[14px] leading-[1.55] ${style.muted}`}
-                  >
-                    {card.frontText}
-                  </p>
-                )}
-              </div>
+              {card.frontText && <p className={`max-w-[14.5rem] text-[14px] leading-[1.55] ${style.muted}`}>{card.frontText}</p>}
             </motion.div>
           </div>
 
           {/* BACK FACE */}
           <div
-            className={`
-              absolute inset-0 overflow-hidden rounded-[1.8rem] sm:rounded-[2.25rem]
-              ${style.backBg}
-              ${style.text}
-              ${style.border}
-              border
-            `}
-            style={{
-              backfaceVisibility: "hidden",
-              transform: "rotateY(180deg)",
-            }}
+            className={`absolute inset-0 overflow-hidden rounded-[1.8rem] sm:rounded-[2.25rem] ${style.backBg} ${style.text} ${style.border} border`}
+            style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
           >
-            <div
-              className={`absolute -right-24 -top-24 h-72 w-72 rounded-full ${style.glow} blur-3xl`}
-            />
+            <div className={`absolute -right-24 -top-24 h-72 w-72 rounded-full ${style.glow} blur-3xl`} />
             <div className="absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-white/25 blur-3xl" />
-
             <div className="absolute inset-0 opacity-[0.095] bg-[radial-gradient(circle_at_1px_1px,rgba(20,20,20,0.45)_1px,transparent_0)] bg-[length:13px_13px]" />
-
-            <div className="pointer-events-none absolute -bottom-3 left-4 select-none text-[4.3rem] font-black leading-none tracking-tighter opacity-[0.09] sm:text-[5.5rem]">
-              {style.backWord}
-            </div>
-
+            <div className="pointer-events-none absolute -bottom-3 left-4 select-none text-[4.3rem] font-black leading-none tracking-tighter opacity-[0.09] sm:text-[5.5rem]">{style.backWord}</div>
             <div className="pointer-events-none absolute inset-[10px] rounded-[1.45rem] border border-white/35 sm:rounded-[1.9rem]" />
-
             <div className="relative z-10 flex h-full flex-col justify-between p-6 sm:p-7">
               <div className="flex items-start justify-between gap-5">
-                <p
-                  className="text-[10px] font-bold uppercase tracking-[0.42em]"
-                  style={{ color: style.accent }}
-                >
-                  {style.name}
-                </p>
-
-                <div
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/35 text-xs font-bold backdrop-blur-md"
-                  style={{ color: style.accent }}
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.42em]" style={{ color: style.accent }}>{style.name}</p>
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/35 text-xs font-bold backdrop-blur-md" style={{ color: style.accent }}>{String(index + 1).padStart(2, "0")}</div>
               </div>
-
               <div>
-                <p className="mb-5 font-display text-[3rem] leading-[0.8] tracking-tighter opacity-90 sm:text-[3.2rem]">
-                  {style.name}
-                </p>
-
-                <p
-                  className={`max-w-[15rem] text-[15px] leading-[1.65] ${style.muted}`}
-                >
-                  “{card.backText}”
-                </p>
+                <p className="mb-5 font-display text-[3rem] leading-[0.8] tracking-tighter opacity-90 sm:text-[3.2rem]">{style.name}</p>
+                <p className={`max-w-[15rem] text-[15px] leading-[1.65] ${style.muted}`}>“{card.backText}”</p>
               </div>
-
-              <p
-                className="text-[10px] font-bold uppercase tracking-[0.32em]"
-                style={{ color: style.accent }}
-              >
-                Click to flip back
-              </p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.32em]" style={{ color: style.accent }}>Click to flip back</p>
             </div>
           </div>
         </motion.div>
@@ -417,34 +202,12 @@ const AwwwardsHeroCard = memo(({ card, index, scrollYProgress, isMobile, isTable
 
 const Hero = () => {
   const containerRef = useRef(null);
-  const [isTablet, setIsTablet] = useState(false);
+  const isTablet = useIsTablet();
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 640px) and (max-width: 1023px)");
-    const handleChange = () => setIsTablet(mediaQuery.matches);
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 50, damping: 26, mass: 1.2 });
 
-    handleChange();
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 50,
-    damping: 26,
-    mass: 1.2,
-  });
-
-  const headOpacity = useTransform(
-    smoothProgress,
-    [0, 0.12, 0.22],
-    [1, 0.5, 0]
-  );
-
+  const headOpacity = useTransform(smoothProgress, [0, 0.12, 0.22], [1, 0.5, 0]);
   const headScale = useTransform(smoothProgress, [0, 0.22], [1, 0.9]);
   const headY = useTransform(smoothProgress, [0, 0.22], ["0vh", "-8vh"]);
 
@@ -457,84 +220,28 @@ const Hero = () => {
   return (
     <>
       <MobileStackHero />
-      <section
-        ref={containerRef}
-        id="top"
-        className="relative hidden h-[460vh] overflow-visible bg-paper md:block"
-      >
+      <section ref={containerRef} id="top" className="relative hidden h-[460vh] overflow-visible bg-paper md:block">
         <div className="sticky top-0 min-h-screen w-full overflow-hidden">
-          {/* Soft texture grid */}
-          {/* <div className="absolute inset-0 opacity-[0.045] bg-[linear-gradient(to_right,rgba(46,42,36,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(46,42,36,0.4)_1px,transparent_1px)] bg-[size:58px_58px]" /> */}
-
-          {/* Background motion glow */}
-          <motion.div
-            className="absolute left-1/2 top-[15vh] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[#B37839]/10 blur-3xl"
-            style={{
-              y: bgOrbY,
-              scale: bgOrbScale,
-            }}
-          />
-
+          <motion.div className="absolute left-1/2 top-[15vh] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[#B37839]/10 blur-3xl" style={{ y: bgOrbY, scale: bgOrbScale }} />
           <div className="absolute -left-28 top-[30vh] h-[24rem] w-[24rem] rounded-full bg-[#9B4E23]/12 blur-3xl" />
           <div className="absolute right-[-8rem] top-[38vh] h-[24rem] w-[24rem] rounded-full bg-[#2F6B55]/14 blur-3xl" />
           <div className="absolute bottom-[8vh] left-1/2 h-[24rem] w-[24rem] -translate-x-1/2 rounded-full bg-[#94433F]/10 blur-3xl" />
 
-          {/* Phase 1 headline */}
-          <motion.div
-            className="relative z-20 mx-auto flex min-h-screen max-w-[calc(72rem+var(--page-gutter)*2)] flex-col items-center justify-start px-[var(--page-gutter)] pt-[18vh] text-center pointer-events-none sm:pt-[15vh]"
-            style={{
-              opacity: headOpacity,
-              scale: headScale,
-              y: headY,
-            }}
-          >
+          <motion.div className="relative z-20 mx-auto flex min-h-screen max-w-[calc(72rem+var(--page-gutter)*2)] flex-col items-center justify-start px-[var(--page-gutter)] pt-[18vh] text-center pointer-events-none sm:pt-[15vh]" style={{ opacity: headOpacity, scale: headScale, y: headY }}>
             <div className="mb-6 inline-flex items-center rounded-full border border-[#B37839]/20 bg-white/30 px-4 py-2 backdrop-blur-md sm:mb-5">
-              <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#6D5B43] sm:text-[10px] sm:tracking-[0.35em]">
-                Culture · Innovation · Excellence
-              </span>
+              <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#6D5B43] sm:text-[10px] sm:tracking-[0.35em]">Culture · Innovation · Excellence</span>
             </div>
-
-            <h1 className="max-w-5xl font-display font-bold text-[clamp(2.75rem,9vw,8rem)] leading-[0.94] tracking-[-0.06em] text-[#2E2A24] sm:leading-[0.92] sm:tracking-[-0.07em]">
-              Leading, &quot; What&apos;s Next.&quot;
-            </h1>
-
-            <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#6D5B43]/85 sm:max-w-2xl sm:text-base md:text-base">
-              Rooted in culture, driven by creativity, and sharpened by modern
-              innovation.
-            </p>
+            <h1 className="max-w-5xl font-display font-bold text-[clamp(2.75rem,9vw,8rem)] leading-[0.94] tracking-[-0.06em] text-[#2E2A24] sm:leading-[0.92] sm:tracking-[-0.07em]">Leading, &quot; What&apos;s Next.&quot;</h1>
+            <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#6D5B43]/85 sm:max-w-2xl sm:text-base md:text-base">Rooted in culture, driven by creativity, and sharpened by modern innovation.</p>
           </motion.div>
 
-          {/* Cards */}
           <div className="absolute inset-0 h-full w-full pointer-events-none">
-            {heroCards.map((card, index) => (
-              <AwwwardsHeroCard
-                key={card.id}
-                card={card}
-                index={index}
-                scrollYProgress={scrollYProgress}
-                isMobile={false}
-                isTablet={isTablet}
-              />
-            ))}
+            {heroCards.map((card, index) => <AwwwardsHeroCard key={card.id} card={card} index={index} scrollProgress={smoothProgress} isTablet={isTablet} />)}
           </div>
 
-          {/* Final settled content */}
-          <motion.div
-            className="absolute bottom-[52vh] left-1/2 z-10 w-full max-w-[calc(56rem+var(--page-gutter)*2)] -translate-x-1/2 px-[var(--page-gutter)] text-center sm:bottom-[60vh]"
-            style={{
-              opacity: settleTextOpacity,
-              y: settleTextY,
-            }}
-          >
-            <h2 className="mb-7 font-display font-bold text-4xl leading-[1] tracking-[-0.04em] text-[#2E2A24] sm:text-5xl sm:leading-[0.95] sm:tracking-[-0.05em] lg:text-7xl">
-              Three standards.
-              <br />
-              One way forward.
-            </h2>
-
-            <div className="flex justify-center">
-              <MagneticButton href="#ventures">Explore the Ecosystem</MagneticButton>
-            </div>
+          <motion.div className="absolute bottom-[52vh] left-1/2 z-10 w-full max-w-[calc(56rem+var(--page-gutter)*2)] -translate-x-1/2 px-[var(--page-gutter)] text-center sm:bottom-[60vh]" style={{ opacity: settleTextOpacity, y: settleTextY }}>
+            <h2 className="mb-7 font-display font-bold text-4xl leading-[1] tracking-[-0.04em] text-[#2E2A24] sm:text-5xl sm:leading-[0.95] sm:tracking-[-0.05em] lg:text-7xl">Three standards.<br />One way forward.</h2>
+            <div className="flex justify-center"><MagneticButton href="#ventures">Explore the Ecosystem</MagneticButton></div>
           </motion.div>
         </div>
       </section>
