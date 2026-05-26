@@ -5,6 +5,7 @@ import Hero from './components/Hero/Hero'
 import { BrandThesis } from './components/About'
 import { Story } from './components/Story'
 import { VentureConstellation } from './components/VentureConstellation'
+import VisionariesSection from './components/MouseImageDistortion'
 import { VisionMission, Impact, Contact, Footer } from './components/Sections'
 import { Leadership } from './components/Leadership'
 
@@ -18,9 +19,9 @@ const App = () => {
       <main>
         <Hero />
         <BrandThesis />
-        {/* <OriginSymbol /> */}
         <Story />
-        <VentureConstellation />
+        <VisionariesSection />
+        {/* <VentureConstellation /> */}
         <VisionMission />
         <Leadership />
         <Impact />

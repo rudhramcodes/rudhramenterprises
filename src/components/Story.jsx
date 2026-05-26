@@ -279,7 +279,6 @@ export const Story = memo(function Story() {
   const mousePosRef = useRef({ x: 0, y: 0 })
   const [detailOpen, setDetailOpen] = useState(() => window.location.hash === '#story-detail')
   const [cursorVisible, setCursorVisible] = useState(false)
-  const [imageHovered, setImageHovered] = useState(false)
   const cursorX = useMotionValue(-200)
   const cursorY = useMotionValue(-200)
   const smoothX = useSpring(cursorX, { stiffness: 135, damping: 18, mass: 0.5 })
@@ -292,7 +291,6 @@ export const Story = memo(function Story() {
 
   const openStory = useCallback(() => {
     setCursorVisible(false)
-    setImageHovered(false)
     setDetailOpen(true)
     if (window.location.hash !== '#story-detail') {
       window.history.pushState({ storyDetail: true }, '', '#story-detail')
@@ -309,7 +307,6 @@ export const Story = memo(function Story() {
       const el = document.elementFromPoint(x, y)
       if (imageRef.current?.contains(el)) {
         setCursorVisible(true)
-        setImageHovered(true)
       }
     })
   }, [])
@@ -329,12 +326,10 @@ export const Story = memo(function Story() {
   }
 
   const showCursor = () => {
-    setImageHovered(true)
     setCursorVisible(true)
   }
 
   const hideCursor = () => {
-    setImageHovered(false)
     setCursorVisible(false)
   }
 
