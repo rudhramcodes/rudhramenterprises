@@ -18,7 +18,7 @@ const thesisItems = [
       'Rudhram represents a way of thinking shaped through experience. It stands for the courage to move forward without complete clarity and the discipline to turn confusion into direction.',
       'It also represents rooted strength: staying connected to values and purpose while building something new. Rudhram balances tradition and progress, where cultural depth meets modern innovation to create meaningful impact.',
     ],
-    image: '/images/culture.webp',
+    image: '/images/stepwell.webp',
     cursorText: 'What we represents'
   },
   {
@@ -30,7 +30,7 @@ const thesisItems = [
       'Rudhram Group exists because the world does not need more businesses without purpose. It needs structured ventures that create meaningful value, improve lives, and build long-term impact.',
       'Its existence is driven by responsibility: to observe real needs, understand them deeply, and build what truly matters with discipline, values, and modern capability.',
     ],
-    image: '/images/innovation.webp',
+    image: '/images/skill-hands.webp',
     cursorText: 'Why we exists'
   },
   {
@@ -42,7 +42,7 @@ const thesisItems = [
       'What sets Rudhram apart is its approach. It does not operate as a traditional company focused on one business. Instead, it builds repeatable systems that identify problems, design solutions, and grow them into structured brands.',
       'Rudhram combines purpose-driven thinking, disciplined execution, long-term vision, cultural grounding, and modern innovation. That makes its ventures scalable, meaningful, sustainable, and aligned with real-world needs.',
     ],
-    image: '/images/excellence.webp',
+    image: '/images/long-corridor.webp',
     cursorText: 'What sets us apart'
   },
   {
@@ -54,7 +54,7 @@ const thesisItems = [
       'Our direction is clear: to build a system that continuously creates, grows, and sustains impactful ventures across industries and geographies.',
       'Rudhram aims to expand across India and globally while staying rooted in its values. By combining cultural strength with modern capability, it is building long-term value with a future-ready mindset.',
     ],
-    image: '/images/culture.webp',
+    image: '/images/golden-field.webp',
     cursorText: 'Our Direction'
   },
 ]
@@ -82,16 +82,16 @@ const AboutDetailPage = memo(function AboutDetailPage({ item, onBack }) {
   }, [onBack])
 
   return (
-    <motion.div className="fixed inset-0 z-[80]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
+    <div className="fixed inset-0 z-[80]">
       <motion.button
         type="button"
         aria-label="Close detail view"
-        className="absolute inset-0 bg-ink/35 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-ink/40"
         onClick={onBack}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.25, ease: 'linear' }}
       />
 
       <motion.div
@@ -101,24 +101,24 @@ const AboutDetailPage = memo(function AboutDetailPage({ item, onBack }) {
         onWheel={(event) => event.stopPropagation()}
         onTouchMove={(event) => event.stopPropagation()}
         onClick={(event) => event.stopPropagation()}
-        style={{ WebkitOverflowScrolling: 'touch' }}
-        initial={{ y: '100%', opacity: 0.78, scale: 0.985 }}
-        animate={{ y: 0, opacity: 1, scale: 1 }}
-        exit={{ y: '100%', opacity: 0.78, scale: 0.985 }}
-        transition={{ duration: 0.88, ease: [0.16, 1, 0.3, 1] }}
+        style={{ WebkitOverflowScrolling: 'touch', willChange: 'transform' }}
+        initial={{ y: '100%' }}
+        animate={{ y: 0 }}
+        exit={{ y: '100%' }}
+        transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
         role="dialog"
         aria-modal="true"
         aria-labelledby="about-detail-title"
       >
-        <div className="sticky top-0 z-30 border-b border-ink/10 bg-paper/78 backdrop-blur-xl">
+        <div className="sticky top-0 z-30 border-b border-ink/10 bg-paper/90">
           <div className={`${maxWidth} flex items-center justify-between py-3 sm:py-4`}>
             <button
               type="button"
               onClick={onBack}
-              className="detail-back-button group relative inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-2xl border border-ink/15 text-ink outline-none transition-all duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-bronze/55 hover:text-bronze focus-visible:-translate-y-0.5 focus-visible:scale-[1.035] focus-visible:border-bronze/65 focus-visible:text-bronze"
+              className="detail-back-button shadow-sm group relative inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-2xl border border-ink/15 text-ink outline-none transition-all duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-bronze/55 hover:text-bronze focus-visible:-translate-y-0.5 focus-visible:scale-[1.035] focus-visible:border-bronze/65 focus-visible:text-bronze"
               aria-label="Back to about section"
             >
-              <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/55 via-white/20 to-transparent opacity-90 transition duration-500 group-hover:opacity-100" />
+              {/* <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/55 via-white/20 to-transparent opacity-90 transition duration-500 group-hover:opacity-100" /> */}
               <span className="pointer-events-none absolute inset-[3px] rounded-2xl border border-white/55 opacity-85" />
               <CaretLeft size={19} weight="bold" className="relative transition duration-450" />
             </button>
@@ -130,18 +130,15 @@ const AboutDetailPage = memo(function AboutDetailPage({ item, onBack }) {
         </div>
 
         <section className={`${maxWidth} relative py-8 sm:py-10 lg:py-12`}>
-          <motion.div className="grid w-full gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,0.76fr)] lg:grid-rows-[auto_auto] lg:items-start lg:gap-x-14 lg:gap-y-8 xl:gap-x-20" initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}>
+          <motion.div className="grid w-full gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,0.76fr)] lg:grid-rows-[auto_auto] lg:items-start lg:gap-x-14 lg:gap-y-8 xl:gap-x-20" initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}>
             <div className="max-w-[48rem]">
-              {/* <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-ink/10 bg-ivory px-4 py-2">
-                <SectionKicker>{item.subtitle}</SectionKicker>
-              </div> */}
               <h1 id="about-detail-title" className="max-w-[11ch] font-display text-[clamp(2.55rem,5.6vw,5.45rem)] font-bold leading-[0.9] tracking-tight text-ink">
                 {item.title}
               </h1>
             </div>
 
             <div className="relative min-h-[18.5rem] overflow-hidden rounded-[1.15rem] border border-ink/10 shadow-[0_24px_80px_rgba(17,16,14,0.18)] sm:h-[41vh] sm:min-h-[21rem] lg:row-span-2 lg:h-[min(64vh,38rem)] lg:min-h-[28rem]">
-              <img src={item.image} alt={item.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.02]" />
+              <img src={item.image} alt={item.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.02]" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/22 via-transparent to-transparent" />
             </div>
 
@@ -158,7 +155,7 @@ const AboutDetailPage = memo(function AboutDetailPage({ item, onBack }) {
           </motion.div>
         </section>
       </motion.div>
-    </motion.div>
+    </div>
   )
 })
 
@@ -166,20 +163,16 @@ const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
   return (
     <div className="lg:hidden flex flex-col w-full">
       {thesisItems.map((item, index) => (
-        <button key={item.title} type="button" onClick={() => onOpenDetails(index)} className="relative h-screen w-full overflow-hidden border-b border-paper/10 text-left outline-none focus-visible:ring-2 focus-visible:ring-bronze">
+        <button key={item.title} type="button" onClick={() => onOpenDetails(index)} className="relative h-screen w-full overflow-hidden text-left outline-none focus-visible:ring-2 focus-visible:ring-bronze">
           <img src={item.image} alt={item.title} className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 z-30 flex flex-col justify-end px-4 pb-12">
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/20 to-transparent pointer-events-none" />
             <div className="ios-glass-menu reveal relative rounded-[2.5rem] p-8 shadow-[0_30px_60px_rgba(0,0,0,0.12)]">
-              <div className="flex items-center gap-3 border-b border-ink/5 pb-4 mb-5">
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-ink">About 0{index + 1}</span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink/70">{item.subtitle}</span>
-              </div>
               <h3 className="font-display font-bold text-[2.6rem] text-ink leading-[0.9] tracking-tighter mb-4">{item.title}</h3>
               <p className="text-[15px] leading-relaxed font-medium text-ink/80">{item.description}</p>
             </div>
           </div>
-          <GradualBlur target="parent" position="bottom" height="14rem" strength={4} divCount={10} curve="bezier" exponential opacity={0.4} zIndex={20} />
+          <GradualBlur target="parent" position="bottom" height="14rem" strength={4} divCount={10} curve="bezier" exponential opacity={0.75} zIndex={20} />
         </button>
       ))}
     </div>
@@ -272,15 +265,31 @@ export const BrandThesis = memo(function BrandThesis() {
                   <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-bronze">About</span>
                   <span className="font-display text-base leading-none text-bronze/65">0{activeIndex + 1} / 0{ITEM_COUNT}</span>
                 </div>
-                <div className="flex flex-1 flex-col divide-y divide-ink/8 overflow-hidden">
+                <div className="relative flex flex-1 flex-col divide-y divide-ink/8 overflow-hidden">
+                  {/* Sliding active background indicator */}
+                  <motion.div
+                    className="pointer-events-none absolute inset-x-0 z-0 bg-ivory"
+                    style={{ height: `${100 / ITEM_COUNT}%` }}
+                    animate={{ top: `${(activeIndex / ITEM_COUNT) * 100}%` }}
+                    transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+                  />
                   {thesisItems.map((item, index) => {
                     const isActive = index === activeIndex
+                    if (isActive) {
+                      return (
+                        <button type="button" onClick={() => openDetails(index)} key={item.title} className="relative z-10 flex flex-1 flex-col justify-center gap-1.5 px-4 py-3 text-left cursor-pointer outline-none transition-colors duration-500 focus-visible:ring-2 focus-visible:ring-bronze">
+                          <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-bronze transition-colors duration-500">{item.subtitle}</span>
+                          <span className="font-display font-semibold tracking-tight text-[clamp(1.1rem,1.9vw,1.72rem)] leading-[0.98] text-ink transition-colors duration-500">{item.title}</span>
+                          <span className="max-w-sm text-sm leading-[1.6] text-stone transition-colors duration-500">{item.description}</span>
+                        </button>
+                      )
+                    }
                     return (
-                      <button type="button" onClick={() => openDetails(index)} key={item.title} className={`flex flex-1 cursor-pointer flex-col justify-center gap-1.5 px-4 py-3 text-left outline-none transition-colors duration-500 focus-visible:ring-2 focus-visible:ring-bronze ${isActive ? 'bg-ivory' : 'bg-paper'}`}>
-                        <span className={`text-[9px] font-bold uppercase tracking-[0.22em] transition-colors duration-500 ${isActive ? 'text-bronze' : 'text-stone/35'}`}>{item.subtitle}</span>
-                        <span className={`font-display font-semibold tracking-tight text-[clamp(1.1rem,1.9vw,1.72rem)] leading-[0.98] transition-colors duration-500 ${isActive ? 'text-ink' : 'text-stone/22'}`}>{item.title}</span>
-                        <span className={`max-w-sm text-sm leading-[1.6] transition-colors duration-500 ${isActive ? 'text-stone' : 'text-stone/35'}`}>{item.description}</span>
-                      </button>
+                      <div key={item.title} className="relative z-10 flex flex-1 flex-col justify-center gap-1.5 px-4 py-3 text-left transition-colors duration-500">
+                        <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-stone/35 transition-colors duration-500">{item.subtitle}</span>
+                        <span className="font-display font-semibold tracking-tight text-[clamp(1.1rem,1.9vw,1.72rem)] leading-[0.98] text-stone/22 transition-colors duration-500">{item.title}</span>
+                        <span className="max-w-sm text-sm leading-[1.6] text-stone/35 transition-colors duration-500">{item.description}</span>
+                      </div>
                     )
                   })}
                 </div>
