@@ -30,7 +30,7 @@ function CardRotate({ children, onSendToBack, sensitivity, disableDrag = false }
   if (disableDrag) return <motion.div className="rb-card-rotate-disabled" style={{ x: 0, y: 0 }}>{children}</motion.div>;
 
   return (
-    <motion.div className="rb-card-rotate" style={{ x, y, rotateX, rotateY }} drag dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }} dragElastic={0.72} dragTransition={{ bounceStiffness: 220, bounceDamping: 20 }} whileDrag={{ scale: 1.025 }} whileTap={{ cursor: "grabbing" }} onDragEnd={handleDragEnd}>
+    <motion.div className="rb-card-rotate" style={{ x, y, rotateX, rotateY, willChange: "transform" }} drag dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }} dragElastic={0.72} dragTransition={{ bounceStiffness: 200, bounceDamping: 22 }} whileDrag={{ scale: 1.025 }} whileTap={{ cursor: "grabbing" }} onDragEnd={handleDragEnd}>
       {children}
     </motion.div>
   );
@@ -83,7 +83,7 @@ export default function Stack({
         const direction = peekSide === "left" ? -1 : 1;
         return (
           <CardRotate key={card.id} onSendToBack={() => sendToBack(card.id)} sensitivity={sensitivity} disableDrag={shouldDisableDrag}>
-            <motion.div className="rb-stack-card" onClick={() => shouldEnableClick && sendToBack(card.id)} animate={{ rotateZ: depth * 3.2 * direction + card.randomRotate, scale: 1 + index * 0.06 - stack.length * 0.06, x: depth * 8 * direction, y: depth * 3, transformOrigin: peekSide === "left" ? "10% 90%" : "90% 90%" }} initial={false} transition={{ type: "spring", stiffness: animationConfig.stiffness, damping: animationConfig.damping }}>
+            <motion.div className="rb-stack-card" onClick={() => shouldEnableClick && sendToBack(card.id)} animate={{ rotateZ: depth * 3.2 * direction + card.randomRotate, scale: 1 + index * 0.06 - stack.length * 0.06, x: depth * 8 * direction, y: depth * 3, transformOrigin: peekSide === "left" ? "10% 90%" : "90% 90%" }} initial={false} style={{ willChange: "transform" }} transition={{ type: "spring", stiffness: animationConfig.stiffness, damping: animationConfig.damping, mass: animationConfig.mass || 1 }}>
               {card.content}
             </motion.div>
           </CardRotate>

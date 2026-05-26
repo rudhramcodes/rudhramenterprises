@@ -92,9 +92,10 @@ const MobileStackHero = () => {
     >
       <div className="relative z-10 mx-auto flex min-h-[calc(100svh-8.75rem)] w-full max-w-[24rem] flex-col">
         <motion.div
-          initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+          style={{ willChange: "transform, opacity" }}
         >
           <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8F5F2E]">
             RUDHRAM
@@ -112,9 +113,10 @@ const MobileStackHero = () => {
 
         <motion.div
           className="relative mx-auto mt-7 h-[23.5rem] w-[min(80vw,18.75rem)] max-w-full"
-          initial={{ opacity: 0, y: 24, rotate: -2, filter: "blur(10px)" }}
-          animate={{ opacity: 1, y: 0, rotate: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 24, rotate: -2 }}
+          animate={{ opacity: 1, y: 0, rotate: 0 }}
           transition={{ duration: 0.78, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+          style={{ willChange: "transform, opacity" }}
         >
           <Stack
             randomRotation={false}
@@ -122,7 +124,7 @@ const MobileStackHero = () => {
             sendToBackOnClick
             peekSide="left"
             cards={cards}
-            animationConfig={{ stiffness: 220, damping: 24 }}
+            animationConfig={{ stiffness: 180, damping: 22, mass: 0.9 }}
           />
         </motion.div>
 

@@ -105,7 +105,7 @@ const AwwwardsHeroCard = memo(({ card, index, scrollProgress, isTablet }) => {
 
   const x = useTransform(
     scrollProgress,
-    [0, 0.25, 0.46, 0.72, 0.95],
+    [0, 0.20, 0.42, 0.75, 0.95],
     [
       `${(index - 1) * xOffset}vw`,
       "0vw",
@@ -115,12 +115,12 @@ const AwwwardsHeroCard = memo(({ card, index, scrollProgress, isTablet }) => {
     ]
   );
 
-  const y = useTransform(scrollProgress, [0, 0.25, 0.46, 0.72, 0.95], ["45vh", "45vh", "35vh", "42vh", "45vh"]);
-  const scale = useTransform(scrollProgress, [0, 0.25, 0.46, 0.72, 0.95], [0.9, 0.8, 0.55, 0.94, 0.91]);
-  const rotateZ = useTransform(scrollProgress, [0, 0.24, 0.46, 0.72, 0.95], [(index - 1) * 12, 0, (index - 1) * -18, (index - 1) * 4, (index - 1) * 1.2]);
+  const y = useTransform(scrollProgress, [0, 0.20, 0.42, 0.75, 0.95], ["45vh", "45vh", "35vh", "42vh", "45vh"]);
+  const scale = useTransform(scrollProgress, [0, 0.20, 0.42, 0.75, 0.95], [0.9, 0.8, 0.55, 0.94, 0.91]);
+  const rotateZ = useTransform(scrollProgress, [0, 0.18, 0.42, 0.75, 0.95], [(index - 1) * 12, 0, (index - 1) * -18, (index - 1) * 4, (index - 1) * 1.2]);
 
-  const flipStart = 0.46 + index * 0.035;
-  const flipEnd = flipStart + 0.12;
+  const flipStart = 0.42 + index * 0.04;
+  const flipEnd = flipStart + 0.15;
   const scrollRotateY = useTransform(scrollProgress, [0, flipStart, flipEnd, 1], [0, 0, 180, 180]);
 
   useMotionValueEvent(scrollProgress, "change", (latest) => {
@@ -134,7 +134,7 @@ const AwwwardsHeroCard = memo(({ card, index, scrollProgress, isTablet }) => {
   return (
     <motion.div
       className="absolute left-1/2 top-0 pointer-events-none"
-      style={{ x, y, scale, rotate: rotateZ, translateX: "-50%", zIndex: 10 + index, perspective: 2600, transformStyle: "preserve-3d" }}
+      style={{ x, y, scale, rotate: rotateZ, translateX: "-50%", zIndex: 10 + index, perspective: 2600, transformStyle: "preserve-3d", willChange: "transform" }}
     >
       <motion.button
         type="button"
@@ -205,14 +205,14 @@ const Hero = () => {
   const isTablet = useIsTablet();
 
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 50, damping: 26, mass: 1.2 });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 45, damping: 22, mass: 0.8, restDelta: 0.001 });
 
   const headOpacity = useTransform(smoothProgress, [0, 0.12, 0.22], [1, 0.5, 0]);
   const headScale = useTransform(smoothProgress, [0, 0.22], [1, 0.9]);
   const headY = useTransform(smoothProgress, [0, 0.22], ["0vh", "-8vh"]);
 
-  const settleTextOpacity = useTransform(smoothProgress, [0.58, 0.72], [0, 1]);
-  const settleTextY = useTransform(smoothProgress, [0.58, 0.72], ["32px", "0px"]);
+  const settleTextOpacity = useTransform(smoothProgress, [0.65, 0.78], [0, 1]);
+  const settleTextY = useTransform(smoothProgress, [0.65, 0.78], ["32px", "0px"]);
 
   const bgOrbY = useTransform(smoothProgress, [0, 1], ["0vh", "-18vh"]);
   const bgOrbScale = useTransform(smoothProgress, [0, 1], [1, 1.25]);
@@ -220,7 +220,7 @@ const Hero = () => {
   return (
     <>
       <MobileStackHero />
-      <section ref={containerRef} id="top" className="relative hidden h-[460vh] overflow-visible bg-paper md:block">
+      <section ref={containerRef} id="top" className="relative hidden h-[560vh] overflow-visible bg-paper md:block">
         <div className="sticky top-0 min-h-screen w-full overflow-hidden">
           <motion.div className="absolute left-1/2 top-[15vh] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[#B37839]/10 blur-3xl" style={{ y: bgOrbY, scale: bgOrbScale }} />
           <div className="absolute -left-28 top-[30vh] h-[24rem] w-[24rem] rounded-full bg-[#9B4E23]/12 blur-3xl" />
