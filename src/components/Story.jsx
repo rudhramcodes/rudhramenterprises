@@ -1,32 +1,33 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion'
+import { CaretLeft } from '@phosphor-icons/react'
 
 const mx = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
 const ease = [0.22, 1, 0.36, 1]
 
 const shortVersion = [
-  'We are not a company built by investors, resumes, or a perfect plan. We are a group built by belief — the belief that if you move with purpose, execute with discipline, and refuse to stop, something meaningful will emerge.',
-  'Rudhram is the result of two people who chose each other, chose to continue, and chose to build something real — even when nothing was certain.',
+  'We are not a company built by investors, resumes, or a perfect plan. We are a group built by belief - the belief that if you move with purpose, execute with discipline, and refuse to stop, something meaningful will emerge.',
+  'Rudhram is the result of two people who chose each other, chose to continue, and chose to build something real - even when nothing was certain.',
   'We are builders. Of ideas, systems, ventures, and impact. We are Rudhram.',
 ]
 
 const preambleText = [
-  'Before there was a name, a logo, a registered company, or a single rupee of revenue — there were two people sitting with a question they could not yet answer.',
+  'Before there was a name, a logo, a registered company, or a single rupee of revenue - there were two people sitting with a question they could not yet answer.',
   'What are we building? Why are we doing this? What does this even become?',
-  'The answer did not come quickly. It never does, for the things that matter. What came instead was something more valuable than answers — the decision to keep moving forward without them.',
+  'The answer did not come quickly. It never does, for the things that matter. What came instead was something more valuable than answers - the decision to keep moving forward without them.',
   'That decision is the real beginning of Rudhram.',
 ]
 
 const bondText = [
-  'In 2021, Shivang Vir and Mukund Barrdoliwala moved to Mumbai. Not with a clear destination. Not with a proven model. With belief — in the journey, in the work, and above everything, in each other.',
-  'Their friendship was not something they built for the business. It was something that existed long before it. In their families, they were never seen as two separate people. They were one — a single unit of trust that ran deeper than any professional agreement could.',
+  'In 2021, Shivang Vir and Mukund Barrdoliwala moved to Mumbai. Not with a clear destination. Not with a proven model. With belief - in the journey, in the work, and above everything, in each other.',
+  'Their friendship was not something they built for the business. It was something that existed long before it. In their families, they were never seen as two separate people. They were one - a single unit of trust that ran deeper than any professional agreement could.',
   'This is the invisible foundation beneath every venture Rudhram builds. Everything stands on this.',
 ]
 
 const phaseText = [
-  'There was a phase — and every founder who tells the truth will acknowledge it — where nothing was working the way it should. Results were not visible. The path was not clear. The future felt uncertain in a way that was not exciting. It was heavy.',
+  'There was a phase - and every founder who tells the truth will acknowledge it - where nothing was working the way it should. Results were not visible. The path was not clear. The future felt uncertain in a way that was not exciting. It was heavy.',
   'Most people do not talk about this phase. They skip past it in the story because it is uncomfortable. But for Rudhram, this phase is not something to be skipped. It is the source of everything.',
-  'That shift — from ambition to purpose — changed the nature of what Rudhram was trying to become. The confusion did not become a roadblock. It became a direction.',
+  'That shift - from ambition to purpose - changed the nature of what Rudhram was trying to become. The confusion did not become a roadblock. It became a direction.',
 ]
 
 const FadeIn = ({ children, delay = 0, className = '' }) => (
@@ -94,14 +95,14 @@ const StoryDetail = ({ onClose }) => {
     >
       <motion.button
         type="button"
-        className="fixed left-5 top-5 z-[90] inline-flex h-12 cursor-pointer items-center justify-center rounded-full border border-white/55 bg-white/28 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.56),0_18px_48px_rgba(17,16,14,0.22)] backdrop-blur-2xl transition-all hover:bg-white/50 duration-300 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze sm:left-8 sm:top-8"
+        className="fixed left-5 top-5 z-[90] inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/55 bg-white/28 text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.56),0_18px_48px_rgba(17,16,14,0.22)] backdrop-blur-2xl transition-all hover:bg-white/50 duration-300 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze sm:left-8 sm:top-8"
         aria-label="Back to story preview"
         onClick={onClose}
         initial={{ opacity: 0, y: -12, filter: 'blur(8px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ duration: 0.55, delay: 0.32, ease }}
       >
-        Back
+        <CaretLeft size={20} />
       </motion.button>
 
       <article>
@@ -126,7 +127,7 @@ const StoryDetail = ({ onClose }) => {
 
           <div className={`${mx} relative z-10 flex min-h-screen flex-col justify-end pb-14 pt-32 sm:pb-20`}>
             <motion.p
-              className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-bronze"
+              className="mb-4 text-[10px] font-bold uppercase tracking-[0.22em] text-white"
               initial={{ opacity: 0, y: 18, filter: 'blur(8px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{ duration: 0.7, delay: 0.48, ease }}
@@ -179,15 +180,15 @@ const StoryDetail = ({ onClose }) => {
 
         <section className="bg-ivory py-16 sm:py-24 lg:py-32">
           <div className={`${mx} max-w-4xl`}>
-            <div className="space-y-5 sm:space-y-6">
+            <div className="space-y-6 sm:space-y-7">
               {preambleText.map((text, i) => (
                 <FadeIn key={text} delay={0.1 + i * 0.08}>
                   <p
-                    className={`leading-[1.7] sm:text-lg ${i === 1
-                        ? 'font-display text-xl italic text-ink sm:text-2xl'
+                    className={`leading-[1.7] sm:text-xl ${i === 1
+                        ? 'font-display text-2xl font-semibold text-ink sm:text-3xl'
                         : i === 3
-                          ? 'font-display text-lg font-semibold text-bronze sm:text-xl'
-                          : 'text-base text-stone sm:text-lg'
+                          ? 'font-display text-xl font-semibold text-bronze sm:text-2xl'
+                          : 'text-lg text-stone sm:text-xl'
                       }`}
                   >
                     {text}
@@ -228,7 +229,7 @@ const StoryDetail = ({ onClose }) => {
                 </span>
                 <p className="relative font-display text-lg leading-snug text-ink sm:text-xl lg:text-2xl">
                   Their partnership was never built on contracts. It was built on the kind of
-                  loyalty that does not need to be spoken — only demonstrated, every single day.
+                  loyalty that does not need to be spoken - only demonstrated, every single day.
                 </p>
               </blockquote>
             </FadeIn>
@@ -383,10 +384,10 @@ export const Story = memo(function Story() {
           </motion.div>
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,16,14,0)_0%,rgba(17,16,14,0.16)_42%,rgba(17,16,14,0.84)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,253,248,0.25),transparent_28rem)] opacity-70" />
-          <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-paper/25 bg-ink/16 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-paper/80 backdrop-blur-md sm:left-7 sm:top-7 sm:px-4 sm:py-2 sm:text-[10px]">
+          {/* <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-paper/25 bg-ink/16 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-paper/80 backdrop-blur-md sm:left-7 sm:top-7 sm:px-4 sm:py-2 sm:text-[10px]">
             <span className="h-1.5 w-1.5 rounded-full bg-bronze" />
             Mumbai / 2021
-          </div>
+          </div> */}
 
           <motion.div
             className="absolute bottom-0 left-0 right-0 p-5 sm:p-10 lg:p-14"
@@ -421,7 +422,7 @@ export const Story = memo(function Story() {
               </span>
               <p className="relative font-display text-xl leading-snug text-ink sm:text-2xl lg:text-3xl">
                 Their partnership was never built on contracts. It was built on the kind of
-                loyalty that does not need to be spoken — only demonstrated, every single day.
+                loyalty that does not need to be spoken - only demonstrated, every single day.
               </p>
             </blockquote>
           </FadeIn>
