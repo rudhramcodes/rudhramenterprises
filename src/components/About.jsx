@@ -186,6 +186,8 @@ export const BrandThesis = memo(function BrandThesis() {
   const [detailIndex, setDetailIndex] = useState(0)
   const isDesktop = useIsDesktop()
   const scrollRef = useRef(null)
+  const imageBtnRef = useRef(null)
+  const mousePosRef = useRef({ x: 0, y: 0 })
 
   const { scrollYProgress } = useScroll({ target: scrollRef, offset: ['start start', 'end end'] })
   const stripY = useTransform(scrollYProgress, [0, 1], ['0%', `-${(((ITEM_COUNT - 1) / ITEM_COUNT) * 100).toFixed(4)}%`])
@@ -194,6 +196,23 @@ export const BrandThesis = memo(function BrandThesis() {
     const next = Math.min(ITEM_COUNT - 1, Math.max(0, Math.floor(latest * ITEM_COUNT)))
     setActiveIndex((prev) => (prev !== next ? next : prev))
   })
+
+  useEffect(() => {
+    const onMouseMove = (e) => {
+      mousePosRef.current = { x: e.clientX, y: e.clientY }
+    }
+    window.addEventListener('mousemove', onMouseMove, { passive: true })
+    return () => window.removeEventListener('mousemove', onMouseMove)
+  }, [])
+
+  const checkHoverAfterClose = useCallback(() => {
+    if (!isDesktop) return
+    const { x, y } = mousePosRef.current
+    const el = document.elementFromPoint(x, y)
+    if (imageBtnRef.current && imageBtnRef.current.contains(el)) {
+      setIsHoveringImage(true)
+    }
+  }, [isDesktop])
 
   const openDetails = useCallback((index = activeIndex) => {
     setIsHoveringImage(false)
@@ -236,7 +255,7 @@ export const BrandThesis = memo(function BrandThesis() {
   return (
     <section id="about" className="relative bg-paper">
       {isDesktop && <CursorFollow show={isHoveringImage}>{thesisItems[activeIndex].cursorText}</CursorFollow>}
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={checkHoverAfterClose}>
         {detailsOpen && <AboutDetailPage item={thesisItems[detailIndex]} onBack={closeDetails} />}
       </AnimatePresence>
 
@@ -298,7 +317,7 @@ export const BrandThesis = memo(function BrandThesis() {
                 </div>
               </div>
 
-              <button type="button" aria-label={`Open ${thesisItems[activeIndex].title}`} className="reveal relative w-full cursor-pointer overflow-hidden border border-ink/10 text-left shadow-[0_34px_100px_rgba(17,16,14,0.11)] outline-none focus-visible:ring-2 focus-visible:ring-bronze" style={{ height: '100%' }} onClick={() => openDetails(activeIndex)} onMouseEnter={() => setIsHoveringImage(true)} onMouseLeave={() => setIsHoveringImage(false)}>
+              <button ref={imageBtnRef} type="button" aria-label={`Open ${thesisItems[activeIndex].title}`} className="reveal relative w-full cursor-pointer overflow-hidden border border-ink/10 text-left shadow-[0_34px_100px_rgba(17,16,14,0.11)] outline-none focus-visible:ring-2 focus-visible:ring-bronze" style={{ height: '100%' }} onClick={() => openDetails(activeIndex)} onMouseEnter={() => setIsHoveringImage(true)} onMouseLeave={() => setIsHoveringImage(false)}>
                 <motion.div style={{ y: stripY, height: `${ITEM_COUNT * 100}%`, willChange: 'transform' }} className="absolute inset-x-0 top-0">
                   {thesisItems.map((item) => (
                     <div key={item.title} className="relative w-full" style={{ height: `${100 / ITEM_COUNT}%` }}>

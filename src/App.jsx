@@ -3,7 +3,7 @@ import { useLenisScroll } from './hooks/useLenisScroll'
 import { useScrollAnimations } from './hooks/useScrollAnimations'
 import Hero from './components/Hero/Hero'
 import { BrandThesis } from './components/About'
-import { Pillars } from './components/Pillars'
+import { Story } from './components/Story'
 import { VentureConstellation } from './components/VentureConstellation'
 import { VisionMission, Impact, Contact, Footer } from './components/Sections'
 import { Leadership } from './components/Leadership'
@@ -19,7 +19,7 @@ const App = () => {
         <Hero />
         <BrandThesis />
         {/* <OriginSymbol /> */}
-        <Pillars />
+        <Story />
         <VentureConstellation />
         <VisionMission />
         <Leadership />

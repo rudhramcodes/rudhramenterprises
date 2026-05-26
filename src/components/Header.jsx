@@ -32,6 +32,7 @@ export const Header = memo(function Header() {
   const [navHovered, setNavHovered] = useState(false)
   const [navPressed, setNavPressed] = useState(false)
   const pressTimerRef = useRef(null)
+  const headerRef = useRef(null)
 
   const resetHoverState = useCallback(() => {
     setHoveredNavIndex(null)
@@ -73,13 +74,24 @@ export const Header = memo(function Header() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!menuOpen) return
+    const handleClickOutside = (e) => {
+      if (headerRef.current && !headerRef.current.contains(e.target)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside, { passive: true })
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [menuOpen])
+
   const smallScreen = !isDesktop
   const menuMode = compact || menuOpen || smallScreen
   const expandedItems = useMemo(() => [...navItems, { label: 'Contact', href: '#contact' }], [])
   const restingNavScale = navHovered ? 1.006 : 1
 
   return (
-    <header className={`fixed left-0 top-0 z-50 w-full px-[var(--page-gutter)] transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${compact ? 'pt-2' : 'pt-3 sm:pt-4'}`}>
+    <header ref={headerRef} className={`fixed left-0 top-0 z-50 w-full px-[var(--page-gutter)] transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${compact ? 'pt-2' : 'pt-3 sm:pt-4'}`}>
       <motion.div
         className="ios-glass-nav mx-auto overflow-hidden rounded-[24px] px-4 sm:rounded-[28px] sm:px-5"
         animate={{
@@ -90,7 +102,7 @@ export const Header = memo(function Header() {
         }}
         transition={{
           scale: navPressed ? { duration: 0.24, ease: [0.16, 1, 0.3, 1] } : { type: 'spring', stiffness: 115, damping: 23, mass: 0.9 },
-          maxWidth: { type: 'spring', stiffness: 115, damping: 23, mass: 0.9 },
+          maxWidth: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
           borderRadius: { type: 'spring', stiffness: 115, damping: 23, mass: 0.9 },
           boxShadow: { duration: 0.24 }
         }}
@@ -98,7 +110,7 @@ export const Header = memo(function Header() {
         onMouseLeave={() => { setNavHovered(false); setHoveredNavIndex(null); }}
       >
         <div className="flex h-16 w-full items-center justify-between sm:h-[4.5rem]">
-          <a className="group flex min-w-28 items-center sm:min-w-36" href="#top" aria-label="Rudhram Enterprises home" onClick={resetHoverState}>
+          <a className="group flex min-w-28 items-center sm:min-w-36" href="#top" aria-label="Rudhram Enterprises home" onClick={(e) => { e.preventDefault(); resetHoverState(); setMenuOpen(false); window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); window.history.pushState(null, '', '#top') }}>
             <img className="h-8 w-auto transition duration-300 ease-out group-hover:opacity-75 group-active:scale-[0.98] sm:h-9" src="/images/logo.png" alt="Rudhram" />
           </a>
 

@@ -12,7 +12,7 @@ const footerContactItems = ['Strategic enquiries', 'Partnerships', 'Collaboratio
 const footerLinkMap = {
   Home: '#top',
   About: '#about',
-  Philosophy: '#philosophy',
+  Story: '#story',
   Ventures: '#ventures',
   Leadership: '#leadership',
   Impact: '#impact',

@@ -1,6 +1,6 @@
 export const navItems = [
   { label: 'About', href: '#about' },
-  { label: 'Philosophy', href: '#philosophy' },
+  { label: 'Story', href: '#story' },
   { label: 'Ventures', href: '#ventures' },
   { label: 'Leadership', href: '#leadership' },
   { label: 'Impact', href: '#impact' },
@@ -99,7 +99,7 @@ export const leadership = [
 export const footerLinks = [
   'Home',
   'About',
-  'Philosophy',
+  'Story',
   'Ventures',
   'Leadership',
   'Impact',
