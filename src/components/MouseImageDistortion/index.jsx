@@ -45,7 +45,7 @@ export default function VisionariesSection() {
   }, [])
 
   return (
-    <section id="visionaries" className="bg-paper py-24 sm:py-28 lg:py-36">
+    <section id="visionaries" className="bg-paper py-16 sm:py-20 lg:py-36">
       <div className={mx}>
         <FadeIn className="max-w-5xl">
           <SectionKicker>The Visionaries</SectionKicker>
@@ -71,15 +71,14 @@ export default function VisionariesSection() {
 
       <WebGLPlane activeMenu={activeMenu} />
 
-      <div className="mt-16 sm:mt-20 lg:mt-28">
-        <div className={`${mx} py-16 sm:py-20 lg:py-28`}>
-          <FadeIn>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/80 sm:text-[11px]">
-              What We Are, In Full
-            </p>
-          </FadeIn>
+      <div className={`${mx} mt-20 sm:mt-24 lg:mt-28`}>
+        <FadeIn>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/80 sm:text-[11px]">
+            What We Are, In Full
+          </p>
+        </FadeIn>
 
-          <div className="mt-10 border-t border-ink/10 pt-10 sm:mt-14 sm:pt-14">
+        <div className="mt-10 border-t border-ink/10 pt-10 sm:mt-14 sm:pt-14">
             <FadeIn>
               <p className="font-display text-[clamp(1.5rem,3.5vw,3.2rem)] leading-[1.12] tracking-tight text-ink">
                 {manifestoLines[0]}
@@ -148,7 +147,6 @@ export default function VisionariesSection() {
             </p>
           </FadeIn>
         </div>
-      </div>
       <AnimatePresence>
         {selectedPerson && (
           <Modal person={selectedPerson} onClose={handleCloseModal} />

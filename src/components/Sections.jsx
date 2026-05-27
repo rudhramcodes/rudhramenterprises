@@ -5,7 +5,7 @@ import { footerLinks, ventures } from '../data/siteContent'
 const maxWidth = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
 const displayTitle = 'font-display text-[clamp(3rem,7vw,7.75rem)] leading-[0.92] tracking-normal text-ink [&>span]:block'
 const sectionLead = 'max-w-3xl text-lg leading-[1.7] text-stone sm:text-xl'
-const sectionShell = 'py-24 sm:py-28 lg:py-36'
+const sectionShell = 'py-16 sm:py-20 lg:py-36'
 const contactFields = ['Name', 'Email']
 const contactOptions = ['Partnership', 'Venture enquiry', 'Collaboration', 'Social impact']
 const footerContactItems = ['Strategic enquiries', 'Partnerships', 'Collaborations', 'Social impact']
@@ -23,14 +23,14 @@ const ventureNames = ventures.map((venture) => venture.name)
 export const VisionMission = memo(function VisionMission() {
   return (
     <section className="chapter grid lg:grid-cols-2">
-      <div className="reveal bg-paper px-[var(--page-gutter)] py-24 lg:py-36">
+      <div className="reveal bg-paper px-[var(--page-gutter)] py-16 sm:py-20 lg:py-36">
         <span className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">Vision</span>
         <h2 className="mt-8 font-display text-[clamp(2.65rem,11vw,4.5rem)] leading-[1.02] text-ink lg:text-7xl">
           To pioneer the future through innovation, empower communities, and redefine excellence
           with lasting impact.
         </h2>
       </div>
-      <div className="reveal bg-ink px-[var(--page-gutter)] py-24 text-paper lg:py-36">
+      <div className="reveal bg-ink px-[var(--page-gutter)] py-16 text-paper sm:py-20 lg:py-36">
         <span className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">Mission</span>
         <h2 className="mt-8 font-display text-[clamp(2.65rem,11vw,4.5rem)] leading-[1.02] text-paper lg:text-7xl">
           To inspire ideas, innovate with purpose, and deliver excellence through ventures that
@@ -67,7 +67,7 @@ export const Impact = memo(function Impact() {
 
 export const Contact = memo(function Contact() {
   return (
-    <section id="contact" className="bg-ink py-24 text-paper lg:py-36">
+    <section id="contact" className="bg-ink py-16 text-paper sm:py-20 lg:py-36">
       <div
         className={`${maxWidth} chapter relative overflow-hidden border border-paper/10 p-6 sm:p-10 lg:p-14`}
       >

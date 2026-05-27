@@ -185,10 +185,10 @@ const StoryDetail = ({ onClose }) => {
                 <FadeIn key={text} delay={0.1 + i * 0.08}>
                   <p
                     className={`leading-[1.7] sm:text-xl ${i === 1
-                        ? 'font-display text-2xl font-semibold text-ink sm:text-3xl'
-                        : i === 3
-                          ? 'font-display text-xl font-semibold text-bronze sm:text-2xl'
-                          : 'text-lg text-stone sm:text-xl'
+                      ? 'font-display text-2xl font-semibold text-ink sm:text-3xl'
+                      : i === 3
+                        ? 'font-display text-xl font-semibold text-bronze sm:text-2xl'
+                        : 'text-lg text-stone sm:text-xl'
                       }`}
                   >
                     {text}
@@ -334,7 +334,7 @@ export const Story = memo(function Story() {
   }
 
   return (
-    <section id="story" className="scroll-mt-32 bg-paper pb-16 pt-28 sm:pb-20 sm:pt-36 lg:pb-28 lg:pt-40">
+    <section id="story" className="scroll-mt-32 bg-paper pt-16 sm:pt-20 lg:pt-30">
       <div className={`${mx}`}>
         <FadeIn className="mb-8 flex items-end justify-between gap-6 sm:mb-10">
           <div>
