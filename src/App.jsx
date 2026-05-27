@@ -26,8 +26,8 @@ const App = () => {
         <VisionMission />
         <VentureGallery />
         {/* <Leadership /> */}
-        <Contact />
-        <Impact />
+        {/* <Contact /> */}
+        {/* <Impact /> */}
       </main>
       <Footer />
     </>

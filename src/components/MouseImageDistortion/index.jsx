@@ -48,12 +48,12 @@ export default function VisionariesSection() {
   const manifestoRef = useRef(null)
 
   return (
-    <section id="visionaries" className="bg-paper py-16 sm:py-20 lg:py-36">
+    <section id="visionaries" className="bg-paper pt-16 sm:pt-20 lg:pt-20">
       <div className={mx}>
         <FadeIn className="max-w-5xl">
           <SectionKicker>The Visionaries</SectionKicker>
           <h2 className="font-display text-[clamp(2.4rem,5.5vw,5.4rem)] leading-[0.96] tracking-tight text-ink">
-            The Visionaries Behind{' '}
+            The Visionaries Behind{' '} <br />
             <span className="text-bronze">Rudhram Group</span>
           </h2>
           <p className="mt-6 max-w-3xl text-base leading-[1.7] text-stone sm:text-lg">
@@ -74,18 +74,18 @@ export default function VisionariesSection() {
 
       <WebGLPlane activeMenu={activeMenu} />
 
-      <div ref={manifestoRef} className={`${mx} mt-20 sm:mt-24 lg:mt-28`} style={{ position: 'relative' }}>
+      <div ref={manifestoRef} className={`${mx} mt-12 sm:mt-18 lg:mt-28`} style={{ position: 'relative' }}>
         <FadeIn>
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/80 sm:text-[11px]">
             What We Are, In Full
           </p>
         </FadeIn>
 
-        <div className="mt-10 border-t border-ink/10 pt-10 sm:mt-14 sm:pt-14">
+        <div className="mt-8 border-t border-ink/10 pt-10 sm:mt-14 sm:pt-14">
           <FadeIn>
             <VariableProximity
               label={manifestoLines[0]}
-              className="block text-[clamp(1.5rem,3.2vw,2rem)] leading-[1.12] tracking-tight text-ink"
+              className="block text-[clamp(1.3rem,3vw,2.7rem)] leading-[1.12] tracking-tight text-ink"
               containerRef={manifestoRef}
               radius={150}
               falloff="linear"
@@ -96,7 +96,7 @@ export default function VisionariesSection() {
           </FadeIn>
         </div>
 
-        <div className="mt-10 grid gap-6 sm:mt-14 sm:grid-cols-[2.5rem_1fr] sm:gap-10 lg:gap-8">
+        <div className="mt-6 grid gap-6 sm:mt-14 sm:grid-cols-[2.5rem_1fr] sm:gap-10 lg:gap-8">
           <FadeIn className="hidden sm:block">
             <span className="block font-display text-[4rem] leading-none text-bronze/15 select-none sm:text-[4rem]">
               01
@@ -105,7 +105,7 @@ export default function VisionariesSection() {
           <FadeIn>
             <VariableProximity
               label={manifestoLines[1]}
-              className="block text-[clamp(1.5rem,3.2vw,2.5rem)] leading-[1.12] tracking-tight text-ink/85"
+              className="block text-[clamp(1.3rem,3vw,2.7rem)] leading-[1.12] tracking-tight text-ink/85"
               containerRef={manifestoRef}
               radius={150}
               falloff="linear"
@@ -118,7 +118,7 @@ export default function VisionariesSection() {
 
         <div className="mt-10 border-t border-ink/8 pt-10 sm:mt-14 sm:pt-14">
           <FadeIn>
-            <p className="font-display text-[clamp(1.5rem,3.5vw,3.2rem)] leading-[1.15] tracking-tight text-ink">
+            <p className="font-display text-[clamp(1.5rem,3.5vw,2.7rem)] leading-[1.15] tracking-tight text-ink">
               We are a system designed{' '}
               {/* <span className="text-bronze">not to do business once</span> */}
               <VariableProximity
@@ -152,7 +152,7 @@ export default function VisionariesSection() {
           </div>
         </FadeIn>
 
-        <div className="my-14 sm:my-18 lg:my-22">
+        <div className="my-10 sm:my-18 lg:my-18">
           <div className="mx-auto h-px w-20 bg-bronze/25 sm:w-24" />
         </div>
 
@@ -165,7 +165,7 @@ export default function VisionariesSection() {
               &ldquo;
             </span>
             <blockquote className="relative">
-              <p className="font-display text-[clamp(1.6rem,3.8vw,3rem)] leading-[1.08] tracking-tight text-bronze">
+              <p className="font-display text-[clamp(1.6rem,3.8vw,2.7rem)] leading-[1.08] tracking-tight text-bronze">
                 We are not here to build businesses for the present. We are here to build
                 something that lasts {'\u2014'} something that, long after we are gone, will still be doing
                 something that matters.
@@ -177,7 +177,7 @@ export default function VisionariesSection() {
         <FadeIn delay={0.3} className="mt-12 sm:mt-16">
           <VariableProximity
             label="That is who we are."
-            className="block text-[clamp(1.2rem,2.5vw,2rem)] leading-[1.1] tracking-tight text-ink/25"
+            className="block text-[clamp(1.5rem,2vw,2rem)] leading-[1.1] tracking-tight text-ink/25"
             containerRef={manifestoRef}
             radius={150}
             falloff="linear"

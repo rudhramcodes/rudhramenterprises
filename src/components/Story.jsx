@@ -334,7 +334,7 @@ export const Story = memo(function Story() {
   }
 
   return (
-    <section id="story" className="scroll-mt-32 bg-paper pt-16 sm:pt-20 lg:pt-30">
+    <section id="story" className="scroll-mt-32 bg-paper pt-16 sm:pt-20 lg:pt-20">
       <div className={`${mx}`}>
         <FadeIn className="mb-8 flex items-end justify-between gap-6 sm:mb-10">
           <div>
@@ -401,7 +401,7 @@ export const Story = memo(function Story() {
         </motion.button>
       </div>
 
-      <div className={`${mx} mt-14 sm:mt-20 lg:mt-24`}>
+      <div className={`${mx} mt-6 sm:mt-10 lg:mt-10`}>
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
           <div className="max-w-xl space-y-5">
             {shortVersion.map((text, i) => (

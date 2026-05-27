@@ -37,38 +37,37 @@ export const VentureConstellation = memo(function VentureConstellation() {
           </p>
         </div>
 
-        <div 
+        <div
           ref={containerRef}
           className="chapter relative mt-12 grid min-h-0 gap-8 overflow-hidden border border-ink/10 bg-paper p-4 sm:mt-16 sm:p-8 lg:min-h-[800px] lg:grid-cols-[1.1fr_1fr] lg:p-12"
         >
           {/* Grid Background */}
           <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#11100e_1px,transparent_1px),linear-gradient(90deg,#11100e_1px,transparent_1px)] [background-size:64px_64px]" />
-          
+
           {/* Signature Orbital Interaction */}
           <div className="relative hidden items-center justify-center lg:flex" aria-hidden="true">
             <motion.div style={{ rotate: rotation }} className="relative flex items-center justify-center">
               <LogoMark className="h-64 w-64 opacity-20 transition-opacity duration-700 hover:opacity-40" />
-              
+
               {ventures.map((venture, i) => {
                 const angle = (i * 360) / ventures.length
                 const isActive = activeIndex === i
-                
+
                 return (
                   <motion.div
                     key={venture.name}
                     className="absolute h-px origin-left transition-colors duration-500"
-                    style={{ 
+                    style={{
                       rotate: `${angle}deg`,
                       width: '240px',
-                      background: isActive 
-                        ? 'linear-gradient(90deg, #b37839 0%, transparent 100%)' 
+                      background: isActive
+                        ? 'linear-gradient(90deg, #b37839 0%, transparent 100%)'
                         : 'linear-gradient(90deg, rgba(17, 16, 14, 0.1) 0%, transparent 100%)'
                     }}
                   >
-                    <motion.div 
-                      className={`absolute -right-2 -top-1 h-2 w-2 rounded-full border transition-all duration-500 ${
-                        isActive ? 'scale-150 border-bronze bg-bronze' : 'border-ink/20 bg-paper'
-                      }`}
+                    <motion.div
+                      className={`absolute -right-2 -top-1 h-2 w-2 rounded-full border transition-all duration-500 ${isActive ? 'scale-150 border-bronze bg-bronze' : 'border-ink/20 bg-paper'
+                        }`}
                       animate={isActive ? { boxShadow: '0 0 15px rgba(179, 120, 57, 0.5)' } : {}}
                     />
                   </motion.div>
@@ -83,11 +82,10 @@ export const VentureConstellation = memo(function VentureConstellation() {
               {ventures.map((venture, index) => (
                 <button
                   key={venture.name}
-                  className={`group relative overflow-hidden border px-4 py-4 text-left transition-all duration-500 ease-out sm:px-5 sm:py-5 ${
-                    index === activeIndex
+                  className={`group relative overflow-hidden border px-4 py-4 text-left transition-all duration-500 ease-out sm:px-5 sm:py-5 ${index === activeIndex
                       ? 'border-bronze bg-bronze text-paper shadow-[0_20px_60px_rgba(179,120,57,0.2)]'
                       : 'border-ink/5 bg-paper/60 text-ink hover:border-bronze/30 hover:bg-paper'
-                  }`}
+                    }`}
                   type="button"
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
@@ -97,7 +95,7 @@ export const VentureConstellation = memo(function VentureConstellation() {
                     {venture.name}
                   </span>
                   {index === activeIndex && (
-                    <motion.span 
+                    <motion.span
                       layoutId="active-bg"
                       className="absolute inset-0 z-0 bg-bronze"
                       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -122,15 +120,15 @@ export const VentureConstellation = memo(function VentureConstellation() {
                     {active.pillar}
                   </span>
                 </div>
-                
+
                 <h3 className="font-display text-[clamp(3rem,14vw,4.5rem)] leading-none text-paper sm:text-7xl">
                   {active.name}
                 </h3>
-                
+
                 <p className="mt-6 max-w-xl text-base leading-relaxed text-paper/70 sm:mt-8 sm:text-xl">
                   {active.line}
                 </p>
-                
+
                 <div className="mt-10 flex flex-col gap-5 border-t border-paper/10 pt-6 sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:pt-8">
                   <small className="text-[10px] font-bold uppercase tracking-[0.24em] text-paper/40 sm:tracking-[0.3em]">
                     {active.motif}

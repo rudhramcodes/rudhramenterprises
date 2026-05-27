@@ -2,8 +2,9 @@ export const navItems = [
   { label: 'About', href: '#about' },
   { label: 'Story', href: '#story' },
   { label: 'Visionaries', href: '#visionaries' },
+  { label: 'Purpose', href: '#purpose' },
   { label: 'Ventures', href: '#ventures' },
-  { label: 'Impact', href: '#impact' },
+  // { label: 'Impact', href: '#impact' },
 ]
 
 export const pillars = [

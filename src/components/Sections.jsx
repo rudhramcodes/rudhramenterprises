@@ -110,7 +110,7 @@ const MissionBlock = memo(function MissionBlock({ content }) {
 
 export const VisionMission = memo(function VisionMission() {
   return (
-    <section className="bg-paper py-16 sm:py-20 lg:py-36" id="vision-mission">
+    <section className="bg-paper pt-16 sm:pt-20 lg:pt-30" id="purpose">
       <div className="mx-auto max-w-[calc(1300px+var(--page-gutter)*2)] px-[var(--page-gutter)]">
         <FadeIn>
           <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/60 sm:text-[11px]">
@@ -123,9 +123,9 @@ export const VisionMission = memo(function VisionMission() {
           </h2>
         </FadeIn>
 
-        <div className="mt-12 sm:mt-16 lg:mt-20">
+        <div className="mt-4 sm:mt-6 lg:mt-6">
           <FadeIn delay={0.1}>
-            <div className="border-t border-ink/8 pt-10 sm:pt-14 lg:pt-16">
+            <div className="border-t border-ink/8 pt-4 sm:pt-6 lg:pt-6">
               <VisionBlock content={visionContent} />
             </div>
           </FadeIn>

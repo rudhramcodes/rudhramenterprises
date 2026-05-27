@@ -88,7 +88,7 @@ export const Header = memo(function Header() {
 
   const smallScreen = !isDesktop
   const menuMode = compact || menuOpen || smallScreen
-  const expandedItems = useMemo(() => [...navItems, { label: 'Contact', href: '#contact' }], [])
+  const expandedItems = useMemo(() => [...navItems], [])
   const restingNavScale = navHovered ? 1.006 : 1
 
   return (
