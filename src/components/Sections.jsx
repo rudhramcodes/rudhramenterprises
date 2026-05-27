@@ -131,11 +131,6 @@ export const VisionMission = memo(function VisionMission() {
           </FadeIn>
 
           <div className="my-12 sm:my-16 lg:my-20">
-            <div className="flex items-center gap-4">
-              <div className="h-px flex-1 bg-bronze/15" />
-              <div className="size-1.5 shrink-0 rounded-full bg-bronze/30" />
-              <div className="h-px flex-1 bg-bronze/15" />
-            </div>
           </div>
 
           <FadeIn delay={0.15}>

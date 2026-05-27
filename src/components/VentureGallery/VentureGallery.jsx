@@ -26,7 +26,7 @@ const VentureRow = memo(function VentureRow({ venture, index }) {
 
   return (
     <div
-      className="group border-b border-ink/8 transition-colors hover:bg-ivory/40"
+      className="group border-b border-ink/8 transition-colors"
       onMouseEnter={() => setIsActive(true)}
       onMouseLeave={() => setIsActive(false)}
     >
@@ -54,11 +54,10 @@ const VentureRow = memo(function VentureRow({ venture, index }) {
             {venture.tag}
           </span>
           <span
-            className={`whitespace-nowrap rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.15em] sm:px-4 sm:py-1.5 sm:text-[10px] ${
-              venture.status === 'available'
-                ? 'bg-emerald-50 text-emerald-700'
-                : 'bg-amber-50/60 text-bronze/60'
-            }`}
+            className={`whitespace-nowrap rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.15em] sm:px-4 sm:py-1.5 sm:text-[10px] ${venture.status === 'available'
+              ? 'bg-emerald-50 text-emerald-700'
+              : 'bg-amber-50/60 text-bronze/60'
+              }`}
           >
             {venture.status === 'available' ? 'Active' : 'Upcoming'}
           </span>
