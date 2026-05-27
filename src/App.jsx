@@ -7,6 +7,7 @@ import { Story } from './components/Story'
 import { VentureConstellation } from './components/VentureConstellation'
 import VisionariesSection from './components/MouseImageDistortion'
 import { VisionMission, Impact, Contact, Footer } from './components/Sections'
+import { VentureGallery } from './components/VentureGallery/VentureGallery'
 import { Leadership } from './components/Leadership'
 
 const App = () => {
@@ -23,9 +24,10 @@ const App = () => {
         <VisionariesSection />
         {/* <VentureConstellation /> */}
         <VisionMission />
-        <Leadership />
-        <Impact />
+        <VentureGallery />
+        {/* <Leadership /> */}
         <Contact />
+        <Impact />
       </main>
       <Footer />
     </>

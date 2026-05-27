@@ -1,0 +1,39 @@
+.project {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.imgContainer {
+  overflow: hidden;
+  width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.imgContainer img {
+  height: 4rem;
+  width: auto;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .imgContainer img {
+    height: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .imgContainer img {
+    height: 6rem;
+  }
+}

@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { motion } from 'framer-motion'
 import { SectionKicker, MagneticButton, LogoMark } from './ui'
 import { footerLinks, ventures } from '../data/siteContent'
 
@@ -20,22 +21,129 @@ const footerLinkMap = {
 }
 const ventureNames = ventures.map((venture) => venture.name)
 
+const visionContent = [
+  'Rudhram Enterprises envisions becoming a pioneering force that continuously transforms ideas into impactful ventures. It aims to create a future where innovation is not driven by trends, but by real-world needs and purposeful thinking.',
+  'Built from a journey of uncertainty and transformation, Rudhram\u2019s vision is rooted in the belief that true growth comes from clarity, discipline, and long-term thinking.',
+  'The company strives to empower communities by creating opportunities, building systems, and delivering solutions that improve lives. Rudhram seeks to redefine excellence by balancing creativity with structure, ambition with responsibility, and growth with sustainability \u2014 ultimately building a legacy that creates meaningful impact across industries and generations.',
+]
+
+const missionContent = [
+  'Rudhram Enterprises exists to transform ideas into structured, impactful ventures. Its mission is to observe real-world challenges, design meaningful solutions, and build systems that can scale with clarity and discipline.',
+  'Driven by the belief that business must go beyond profit, Rudhram focuses on creating ventures that contribute to society, empower individuals, and deliver lasting value.',
+  'Every initiative is approached with a commitment to innovation, excellence, and responsibility. The mission is not only to build successful brands, but to establish a system that consistently creates, nurtures, and scales ventures with purpose \u2014 ensuring that growth is sustainable, impact is real, and every step aligns with a larger vision of building something that truly matters.',
+]
+
+const FadeIn = ({ children, delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 24 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+    viewport={{ once: true, amount: 0.25 }}
+  >
+    {children}
+  </motion.div>
+)
+
+const VisionBlock = memo(function VisionBlock({ content }) {
+  return (
+    <div className="relative overflow-hidden">
+      <span
+        className="pointer-events-none absolute -top-8 left-0 select-none font-display text-[clamp(12rem,30vw,28rem)] leading-none text-bronze/[0.06]"
+        aria-hidden="true"
+      >
+        V
+      </span>
+      <div className="relative">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-bronze sm:text-[11px]">
+          Vision
+        </span>
+        <div className="mt-3 h-px w-10 bg-bronze/40 sm:mt-4" />
+
+        <p className="mt-8 font-display text-[clamp(1.3rem,2.8vw,2.6rem)] leading-[1.12] tracking-tight text-ink sm:mt-10 max-w-3xl">
+          {content[0]}
+        </p>
+
+        <div className="mt-8 grid gap-6 sm:mt-10 sm:grid-cols-2 sm:gap-8">
+          <p className="text-base leading-[1.7] text-stone sm:text-lg">
+            {content[1]}
+          </p>
+          <p className="text-base leading-[1.7] text-stone sm:text-lg">
+            {content[2]}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+})
+
+const MissionBlock = memo(function MissionBlock({ content }) {
+  return (
+    <div className="relative overflow-hidden">
+      <span
+        className="pointer-events-none absolute -bottom-8 right-0 select-none font-display text-[clamp(12rem,30vw,28rem)] leading-none text-bronze/[0.06]"
+        aria-hidden="true"
+      >
+        M
+      </span>
+      <div className="relative">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-bronze sm:text-[11px]">
+          Mission
+        </span>
+        <div className="mt-3 h-px w-10 bg-bronze/40 sm:mt-4" />
+
+        <p className="mt-8 font-display text-[clamp(1.3rem,2.8vw,2.6rem)] leading-[1.12] tracking-tight text-ink sm:mt-10 max-w-3xl">
+          {content[0]}
+        </p>
+
+        <div className="mt-8 grid gap-6 sm:mt-10 sm:grid-cols-2 sm:gap-8">
+          <p className="text-base leading-[1.7] text-stone sm:text-lg">
+            {content[1]}
+          </p>
+          <p className="text-base leading-[1.7] text-stone sm:text-lg">
+            {content[2]}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+})
+
 export const VisionMission = memo(function VisionMission() {
   return (
-    <section className="chapter grid lg:grid-cols-2">
-      <div className="reveal bg-paper px-[var(--page-gutter)] py-16 sm:py-20 lg:py-36">
-        <span className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">Vision</span>
-        <h2 className="mt-8 font-display text-[clamp(2.65rem,11vw,4.5rem)] leading-[1.02] text-ink lg:text-7xl">
-          To pioneer the future through innovation, empower communities, and redefine excellence
-          with lasting impact.
-        </h2>
-      </div>
-      <div className="reveal bg-ink px-[var(--page-gutter)] py-16 text-paper sm:py-20 lg:py-36">
-        <span className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">Mission</span>
-        <h2 className="mt-8 font-display text-[clamp(2.65rem,11vw,4.5rem)] leading-[1.02] text-paper lg:text-7xl">
-          To inspire ideas, innovate with purpose, and deliver excellence through ventures that
-          empower communities, transform experiences, and create legacy.
-        </h2>
+    <section className="bg-paper py-16 sm:py-20 lg:py-36" id="vision-mission">
+      <div className="mx-auto max-w-[calc(1300px+var(--page-gutter)*2)] px-[var(--page-gutter)]">
+        <FadeIn>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/60 sm:text-[11px]">
+            Our Purpose
+          </span>
+          <h2 className="mt-4 font-display text-[clamp(2rem,5vw,4.5rem)] leading-[0.96] tracking-tight text-ink">
+            What drives everything
+            <br />
+            <span className="text-bronze">we build</span>
+          </h2>
+        </FadeIn>
+
+        <div className="mt-12 sm:mt-16 lg:mt-20">
+          <FadeIn delay={0.1}>
+            <div className="border-t border-ink/8 pt-10 sm:pt-14 lg:pt-16">
+              <VisionBlock content={visionContent} />
+            </div>
+          </FadeIn>
+
+          <div className="my-12 sm:my-16 lg:my-20">
+            <div className="flex items-center gap-4">
+              <div className="h-px flex-1 bg-bronze/15" />
+              <div className="size-1.5 shrink-0 rounded-full bg-bronze/30" />
+              <div className="h-px flex-1 bg-bronze/15" />
+            </div>
+          </div>
+
+          <FadeIn delay={0.15}>
+            <div className="border-t border-ink/8 pt-10 sm:pt-14 lg:pt-16">
+              <MissionBlock content={missionContent} />
+            </div>
+          </FadeIn>
+        </div>
       </div>
     </section>
   )
