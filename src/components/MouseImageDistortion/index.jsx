@@ -45,7 +45,7 @@ export default function VisionariesSection() {
   }, [])
 
   return (
-    <section className="bg-paper py-24 sm:py-28 lg:py-36">
+    <section id="visionaries" className="bg-paper py-24 sm:py-28 lg:py-36">
       <div className={mx}>
         <FadeIn className="max-w-5xl">
           <SectionKicker>The Visionaries</SectionKicker>
@@ -71,36 +71,79 @@ export default function VisionariesSection() {
 
       <WebGLPlane activeMenu={activeMenu} />
 
-      <div className="mt-16 bg-ink sm:mt-20 lg:mt-28">
-        <div className={`${mx} py-20 sm:py-28 lg:py-36`}>
-          <FadeIn className="max-w-4xl">
+      <div className="mt-16 sm:mt-20 lg:mt-28">
+        <div className={`${mx} py-16 sm:py-20 lg:py-28`}>
+          <FadeIn>
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/80 sm:text-[11px]">
               What We Are, In Full
             </p>
           </FadeIn>
 
-          <div className="mt-10 space-y-6 sm:space-y-7 lg:space-y-8">
-            {manifestoLines.map((line, i) => (
-              <FadeIn key={line} delay={0.1 + i * 0.08}>
-                <p className="max-w-4xl font-display text-[clamp(1.5rem,3.5vw,3.2rem)] leading-[1.12] tracking-tight text-paper">
-                  {line}
-                </p>
-              </FadeIn>
-            ))}
+          <div className="mt-10 border-t border-ink/10 pt-10 sm:mt-14 sm:pt-14">
+            <FadeIn>
+              <p className="font-display text-[clamp(1.5rem,3.5vw,3.2rem)] leading-[1.12] tracking-tight text-ink">
+                {manifestoLines[0]}
+              </p>
+            </FadeIn>
           </div>
 
-          <FadeIn delay={0.5} className="mt-14 sm:mt-20 lg:mt-24">
-            <blockquote className="max-w-4xl border-l-[3px] border-bronze pl-5 sm:pl-7">
-              <p className="font-display text-[clamp(1.6rem,3.8vw,3.5rem)] leading-[1.08] tracking-tight text-bronze">
-                {'\u201C'}We are not here to build businesses for the present. We are here to build
-                something that lasts {'\u2014'} something that, long after we are gone, will still be doing
-                something that matters.{'\u201D'}
+          <div className="mt-10 grid gap-6 sm:mt-14 sm:grid-cols-[2.5rem_1fr] sm:gap-10 lg:gap-14">
+            <FadeIn className="hidden sm:block">
+              <span className="block font-display text-[4rem] leading-none text-bronze/15 select-none sm:text-[5rem]">
+                01
+              </span>
+            </FadeIn>
+            <FadeIn>
+              <p className="font-display text-[clamp(1.5rem,3.2vw,3rem)] leading-[1.12] tracking-tight text-ink/85">
+                {manifestoLines[1]}
               </p>
-            </blockquote>
+            </FadeIn>
+          </div>
+
+          <div className="mt-10 border-t border-ink/8 pt-10 sm:mt-14 sm:pt-14">
+            <FadeIn>
+              <p className="font-display text-[clamp(1.5rem,3.5vw,3.2rem)] leading-[1.15] tracking-tight text-ink">
+                We are a system designed{' '}
+                <span className="text-bronze">not to do business once</span>
+                , but to build meaningful businesses,{' '}
+                <em className="font-display">again and again</em>
+                , for as long as there are real problems that need real solutions.
+              </p>
+            </FadeIn>
+          </div>
+
+          <FadeIn className="mt-10 sm:mt-14">
+            <div className="border-l-[2px] border-bronze/50 pl-5 sm:pl-8">
+              <p className="font-display italic text-[clamp(1.3rem,2.8vw,2.5rem)] leading-[1.22] tracking-tight text-stone">
+                {manifestoLines[3]}
+              </p>
+            </div>
           </FadeIn>
 
-          <FadeIn delay={0.65} className="mt-12 sm:mt-16">
-            <p className="font-display text-[clamp(1.4rem,3vw,2.8rem)] leading-[1.1] tracking-tight text-paper/50">
+          <div className="my-14 sm:my-18 lg:my-22">
+            <div className="mx-auto h-px w-20 bg-bronze/25 sm:w-24" />
+          </div>
+
+          <FadeIn>
+            <div className="relative">
+              <span
+                className="absolute -top-6 left-0 font-display text-[8rem] leading-none text-bronze/8 select-none sm:-top-8 sm:text-[12rem] lg:text-[16rem]"
+                aria-hidden="true"
+              >
+                &ldquo;
+              </span>
+              <blockquote className="relative">
+                <p className="font-display text-[clamp(1.6rem,3.8vw,3.5rem)] leading-[1.08] tracking-tight text-bronze">
+                  We are not here to build businesses for the present. We are here to build
+                  something that lasts {'\u2014'} something that, long after we are gone, will still be doing
+                  something that matters.
+                </p>
+              </blockquote>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.3} className="mt-12 sm:mt-16">
+            <p className="font-display text-[clamp(1.2rem,2.5vw,2.4rem)] leading-[1.1] tracking-tight text-ink/25">
               That is who we are.
             </p>
           </FadeIn>

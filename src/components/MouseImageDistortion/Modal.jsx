@@ -36,7 +36,7 @@ export default function Modal({ person, onClose }) {
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-paper/90 text-ink shadow-lg transition-colors hover:bg-paper focus-visible:outline-2 focus-visible:outline-bronze sm:right-4 sm:top-4"
+          className="absolute right-3 top-3 z-10 grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-paper/90 text-ink shadow-lg transition-colors hover:bg-paper sm:right-4 sm:top-4"
         >
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
