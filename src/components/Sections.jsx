@@ -253,45 +253,4 @@ const FooterColumn = memo(function FooterColumn({ title, items, getHref }) {
   )
 })
 
-export const Footer = memo(function Footer() {
-  return (
-    <footer className="relative overflow-hidden bg-ink pb-10 pt-20 text-paper">
-      <LogoMark className="pointer-events-none absolute bottom-0 right-0 h-[34rem] translate-x-1/4 translate-y-1/4 opacity-[0.045]" />
-      <div className={`${maxWidth} relative z-10`}>
-        <div className="grid gap-12 border-t border-paper/10 pt-12 lg:grid-cols-[1.1fr_1fr]">
-          <div>
-            <h2 className="font-display text-[clamp(3rem,13vw,4.5rem)] leading-none text-paper lg:text-7xl">
-              RUDHRAM ENTERPRISES
-            </h2>
-            <p className="mt-5 text-xl text-bronze">Leading, What's Next.</p>
-            <span className="mt-6 block max-w-xl text-lg leading-[1.65] text-paper/62">
-              A purpose-driven enterprise ecosystem rooted in culture, shaped by innovation, and
-              built for lasting impact.
-            </span>
-          </div>
-          <div className="grid gap-8 sm:grid-cols-3">
-            <FooterColumn
-              title="Navigation"
-              items={footerLinks}
-              getHref={(item) => footerLinkMap[item]}
-            />
-            <FooterColumn
-              title="Ventures"
-              items={ventureNames}
-              getHref={() => '#ventures'}
-            />
-            <FooterColumn
-              title="Contact"
-              items={footerContactItems}
-              getHref={(item) => (item === 'Social impact' ? '#impact' : '#contact')}
-            />
-          </div>
-        </div>
-        <div className="mt-16 flex flex-col gap-3 border-t border-paper/10 pt-6 text-sm text-paper/45 sm:flex-row sm:justify-between">
-          <span>(c) 2026 Rudhram Enterprises. All rights reserved.</span>
-          <span>Inspiring. Innovative. Impeccable.</span>
-        </div>
-      </div>
-    </footer>
-  )
-})
+

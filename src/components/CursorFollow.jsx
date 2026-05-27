@@ -47,7 +47,7 @@ export const CursorFollow = memo(function CursorFollow({
       }}
       transition={{ duration: 0.2 }}
     >
-      <div className="ios-glass-button rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-ink shadow-2xl">
+      <div className="rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-ink shadow-2xl bg-white/80 backdrop-blur-xl border border-white/40">
         {children}
       </div>
     </motion.div>

@@ -336,8 +336,11 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
 
-  .expanded-nav-link,
-  .ios-glass-link {
+  .expanded-nav-link {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ───── Footer ───── */
+
+/* Styles removed as they are now handled in Footer.css */

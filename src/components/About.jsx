@@ -115,7 +115,7 @@ const AboutDetailPage = memo(function AboutDetailPage({ item, onBack }) {
             <button
               type="button"
               onClick={onBack}
-              className="detail-back-button shadow-sm group relative inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-2xl border border-ink/15 text-ink outline-none transition-all duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-bronze/55 hover:text-bronze focus-visible:-translate-y-0.5 focus-visible:scale-[1.035] focus-visible:border-bronze/65 focus-visible:text-bronze"
+              className="shadow-sm group relative inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-2xl border border-ink/15 text-ink outline-none transition-all duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-bronze/55 hover:text-bronze focus-visible:-translate-y-0.5 focus-visible:scale-[1.035] focus-visible:border-bronze/65 focus-visible:text-bronze bg-white/80 backdrop-blur-xl"
               aria-label="Back to about section"
             >
               {/* <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/55 via-white/20 to-transparent opacity-90 transition duration-500 group-hover:opacity-100" /> */}
@@ -167,7 +167,7 @@ const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
           <img src={item.image} alt={item.title} className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 z-30 flex flex-col justify-end px-4 pb-12">
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/20 to-transparent pointer-events-none" />
-            <div className="ios-glass-menu reveal relative rounded-[2.5rem] p-8 shadow-[0_30px_60px_rgba(0,0,0,0.12)]">
+            <div className="reveal relative rounded-[2.5rem] p-8 shadow-[0_30px_60px_rgba(0,0,0,0.12)] bg-white/30 backdrop-blur-2xl border border-white/40">
               <h3 className="font-display font-bold text-[2.6rem] text-ink leading-[0.9] tracking-tighter mb-4">{item.title}</h3>
               <p className="text-[15px] leading-relaxed font-medium text-ink/80">{item.description}</p>
             </div>
