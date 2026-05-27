@@ -1,4 +1,5 @@
 @import url("https://cdn.jsdelivr.net/npm/geomanist@0.0.3/geomanist.css");
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap');
 @import "tailwindcss";
 
 @font-face {

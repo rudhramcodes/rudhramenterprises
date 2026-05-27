@@ -1,9 +1,10 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import WebGLPlane from './WebGLPlane'
 import PeopleList from './PeopleList'
 import Modal from './Modal'
 import { SectionKicker } from '../ui'
+import VariableProximity from '../VariableProximity/VariableProximity'
 
 const mx = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
 const ease = [0.22, 1, 0.36, 1]
@@ -44,6 +45,8 @@ export default function VisionariesSection() {
     setSelectedPerson(null)
   }, [])
 
+  const manifestoRef = useRef(null)
+
   return (
     <section id="visionaries" className="bg-paper py-16 sm:py-20 lg:py-36">
       <div className={mx}>
@@ -71,7 +74,7 @@ export default function VisionariesSection() {
 
       <WebGLPlane activeMenu={activeMenu} />
 
-      <div className={`${mx} mt-20 sm:mt-24 lg:mt-28`}>
+      <div ref={manifestoRef} className={`${mx} mt-20 sm:mt-24 lg:mt-28`} style={{ position: 'relative' }}>
         <FadeIn>
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/80 sm:text-[11px]">
             What We Are, In Full
@@ -80,9 +83,16 @@ export default function VisionariesSection() {
 
         <div className="mt-10 border-t border-ink/10 pt-10 sm:mt-14 sm:pt-14">
             <FadeIn>
-              <p className="font-display text-[clamp(1.5rem,3.5vw,3.2rem)] leading-[1.12] tracking-tight text-ink">
-                {manifestoLines[0]}
-              </p>
+              <VariableProximity
+                label={manifestoLines[0]}
+                className="block text-[clamp(1.5rem,3.5vw,3.2rem)] leading-[1.12] tracking-tight text-ink"
+                containerRef={manifestoRef}
+                radius={150}
+                falloff="linear"
+                fromFontVariationSettings="'wght' 300"
+                toFontVariationSettings="'wght' 900"
+                style={{ display: 'block' }}
+              />
             </FadeIn>
           </div>
 
@@ -93,9 +103,16 @@ export default function VisionariesSection() {
               </span>
             </FadeIn>
             <FadeIn>
-              <p className="font-display text-[clamp(1.5rem,3.2vw,3rem)] leading-[1.12] tracking-tight text-ink/85">
-                {manifestoLines[1]}
-              </p>
+              <VariableProximity
+                label={manifestoLines[1]}
+                className="block text-[clamp(1.5rem,3.2vw,3rem)] leading-[1.12] tracking-tight text-ink/85"
+                containerRef={manifestoRef}
+                radius={150}
+                falloff="linear"
+                fromFontVariationSettings="'wght' 300"
+                toFontVariationSettings="'wght' 900"
+                style={{ display: 'block' }}
+              />
             </FadeIn>
           </div>
 
@@ -105,17 +122,24 @@ export default function VisionariesSection() {
                 We are a system designed{' '}
                 <span className="text-bronze">not to do business once</span>
                 , but to build meaningful businesses,{' '}
-                <em className="font-display">again and again</em>
+                <em className="">again and again</em>
                 , for as long as there are real problems that need real solutions.
               </p>
             </FadeIn>
           </div>
 
           <FadeIn className="mt-10 sm:mt-14">
-            <div className="border-l-[2px] border-bronze/50 pl-5 sm:pl-8">
-              <p className="font-display italic text-[clamp(1.3rem,2.8vw,2.5rem)] leading-[1.22] tracking-tight text-stone">
-                {manifestoLines[3]}
-              </p>
+            <div className="border-l-[2px] border-bronze/50 pl-5 sm:pl-8 italic">
+              <VariableProximity
+                label={manifestoLines[3]}
+                className="block font-display text-[clamp(1.3rem,2.8vw,2.5rem)] leading-[1.22] tracking-tight text-stone"
+                containerRef={manifestoRef}
+                radius={150}
+                falloff="linear"
+                fromFontVariationSettings="'wght' 300"
+                toFontVariationSettings="'wght' 900"
+                style={{ display: 'block' }}
+              />
             </div>
           </FadeIn>
 
@@ -142,9 +166,16 @@ export default function VisionariesSection() {
           </FadeIn>
 
           <FadeIn delay={0.3} className="mt-12 sm:mt-16">
-            <p className="font-display text-[clamp(1.2rem,2.5vw,2.4rem)] leading-[1.1] tracking-tight text-ink/25">
-              That is who we are.
-            </p>
+            <VariableProximity
+              label="That is who we are."
+              className="block text-[clamp(1.2rem,2.5vw,2.4rem)] leading-[1.1] tracking-tight text-ink/25"
+              containerRef={manifestoRef}
+              radius={150}
+              falloff="linear"
+              fromFontVariationSettings="'wght' 300"
+              toFontVariationSettings="'wght' 900"
+              style={{ display: 'block' }}
+            />
           </FadeIn>
         </div>
       <AnimatePresence>
