@@ -33,6 +33,7 @@ export const Header = memo(function Header() {
   const [navPressed, setNavPressed] = useState(false)
   const pressTimerRef = useRef(null)
   const headerRef = useRef(null)
+  const navRef = useRef(null)
 
   const resetHoverState = useCallback(() => {
     setHoveredNavIndex(null)
@@ -77,12 +78,12 @@ export const Header = memo(function Header() {
   useEffect(() => {
     if (!menuOpen) return
     const handleClickOutside = (e) => {
-      if (headerRef.current && !headerRef.current.contains(e.target)) {
+      if (navRef.current && !navRef.current.contains(e.target)) {
         setMenuOpen(false)
       }
     }
-    document.addEventListener('mousedown', handleClickOutside, { passive: true })
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
   }, [menuOpen])
 
   const smallScreen = !isDesktop
@@ -93,6 +94,7 @@ export const Header = memo(function Header() {
   return (
     <header ref={headerRef} className={`fixed left-0 top-0 z-50 w-full px-[var(--page-gutter)] transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${compact ? 'pt-2' : 'pt-3 sm:pt-4'}`}>
       <motion.div
+        ref={navRef}
         className="ios-glass-nav mx-auto overflow-hidden rounded-[24px] px-4 sm:rounded-[28px] sm:px-5"
         animate={{
           scale: navPressed ? [restingNavScale, 0.995, restingNavScale] : restingNavScale,

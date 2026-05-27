@@ -3,7 +3,7 @@ import { visionaries } from './data'
 export default function PeopleList({ setActiveMenu, onPersonClick }) {
   return (
     <div className="relative z-10">
-      <ul className="divide-y divide-ink/10 border-b border-ink/10">
+      <ul>
         {visionaries.map((person, i) => (
           <li
             key={person.id}
@@ -14,7 +14,7 @@ export default function PeopleList({ setActiveMenu, onPersonClick }) {
             <button
               type="button"
               onClick={() => onPersonClick(person)}
-              className="flex w-full items-center gap-4 px-[var(--page-gutter)] py-5 text-left outline-none transition-colors duration-300 hover:bg-ink/[0.03] sm:py-6 lg:py-7"
+              className="flex w-full cursor-pointer items-center gap-4 px-3 py-5 text-left outline-none transition-colors duration-300 hover:bg-ink/[0.03] sm:px-4 sm:py-6 lg:px-6 lg:py-7"
             >
               <span className="w-8 shrink-0 font-display text-sm text-ink/25 sm:w-10 sm:text-base">
                 {String(i + 1).padStart(2, '0')}
