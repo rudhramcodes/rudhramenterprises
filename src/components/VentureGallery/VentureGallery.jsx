@@ -71,7 +71,7 @@ export const VentureGallery = memo(function VentureGallery() {
   return (
     <section
       id="ventures"
-      className="bg-paper py-16 sm:py-20 lg:py-36"
+      className="bg-ivory py-16 sm:py-20 lg:py-36"
     >
       <div className="mx-auto max-w-[calc(1200px+var(--page-gutter)*2)] px-[var(--page-gutter)]">
         <motion.div

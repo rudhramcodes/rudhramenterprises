@@ -85,7 +85,7 @@ export default function VisionariesSection() {
           <FadeIn>
             <VariableProximity
               label={manifestoLines[0]}
-              className="block text-[clamp(1.5rem,3.2vw,3rem)] leading-[1.12] tracking-tight text-ink"
+              className="block text-[clamp(1.5rem,3.2vw,2rem)] leading-[1.12] tracking-tight text-ink"
               containerRef={manifestoRef}
               radius={150}
               falloff="linear"
@@ -96,16 +96,16 @@ export default function VisionariesSection() {
           </FadeIn>
         </div>
 
-        <div className="mt-10 grid gap-6 sm:mt-14 sm:grid-cols-[2.5rem_1fr] sm:gap-10 lg:gap-14">
+        <div className="mt-10 grid gap-6 sm:mt-14 sm:grid-cols-[2.5rem_1fr] sm:gap-10 lg:gap-8">
           <FadeIn className="hidden sm:block">
-            <span className="block font-display text-[4rem] leading-none text-bronze/15 select-none sm:text-[5rem]">
+            <span className="block font-display text-[4rem] leading-none text-bronze/15 select-none sm:text-[4rem]">
               01
             </span>
           </FadeIn>
           <FadeIn>
             <VariableProximity
               label={manifestoLines[1]}
-              className="block text-[clamp(1.5rem,3.2vw,3rem)] leading-[1.12] tracking-tight text-ink/85"
+              className="block text-[clamp(1.5rem,3.2vw,2.5rem)] leading-[1.12] tracking-tight text-ink/85"
               containerRef={manifestoRef}
               radius={150}
               falloff="linear"
@@ -177,7 +177,7 @@ export default function VisionariesSection() {
         <FadeIn delay={0.3} className="mt-12 sm:mt-16">
           <VariableProximity
             label="That is who we are."
-            className="block text-[clamp(1.2rem,2.5vw,2.4rem)] leading-[1.1] tracking-tight text-ink/25"
+            className="block text-[clamp(1.2rem,2.5vw,2rem)] leading-[1.1] tracking-tight text-ink/25"
             containerRef={manifestoRef}
             radius={150}
             falloff="linear"
