@@ -2,7 +2,7 @@ import { memo } from 'react'
 import { motion } from 'framer-motion'
 import { SectionKicker, LogoMark } from './ui'
 import { AwwwardsButton } from './ui/AwwwardsButton'
-import { footerLinks, ventures } from '../data/siteContent'
+// import { ventures } from '../data/siteContent'
 
 const maxWidth = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
 const displayTitle = 'font-display text-[clamp(3rem,7vw,7.75rem)] leading-[0.92] tracking-normal text-ink [&>span]:block'
@@ -10,17 +10,17 @@ const sectionLead = 'max-w-3xl text-lg leading-[1.7] text-stone sm:text-xl'
 const sectionShell = 'py-16 sm:py-20 lg:py-36'
 const contactFields = ['Name', 'Email']
 const contactOptions = ['Partnership', 'Venture enquiry', 'Collaboration', 'Social impact']
-const footerContactItems = ['Strategic enquiries', 'Partnerships', 'Collaborations', 'Social impact']
-const footerLinkMap = {
-  Home: '#top',
-  About: '#about',
-  Story: '#story',
-  Ventures: '#ventures',
-  Leadership: '#leadership',
-  Impact: '#impact',
-  Contact: '#contact',
-}
-const ventureNames = ventures.map((venture) => venture.name)
+// const footerContactItems = ['Strategic enquiries', 'Partnerships', 'Collaborations', 'Social impact']
+// const footerLinkMap = {
+//   Home: '#top',
+//   About: '#about',
+//   Story: '#story',
+//   Ventures: '#ventures',
+//   Leadership: '#leadership',
+//   Impact: '#impact',
+//   Contact: '#contact',
+// }
+// const ventureNames = ventures.map((venture) => venture.name)
 
 const visionContent = [
   'Rudhram Enterprises envisions becoming a pioneering force that continuously transforms ideas into impactful ventures. It aims to create a future where innovation is not driven by trends, but by real-world needs and purposeful thinking.',
@@ -235,21 +235,21 @@ export const Contact = memo(function Contact() {
   )
 })
 
-const FooterColumn = memo(function FooterColumn({ title, items, getHref }) {
-  return (
-    <div>
-      <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-bronze">{title}</h3>
-      <div className="grid gap-3">
-        {items.map((item) => (
-          <a
-            className="text-sm text-paper/62 transition hover:translate-x-1 hover:text-bronze"
-            href={getHref(item)}
-            key={item}
-          >
-            {item}
-          </a>
-        ))}
-      </div>
-    </div>
-  )
-})
+// const FooterColumn = memo(function FooterColumn({ title, items, getHref }) {
+//   return (
+//     <div>
+//       <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-bronze">{title}</h3>
+//       <div className="grid gap-3">
+//         {items.map((item) => (
+//           <a
+//             className="text-sm text-paper/62 transition hover:translate-x-1 hover:text-bronze"
+//             href={getHref(item)}
+//             key={item}
+//           >
+//             {item}
+//           </a>
+//         ))}
+//       </div>
+//     </div>
+//   )
+// })

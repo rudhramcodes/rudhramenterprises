@@ -1,5 +1,5 @@
 @import url("https://cdn.jsdelivr.net/npm/geomanist@0.0.3/geomanist.css");
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap");
 @import "tailwindcss";
 
 @font-face {
@@ -28,7 +28,8 @@
 
 @theme {
   --font-display: "Goldenbook", "Golden Book", Georgia, serif;
-  --font-sans: "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-sans:
+    "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
   --color-bronze: #b37839;
   --color-bronze-dark: #8f5f2e;
   --color-bronze-soft: #f5e7d4;
@@ -42,7 +43,8 @@
 
 :root {
   --font-display: "Goldenbook", "Golden Book", Georgia, serif;
-  --font-body: "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-body:
+    "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
 
   /* Motion timing tokens */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -80,20 +82,22 @@ html {
 }
 
 @media (max-width: 767px) {
-
   html,
   body {
     overflow-x: hidden;
   }
 }
 
-
 body {
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at 86% 4%, rgba(179, 120, 57, 0.12), transparent 28rem),
+    radial-gradient(
+      circle at 86% 4%,
+      rgba(179, 120, 57, 0.12),
+      transparent 28rem
+    ),
     #fffdf8;
 }
 
@@ -111,7 +115,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
@@ -190,10 +193,12 @@ body {
   isolation: isolate;
   border: 1px solid rgba(255, 255, 255, 0.65);
   /* Super White / Milky Glass Base */
-  background: linear-gradient(165deg,
-      rgba(255, 255, 255, 0.40) 0%,
-      rgba(255, 255, 255, 0.40) 40%,
-      rgba(255, 253, 248, 0.40) 100%);
+  background: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 253, 248, 0.4) 100%
+  );
   -webkit-backdrop-filter: blur(45px) saturate(1.8);
   backdrop-filter: blur(45px) saturate(1.8);
   box-shadow:
@@ -206,10 +211,12 @@ body {
   isolation: isolate;
   border: 1px solid rgba(255, 255, 255, 0.35);
   /* softer border */
-  background: linear-gradient(165deg,
-      rgba(240, 250, 255, 0.07) 0%,
-      rgba(240, 250, 255, 0.07) 20%,
-      rgba(255, 253, 248, 0.07) 20%);
+  background: linear-gradient(
+    165deg,
+    rgba(240, 250, 255, 0.07) 0%,
+    rgba(240, 250, 255, 0.07) 20%,
+    rgba(255, 253, 248, 0.07) 20%
+  );
   -webkit-backdrop-filter: blur(45px) saturate(1.8);
   backdrop-filter: blur(45px) saturate(1.8);
   box-shadow:
@@ -224,8 +231,7 @@ body {
   z-index: -1;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.22), transparent);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent);
   /* lighter highlight */
   opacity: 0.4;
   /* less intense */
@@ -233,7 +239,11 @@ body {
 
 .detail-back-button {
   background:
-    radial-gradient(130% 130% at 18% 12%, rgba(255, 255, 255, 0.96), rgba(255, 253, 248, 0.72)),
+    radial-gradient(
+      130% 130% at 18% 12%,
+      rgba(255, 255, 255, 0.96),
+      rgba(255, 253, 248, 0.72)
+    ),
     linear-gradient(165deg, rgba(255, 255, 255, 0.44), rgba(245, 231, 212, 0.2));
   -webkit-backdrop-filter: blur(30px) saturate(1.5);
   backdrop-filter: blur(30px) saturate(1.5);
@@ -254,7 +264,6 @@ body {
 .detail-back-button:focus-visible::after {
   opacity: 1;
 }
-
 
 .ios-glass-nav::before,
 .ios-glass-menu::before,
@@ -283,10 +292,12 @@ body {
 
 .ios-glass-menu {
   /* Maximum milkiness for menus */
-  background: linear-gradient(165deg,
-      rgba(255, 255, 255, 0.40) 0%,
-      rgba(255, 255, 255, 0.40) 50%,
-      rgba(255, 255, 255, 0.40) 100%);
+  background: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
   -webkit-backdrop-filter: blur(50px) saturate(2);
   backdrop-filter: blur(50px) saturate(2);
   box-shadow:
@@ -343,7 +354,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .expanded-nav-link {
     transition-duration: 0.01ms !important;
   }
@@ -357,7 +367,7 @@ body {
   justify-content: center;
   overflow: hidden;
   border-radius: 9999px;
-  border: 1.5px solid var(--aww-b);
+  border: 1px solid var(--aww-b);
   color: var(--aww-c);
   font-family: var(--font-sans);
   font-weight: 700;
@@ -368,14 +378,26 @@ body {
   background: transparent;
   isolation: isolate;
   -webkit-font-smoothing: antialiased;
-  transition: transform 540ms var(--ease-out), box-shadow 540ms var(--ease-out);
+  transition:
+    transform 540ms var(--ease-out),
+    box-shadow 540ms var(--ease-out);
   will-change: transform;
   outline: none;
   white-space: nowrap;
+  gap: 6px;
 }
-.aww-btn:hover          { transform: translateY(-3px) scale(1.018); }
-.aww-btn:active         { transform: translateY(0) scale(0.984); transition-duration: 120ms; }
-.aww-btn:focus-visible  { box-shadow: 0 0 0 2px #b37839, 0 0 0 5px rgba(179,120,57,0.22); }
+.aww-btn:hover {
+  transform: translateY(-3px) scale(1.018);
+}
+.aww-btn:active {
+  transform: translateY(0) scale(0.984);
+  transition-duration: 120ms;
+}
+.aww-btn:focus-visible {
+  box-shadow:
+    0 0 0 2px #b37839,
+    0 0 0 5px rgba(179, 120, 57, 0.22);
+}
 
 .aww-fill {
   position: absolute;
@@ -387,13 +409,108 @@ body {
   z-index: -1;
 }
 .aww-btn:hover .aww-fill,
-.aww-btn:focus-visible .aww-fill { transform: translateY(0); }
+.aww-btn:focus-visible .aww-fill {
+  transform: translateY(0);
+}
 
-.aww-text { position: relative; display: block; overflow: hidden; line-height: 1; padding: 0.12em 0; }
-.aww-t1   { display: block; transition: transform 540ms var(--ease-out); }
-.aww-t2   { position: absolute; left: 0; top: 0.12em; display: block; transform: translateY(140%); color: var(--aww-h); transition: transform 540ms var(--ease-out); }
+.aww-text {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  line-height: 1;
+  padding: 0.12em 0;
+}
+.aww-t1 {
+  display: block;
+  transition: transform 540ms var(--ease-out);
+}
+.aww-t2 {
+  position: absolute;
+  left: 0;
+  top: 0.12em;
+  display: block;
+  transform: translateY(140%);
+  color: var(--aww-h);
+  transition: transform 540ms var(--ease-out);
+}
 
 .aww-btn:hover .aww-t1,
-.aww-btn:focus-visible .aww-t1 { transform: translateY(-145%); }
+.aww-btn:focus-visible .aww-t1 {
+  transform: translateY(-145%);
+}
 .aww-btn:hover .aww-t2,
-.aww-btn:focus-visible .aww-t2 { transform: translateY(0); }
+.aww-btn:focus-visible .aww-t2 {
+  transform: translateY(0);
+}
+
+.aww-arrow {
+  display: inline-flex;
+  align-items: center;
+  width: 1em;
+  height: 1em;
+  transition:
+    transform 540ms var(--ease-out),
+    color 540ms var(--ease-out);
+  color: var(--aww-c);
+}
+.aww-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+.aww-btn:hover .aww-arrow,
+.aww-btn:focus-visible .aww-arrow {
+  transform: translateX(3px);
+  color: var(--aww-h);
+}
+
+.aww-icon-main {
+  display: flex;
+  transition:
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.4s ease;
+}
+.aww-btn:hover .aww-icon-main {
+  transform: translateY(-150%);
+}
+
+
+
+.aww-icon-wrap {
+  position: relative;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--aww-c);
+  transition: color 540ms var(--ease-out);
+}
+ 
+.aww-btn:hover .aww-icon-wrap,
+.aww-btn:focus-visible .aww-icon-wrap {
+  color: var(--aww-h);
+}
+ 
+.aww-icon-main {
+  display: flex;
+  transition: transform 540ms var(--ease-out);
+}
+ 
+.aww-btn:hover .aww-icon-main,
+.aww-btn:focus-visible .aww-icon-main {
+  transform: translateY(-150%);
+}
+ 
+.aww-icon-clone {
+  position: absolute;
+  display: flex;
+  transform: translateY(150%);
+  transition: transform 540ms var(--ease-out);
+}
+ 
+.aww-btn:hover .aww-icon-clone,
+.aww-btn:focus-visible .aww-icon-clone {
+  transform: translateY(0);
+}
