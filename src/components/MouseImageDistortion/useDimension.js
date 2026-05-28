@@ -1,21 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 export default function useDimension() {
-  const [dimension, setDimension] = useState({ width: 0, height: 0 })
-
-  const resize = () => {
-    const { innerWidth, innerHeight } = window
-    setDimension({
-      width: innerWidth,
-      height: innerHeight,
-    })
-  }
+  const dimensionRef = useRef({ width: window.innerWidth, height: window.innerHeight })
 
   useEffect(() => {
-    resize()
-    window.addEventListener('resize', resize)
-    return () => window.removeEventListener('resize', resize)
+    const onResize = () => {
+      dimensionRef.current.width = window.innerWidth
+      dimensionRef.current.height = window.innerHeight
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  return dimension
+  return dimensionRef
 }

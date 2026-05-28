@@ -104,8 +104,8 @@ export default function WebGLPlane({ activeMenu }) {
   const imageAspect = useRef(1)
   const glReady = useRef(false)
 
-  const mouse = useMouse()
-  const dimension = useDimension()
+  const mouseRef = useMouse()
+  const dimRef = useDimension()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -226,8 +226,8 @@ export default function WebGLPlane({ activeMenu }) {
       if (!glState.current) return
 
       const { gl, program, vao, uDeltaLoc, uScaleLoc, uPositionLoc, uAlphaLoc, indexCount } = state
-      const { x, y } = mouse
-      const dim = dimension
+      const { x, y } = mouseRef.current
+      const dim = dimRef.current
 
       if (dim.width > 0 && dim.height > 0) {
         const sx = smoothMouse.current.x
@@ -274,7 +274,7 @@ export default function WebGLPlane({ activeMenu }) {
     return () => {
       if (rafId.current) cancelAnimationFrame(rafId.current)
     }
-  }, [mouse, dimension])
+  }, [])
 
   useEffect(() => {
     if (activeMenu != null && textures.current[activeMenu]) {

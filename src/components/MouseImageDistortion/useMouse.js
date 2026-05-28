@@ -1,20 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 export default function useMouse() {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
-
-  const mouseMove = (e) => {
-    const { clientX, clientY } = e
-    setMouse({
-      x: clientX,
-      y: clientY,
-    })
-  }
+  const mouseRef = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
-    window.addEventListener('mousemove', mouseMove)
-    return () => window.removeEventListener('mousemove', mouseMove)
+    const onMouseMove = (e) => {
+      mouseRef.current.x = e.clientX
+      mouseRef.current.y = e.clientY
+    }
+    window.addEventListener('mousemove', onMouseMove)
+    return () => window.removeEventListener('mousemove', onMouseMove)
   }, [])
 
-  return mouse
+  return mouseRef
 }
