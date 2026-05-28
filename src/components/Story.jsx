@@ -1,9 +1,11 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion'
 import { CaretLeft } from '@phosphor-icons/react'
 
 const mx = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
 const ease = [0.22, 1, 0.36, 1]
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
 
 const shortVersion = [
   'We are not a company built by investors, resumes, or a perfect plan. We are a group built by belief - the belief that if you move with purpose, execute with discipline, and refuse to stop, something meaningful will emerge.',
@@ -45,6 +47,12 @@ const FadeIn = ({ children, delay = 0, className = '' }) => (
 const StoryDetail = ({ onClose }) => {
   const detailRef = useRef(null)
 
+  const handleBack = useCallback((event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    onClose()
+  }, [onClose])
+
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
     const previousHtmlOverflow = document.documentElement.style.overflow
@@ -65,10 +73,10 @@ const StoryDetail = ({ onClose }) => {
     requestAnimationFrame(() => detailRef.current?.scrollTo({ top: 0, left: 0 }))
   }, [])
 
-  return (
+  return createPortal(
     <motion.div
       ref={detailRef}
-      className="fixed inset-0 z-[80] h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-contain bg-paper text-ink"
+      className="fixed inset-0 z-[1000] h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-contain bg-paper text-ink"
       data-lenis-prevent
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -77,9 +85,11 @@ const StoryDetail = ({ onClose }) => {
     >
       <motion.button
         type="button"
-        className="fixed left-5 top-5 z-[90] inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/55 bg-white/28 text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.56),0_18px_48px_rgba(17,16,14,0.22)] backdrop-blur-2xl transition-all hover:bg-white/50 duration-300 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze sm:left-8 sm:top-8"
+        className="detail-back-button fixed left-5 top-5 z-[1001] inline-flex h-12 w-12 cursor-pointer touch-manipulation items-center justify-center rounded-full border border-white/55 bg-white/28 text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.56),0_18px_48px_rgba(17,16,14,0.22)] backdrop-blur-2xl transition-all duration-300 hover:bg-white/50 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze sm:left-8 sm:top-8"
         aria-label="Back to story preview"
-        onClick={onClose}
+        onClick={handleBack}
+        onPointerUp={handleBack}
+        style={{ cursor: 'pointer', pointerEvents: 'auto' }}
         initial={{ opacity: 0, y: -12, filter: 'blur(8px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ duration: 0.55, delay: 0.32, ease }}
@@ -252,7 +262,8 @@ const StoryDetail = ({ onClose }) => {
           </div>
         </section>
       </article>
-    </motion.div>
+    </motion.div>,
+    document.body
   )
 }
 
@@ -286,7 +297,7 @@ export const Story = memo(function Story() {
   const closeStory = useCallback(() => {
     setDetailOpen(false)
     if (window.location.hash === '#story-detail') {
-      window.history.pushState(null, '', '#story')
+      window.history.replaceState(null, '', '#story')
     }
   }, [])
 
@@ -329,9 +340,8 @@ export const Story = memo(function Story() {
         const stretchAmount = 1 + (maxStretch - 1) * speedNorm
         const compressAmount = 1 / stretchAmount // area-preserving
 
-        // Skew: very subtle for that liquid feel (max ±3deg)
-        const skewX = vx * 0.2
-        const skewY = vy * 0.02
+        const skewX = clamp(vx * 0.08, -1.6, 1.6)
+        const skewY = clamp(vy * 0.01, -0.8, 0.8)
 
         el.style.transform = `translate3d(${currentPos.current.x}px, ${currentPos.current.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${stretchAmount}, ${compressAmount}) skew(${skewX}deg, ${skewY}deg)`
       }
@@ -347,6 +357,16 @@ export const Story = memo(function Story() {
 
   const handleMouseMove = (e) => {
     targetPos.current = { x: e.clientX, y: e.clientY }
+  }
+
+  const handleMouseEnter = (e) => {
+    if (e.nativeEvent.pointerType === 'touch') return
+
+    const pos = { x: e.clientX, y: e.clientY }
+    targetPos.current = pos
+    currentPos.current = pos
+    velocity.current = { x: 0, y: 0 }
+    setIsHovering(true)
   }
 
   return (
@@ -370,10 +390,10 @@ export const Story = memo(function Story() {
         <motion.button
           ref={imageRef}
           type="button"
-          className="group relative block h-[50vh] min-h-[20rem] w-full overflow-hidden rounded-[10px] bg-ink text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze sm:h-[78vh] sm:min-h-[34rem]"
+          className="group relative block h-[50vh] min-h-[20rem] w-full cursor-pointer overflow-hidden rounded-[10px] bg-ink text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze sm:h-[78vh] sm:min-h-[34rem]"
           onClick={openStory}
           onMouseMove={handleMouseMove}
-          onMouseEnter={(e) => { if (e.nativeEvent.pointerType !== 'touch') setIsHovering(true) }}
+          onMouseEnter={handleMouseEnter}
           onMouseLeave={() => setIsHovering(false)}
           transition={{ duration: 0.5, ease }}
           aria-label="Open the full Rudhram story"
@@ -441,15 +461,16 @@ export const Story = memo(function Story() {
         {isHovering && !detailOpen && (
           <motion.div
             ref={cursorRef}
-            className="pointer-events-none fixed left-0 top-0 z-[999] hidden lg:flex h-24 w-24 items-center justify-center rounded-full bg-[#1a1a1a] shadow-[0_4px_24px_rgba(0,0,0,0.25)]"
+            className="pointer-events-none fixed left-0 top-0 z-[999] hidden h-24 w-24 items-center justify-center rounded-full border border-white/25 bg-bronze lg:flex"
             style={{
+              transform: 'translate3d(-999px, -999px, 0) translate(-50%, -50%)',
               willChange: 'transform',
               backfaceVisibility: 'hidden',
             }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           >
             <span
               ref={cursorTextRef}
@@ -483,8 +504,8 @@ function CounterRotateText({ cursorRef, textRef, velocity }) {
       const vx = velocity.current.x
       const vy = velocity.current.y
       const angle = Math.atan2(vy, vx) * (180 / Math.PI)
-      const skewX = vx * 0.2
-      const skewY = vy * 0.02
+      const skewX = clamp(vx * 0.08, -1.6, 1.6)
+      const skewY = clamp(vy * 0.01, -0.8, 0.8)
       if (textRef.current) {
         // Undo parent rotation + skew so text stays perfectly horizontal and undistorted
         textRef.current.style.transform = `skew(${-skewY}deg, ${-skewX}deg) rotate(${-angle}deg)`
