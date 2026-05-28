@@ -266,11 +266,16 @@ const Footer = memo(function Footer() {
     updateTime()
     const id = setInterval(updateTime, 60000)
 
+    let rafId = null
     const onScroll = () => {
-      const scrollTop = window.scrollY
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0
-      setScrollProgress(progress)
+      if (rafId !== null) return
+      rafId = requestAnimationFrame(() => {
+        rafId = null
+        const scrollTop = window.scrollY
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight
+        const progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0
+        setScrollProgress(progress)
+      })
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
@@ -278,6 +283,7 @@ const Footer = memo(function Footer() {
     return () => {
       clearInterval(id)
       window.removeEventListener('scroll', onScroll)
+      if (rafId !== null) cancelAnimationFrame(rafId)
     }
   }, [])
 
