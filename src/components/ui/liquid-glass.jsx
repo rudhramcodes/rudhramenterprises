@@ -3,28 +3,28 @@ import { motion } from 'motion/react'
 import { useState } from 'react'
 
 const blurClasses = {
-  sm: 'backdrop-blur-sm',
-  md: 'backdrop-blur-md',
-  lg: 'backdrop-blur-lg',
-  xl: 'backdrop-blur-xl',
+  sm: 'backdrop-blur-[4px]',
+  md: 'backdrop-blur-[8px]',
+  lg: 'backdrop-blur-[12px]',
+  xl: 'backdrop-blur-[16px]',
 }
 
 const shadowStyles = {
   none: 'inset 0 0 0 0 rgba(255, 255, 255, 0)',
-  xs: 'inset 1px 1px 1px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 1px 0 rgba(255, 255, 255, 0.3)',
-  sm: 'inset 2px 2px 2px 0 rgba(255, 255, 255, 0.35), inset -2px -2px 2px 0 rgba(255, 255, 255, 0.35)',
-  md: 'inset 3px 3px 3px 0 rgba(255, 255, 255, 0.45), inset -3px -3px 3px 0 rgba(255, 255, 255, 0.45)',
-  lg: 'inset 4px 4px 4px 0 rgba(255, 255, 255, 0.5), inset -4px -4px 4px 0 rgba(255, 255, 255, 0.5)',
-  xl: 'inset 6px 6px 6px 0 rgba(255, 255, 255, 0.55), inset -6px -6px 6px 0 rgba(255, 255, 255, 0.55)',
+  xs: 'inset 0 0 0 1px rgba(255, 255, 255, 0.3), inset 1px 1px 2px 0 rgba(255, 255, 255, 0.3)',
+  sm: 'inset 0 0 0 1px rgba(255, 255, 255, 0.35), inset 2px 2px 4px 0 rgba(255, 255, 255, 0.4)',
+  md: 'inset 0 0 0 1.5px rgba(255, 255, 255, 0.4), inset 3px 3px 6px 0 rgba(255, 255, 255, 0.45)',
+  lg: 'inset 0 0 0 2px rgba(255, 255, 255, 0.45), inset 4px 4px 10px 0 rgba(255, 255, 255, 0.5)',
+  xl: 'inset 0 0 0 2.5px rgba(255, 255, 255, 0.5), inset 6px 6px 14px 0 rgba(255, 255, 255, 0.55)',
 }
 
 const glowStyles = {
-  none: '0 4px 4px rgba(0, 0, 0, 0.05), 0 0 12px rgba(0, 0, 0, 0.05)',
-  xs: '0 4px 4px rgba(0, 0, 0, 0.15), 0 0 12px rgba(0, 0, 0, 0.08), 0 0 16px rgba(255, 255, 255, 0.05)',
-  sm: '0 4px 4px rgba(0, 0, 0, 0.15), 0 0 12px rgba(0, 0, 0, 0.08), 0 0 24px rgba(255, 255, 255, 0.1)',
-  md: '0 4px 4px rgba(0, 0, 0, 0.15), 0 0 12px rgba(0, 0, 0, 0.08), 0 0 32px rgba(255, 255, 255, 0.15)',
-  lg: '0 4px 4px rgba(0, 0, 0, 0.15), 0 0 12px rgba(0, 0, 0, 0.08), 0 0 40px rgba(255, 255, 255, 0.2)',
-  xl: '0 4px 4px rgba(0, 0, 0, 0.15), 0 0 12px rgba(0, 0, 0, 0.08), 0 0 48px rgba(255, 255, 255, 0.25)',
+  none: '0 4px 12px rgba(255, 255, 255, 0.05)',
+  xs: '0 8px 24px rgba(255, 255, 255, 0.1)',
+  sm: '0 12px 32px rgba(255, 255, 255, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+  md: '0 16px 48px rgba(255, 255, 255, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 30px rgba(255, 255, 255, 0.1)',
+  lg: '0 24px 64px rgba(255, 255, 255, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.15), 0 0 40px rgba(255, 255, 255, 0.15)',
+  xl: '0 32px 80px rgba(255, 255, 255, 0.25), 0 0 0 1.5px rgba(255, 255, 255, 0.2), 0 0 50px rgba(255, 255, 255, 0.2)',
 }
 
 export function LiquidGlassCard({
@@ -36,10 +36,10 @@ export function LiquidGlassCard({
   height,
   expandedWidth,
   expandedHeight,
-  blurIntensity = 'xl',
+  blurIntensity = 'lg',
   borderRadius = '32px',
-  glowIntensity = 'sm',
-  shadowIntensity = 'md',
+  glowIntensity = 'md',
+  shadowIntensity = 'lg',
   ...props
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -80,8 +80,8 @@ export function LiquidGlassCard({
             ? { bounceStiffness: 300, bounceDamping: 10, power: 0.3 }
             : undefined,
           whileDrag: draggable ? { scale: 1.02 } : undefined,
-          whileHover: { scale: 1.01 },
-          whileTap: { scale: 0.98 },
+          whileHover: { scale: 1.002 },
+          whileTap: { scale: 0.99 },
         }
       : {}
 
@@ -89,9 +89,9 @@ export function LiquidGlassCard({
     <>
       <svg className="hidden">
         <defs>
-          <filter id="glass-blur" x="0" y="0" width="100%" height="100%" filterUnits="objectBoundingBox">
-            <feTurbulence type="fractalNoise" baseFrequency="0.003 0.007" numOctaves="1" result="turbulence" />
-            <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="200" xChannelSelector="R" yChannelSelector="G" />
+          <filter id="liquid-refraction" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" seed="5" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
           </filter>
         </defs>
       </svg>
@@ -108,19 +108,50 @@ export function LiquidGlassCard({
         {...motionProps}
         {...props}
       >
+        {/* Main Glass Body with Backdrop Blur */}
         <div
           className={`absolute inset-0 ${blurClasses[blurIntensity]} z-0`}
-          style={{ borderRadius, filter: 'url(#glass-blur)' }}
+          style={{ 
+            borderRadius,
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%)',
+          }}
         />
+        
+        {/* Refraction Layer (Separated to avoid black background bug) */}
+        <div
+          className="absolute inset-0 z-5 opacity-40 pointer-events-none"
+          style={{ 
+            borderRadius,
+            background: 'rgba(255,255,255,0.05)',
+            filter: 'url(#liquid-refraction)',
+            transform: 'scale(1.02)',
+          }}
+        />
+        
+        {/* Surface Reflections & Glow */}
         <div
           className="absolute inset-0 z-10"
-          style={{ borderRadius, boxShadow: glowStyles[glowIntensity] }}
+          style={{ 
+            borderRadius, 
+            boxShadow: glowStyles[glowIntensity],
+            background: 'linear-gradient(165deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.05) 100%)',
+          }}
         />
+        
+        {/* Beveled Edges */}
         <div
           className="absolute inset-0 z-20"
-          style={{ borderRadius, boxShadow: shadowStyles[shadowIntensity] }}
+          style={{ 
+            borderRadius, 
+            boxShadow: shadowStyles[shadowIntensity],
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+          }}
         />
-        {children}
+        
+        {/* Content Layer */}
+        <div className="relative z-30">
+          {children}
+        </div>
       </MotionComponent>
     </>
   )

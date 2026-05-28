@@ -41,10 +41,18 @@
 }
 
 :root {
+  --font-display: "Goldenbook", "Golden Book", Georgia, serif;
+  --font-body: "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  /* Motion timing tokens */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-premium: cubic-bezier(0.19, 1, 0.22, 1);
+
   --page-gutter: 1rem;
   color: #11100e;
   background: #f8f4ed;
-  font-family: "geomanist", "Geomanist", "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-body);
   font-synthesis-weight: none;
   text-rendering: geometricPrecision;
 }
@@ -341,6 +349,51 @@ body {
   }
 }
 
-/* ───── Footer ───── */
+/* ─── AwwwardsButton ─────────────────────────────────────── */
+.aww-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 9999px;
+  border: 1.5px solid var(--aww-b);
+  color: var(--aww-c);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.125em;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  isolation: isolate;
+  -webkit-font-smoothing: antialiased;
+  transition: transform 540ms var(--ease-out), box-shadow 540ms var(--ease-out);
+  will-change: transform;
+  outline: none;
+  white-space: nowrap;
+}
+.aww-btn:hover          { transform: translateY(-3px) scale(1.018); }
+.aww-btn:active         { transform: translateY(0) scale(0.984); transition-duration: 120ms; }
+.aww-btn:focus-visible  { box-shadow: 0 0 0 2px #b37839, 0 0 0 5px rgba(179,120,57,0.22); }
 
-/* Styles removed as they are now handled in Footer.css */
+.aww-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--aww-f);
+  transform: translateY(106%);
+  transition: transform 540ms var(--ease-out);
+  z-index: -1;
+}
+.aww-btn:hover .aww-fill,
+.aww-btn:focus-visible .aww-fill { transform: translateY(0); }
+
+.aww-text { position: relative; display: block; overflow: hidden; line-height: 1; padding: 0.12em 0; }
+.aww-t1   { display: block; transition: transform 540ms var(--ease-out); }
+.aww-t2   { position: absolute; left: 0; top: 0.12em; display: block; transform: translateY(140%); color: var(--aww-h); transition: transform 540ms var(--ease-out); }
+
+.aww-btn:hover .aww-t1,
+.aww-btn:focus-visible .aww-t1 { transform: translateY(-145%); }
+.aww-btn:hover .aww-t2,
+.aww-btn:focus-visible .aww-t2 { transform: translateY(0); }

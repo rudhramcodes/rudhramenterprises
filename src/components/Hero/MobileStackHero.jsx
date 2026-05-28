@@ -2,6 +2,7 @@ import { memo, useMemo } from "react";
 import { motion } from "framer-motion";
 import Stack from "../Stack/Stack";
 import { heroCards } from "../../data/siteContent";
+import { AwwwardsButton } from "../ui/AwwwardsButton";
 
 const cardStyles = [
   {
@@ -133,18 +134,22 @@ const MobileStackHero = () => {
             Swipe the cards
           </p>
           <div className="flex items-center gap-3">
-            <a
-              className="flex min-h-12 flex-1 items-center justify-center border border-[#B37839] bg-[#B37839] px-4 text-[13px] font-semibold text-[#FFFDF8] transition active:scale-[0.98]"
+            <AwwwardsButton
+              className="flex-1"
               href="#ventures"
+              variant="bronze"
+              size="sm"
             >
               Explore
-            </a>
-            <a
-              className="flex min-h-12 flex-1 items-center justify-center border border-[#B37839]/30 bg-[#FFFDF8]/52 px-4 text-[13px] font-semibold text-[#2E2A24] backdrop-blur-md transition active:scale-[0.98]"
+            </AwwwardsButton>
+            <AwwwardsButton
+              className="flex-1"
               href="#contact"
+              variant="ghost-light"
+              size="sm"
             >
               Contact
-            </a>
+            </AwwwardsButton>
           </div>
         </div>
       </div>

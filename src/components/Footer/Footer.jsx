@@ -1,184 +1,469 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
-import { motion, useScroll, useSpring, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { SunburstIcon, TrishulLineIcon, ArrowIcon, PlusIcon, ScrollToTopRing } from './FooterSVGs';
-import './Footer.css';
+import { memo, useState, useEffect, useRef, useCallback, Fragment } from 'react'
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'framer-motion'
+import { AwwwardsButton } from '../ui/AwwwardsButton'
+import { ChevronUpIcon, InstagramIcon, LinkedInIcon, TwitterIcon } from './FooterSVGs'
+import './Footer.css'
+const EASE_OUT = [0.16, 1, 0.3, 1]
 
-const ventures = [
-  { id: '01', name: 'Panigrahna', tag: 'Legacy & Tradition', teaser: 'Honoring sacred unions through timeless craft and cultural precision.' },
-  { id: '02', name: 'Aghhori', tag: 'Bold Innovation', teaser: 'Defying conventions with radical design and transformative thinking.' },
-  { id: '03', name: 'House of Joggi', tag: 'Luxury Lifestyle', teaser: 'A sanctuary of refined aesthetics and artisanal excellence.' },
-  { id: '04', name: 'Damrru', tag: 'Creative Rhythm', teaser: 'Capturing the heartbeat of innovation through sound and visual flow.' },
-  { id: '05', name: 'Tandavs', tag: 'Dynamic Energy', teaser: 'Executing vision with power, precision, and relentless momentum.' },
-  { id: '06', name: 'Kapaalik', tag: 'Identity & Brand', teaser: 'Precision branding and digital experiences that leave a mark.' },
-  { id: '07', name: 'Kalyannam', tag: 'Holistic Growth', teaser: 'Nurturing ventures that celebrate balance, prosperity, and wellness.' },
-  { id: '08', name: 'Storage Media Solution', tag: 'Tech Infrastructure', teaser: 'Architecting the digital foundation for the ventures of tomorrow.' },
-];
+const MARQUEE_ITEMS = [
+  'Inspiring', 'Innovative', 'Impeccable', 'Venture Building',
+  'Design Studio', 'Tech Infrastructure', 'Events & Weddings', "What's Next",
+]
 
-const VentureRow = ({ venture, isActive, onClick }) => {
+const NAV_COLUMNS = [
+  {
+    title: 'Company',
+    links: [
+      { label: 'About Us', href: '#about' },
+      { label: 'Our Philosophy', href: '#purpose' },
+      { label: 'Visionaries', href: '#visionaries' },
+      { label: 'Ventures', href: '#ventures' },
+      { label: 'Careers', href: null },
+    ],
+  },
+  {
+    title: 'Ventures',
+    links: [
+      { label: 'Panigrahna', href: null },
+      { label: 'Aghhori', href: null },
+      { label: 'Design Studio', href: null },
+      { label: 'Tech Infra', href: null },
+      { label: 'Events', href: null },
+    ],
+  },
+  {
+    title: 'Connect',
+    links: [
+      { label: 'Contact Us', href: 'mailto:hello@rudhramenterprises.com' },
+      { label: 'Partner With Us', href: 'mailto:partners@rudhramenterprises.com' },
+      { label: 'Invest', href: 'mailto:invest@rudhramenterprises.com' },
+      { label: 'Press', href: 'mailto:press@rudhramenterprises.com' },
+    ],
+  },
+]
+
+const MagneticArea = memo(({ children, className = '', as: Tag = 'div', ...props }) => {
+  const ref = useRef(null)
+
+  const handleMouseMove = useCallback((e) => {
+    const el = ref.current
+    if (!el) return
+
+    const rect = el.getBoundingClientRect()
+    const x = e.clientX - rect.left - rect.width / 2
+    const y = e.clientY - rect.top - rect.height / 2
+
+    const distance = Math.min(Math.sqrt(x * x + y * y), 150)
+    const strength = Math.max(0.1, 1 - distance / 150)
+
+    el.style.transform = `translate(${x * 0.2 * strength}px, ${y * 0.2 * strength}px)`
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    const el = ref.current
+    if (!el) return
+    el.style.transform = 'translate(0, 0)'
+  }, [])
+
   return (
-    <div className={`venture-row ${isActive ? 'active' : ''}`}>
-      <div 
-        className="venture-row-header" 
-        onClick={() => onClick(isActive ? null : venture.id)}
-      >
-        <span className="venture-num">{venture.id}</span>
-        <h3 className="venture-name">{venture.name}</h3>
-        <span className="venture-tag">{venture.tag}</span>
-        <div className="venture-plus-container">
-          <PlusIcon className="venture-plus" />
-        </div>
-      </div>
-      
-      <div className="venture-content">
-        <div className="venture-inner-content">
-          <div className="venture-teaser">
-            {venture.teaser}
-            <button className="venture-action">
-              View Venture <ArrowIcon className="venture-action-arrow" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+    <Tag
+      ref={ref}
+      className={`footer-magnetic ${className}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      {...props}
+    >
+      {children}
+    </Tag>
+  )
+})
 
-const Footer = memo(() => {
-  const [activeVenture, setActiveVenture] = useState('06');
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const footerRef = useRef(null);
-  const isInView = useInView(footerRef, { once: true, amount: 0.1 });
+MagneticArea.displayName = 'MagneticArea'
 
-  const { scrollYProgress } = useScroll();
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+/**
+ * Particle field with CSS animation (hardware accelerated).
+ */
+const ParticleField = memo(() => (
+  <div className="footer-particles" aria-hidden="true">
+    {Array.from({ length: 40 }, (_, i) => (
+      <span
+        key={i}
+        className="footer-particle"
+        style={{
+          '--x': `${Math.random() * 100}%`,
+          '--y': `${Math.random() * 100}%`,
+          '--size': `${1.5 + Math.random() * 2.5}px`,
+          '--drift': `${(Math.random() - 0.5) * 80}px`,
+          '--delay': `${Math.random() * 6}s`,
+          '--duration': `${5 + Math.random() * 5}s`,
+        }}
+      />
+    ))}
+  </div>
+))
+
+ParticleField.displayName = 'ParticleField'
+
+/**
+ * Scroll-aware marquee. Speed responds to scroll velocity,
+ * direction spring-smoothed for jerk-free reversal.
+ */
+const Marquee = memo(() => {
+  const trackRef = useRef(null)
+  const rawSpeed = useMotionValue(1.6)
+  const rawDir = useMotionValue(-1)
+
+  // Spring-smooth speed — no sudden jumps
+  const smoothSpeed = useSpring(rawSpeed, { stiffness: 55, damping: 18, mass: 0.5 })
+  // Spring-smooth direction — decelerates → stops → accelerates on reversal
+  const smoothDir = useSpring(rawDir, { stiffness: 18, damping: 8, mass: 1.4 })
 
   useEffect(() => {
-    const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / totalHeight) * 100;
-      setScrollProgress(progress);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    let prevY = window.scrollY
+    let idleTimer
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+    const onScroll = () => {
+      const curY = window.scrollY
+      const delta = curY - prevY
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { duration: 1, ease: 'easeOut', staggerChildren: 0.15 }
+      rawDir.set(delta >= 0 ? -1 : 1)
+
+      const mag = Math.abs(delta)
+      const target = Math.min(1.6 + mag * 0.12, 10)
+      rawSpeed.set(target)
+
+      prevY = curY
+
+      clearTimeout(idleTimer)
+      idleTimer = setTimeout(() => rawSpeed.set(1.6), 600)
     }
-  };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } }
-  };
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      clearTimeout(idleTimer)
+    }
+  }, [])
 
-  const wordmarkY = useTransform(smoothProgress, [0.85, 1], [0, -80]);
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+
+    let x = 0
+    let rafId
+
+    const tick = () => {
+      const speed = smoothSpeed.get()
+      const dir = smoothDir.get()
+
+      x += 0.65 * speed * dir
+
+      const wrapAt = el.scrollWidth / 2
+      if (x <= -wrapAt) x += wrapAt
+      if (x >= 0) x -= wrapAt
+
+      el.style.transform = `translateX(${x}px)`
+      rafId = requestAnimationFrame(tick)
+    }
+
+    rafId = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafId)
+  }, [])
 
   return (
-    <footer 
-      ref={footerRef}
-      className={`footer-ledger-container ${isInView ? 'visible' : ''}`}
-    >
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? 'visible' : 'hidden'}
-      >
-        {/* Section 1: Top Closing */}
-        <div className="footer-top">
-          <div className="footer-headline-container">
-            <motion.h2 className="footer-headline" variants={itemVariants}>
-              Build what <br /> endures.
-            </motion.h2>
-            <motion.p className="footer-sub-headline" variants={itemVariants}>
-              Rudhram Enterprises partners with ambitious people, cultural ideas, and future-ready ventures.
-            </motion.p>
-          </div>
+    <div className="footer-marquee" role="marquee" aria-label="Brand values">
+      <div ref={trackRef} className="marquee-track">
+        {Array.from({ length: 2 }).flatMap((_, dup) =>
+          MARQUEE_ITEMS.map((item, i) => (
+            <div className="marquee-item" key={`${dup}-${i}`}>
+              <span className="marquee-dot" />
+              {item}
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  )
+})
 
-          <div className="footer-cta-container">
-            <motion.div 
-              className="footer-cta-circle" 
-              variants={itemVariants}
-              onClick={() => window.location.href = 'mailto:hello@rudhram.com'}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+Marquee.displayName = 'Marquee'
+
+// CTA heading with word-by-word stagger — translateY + scale + blur reveal.
+const AWWWARDS_EASE = [0.16, 1, 0.3, 1]
+
+const CTAHeading = memo(() => {
+  const lines = [
+    { words: ["Let's", 'Build'], italic: false },
+    { words: ["What's", 'Next'], italic: true },
+    { words: ['Together.'], italic: false },
+  ]
+  const ctaRef = useRef(null)
+  const ctaInView = useInView(ctaRef, { once: true, amount: 0.4 })
+
+  return (
+    <h2 ref={ctaRef} className="footer-cta-heading">
+      {lines.map((line, i) => (
+        <span className="heading-line" key={i}>
+          {line.words.map((word, j) => (
+            <Fragment key={j}>
+              <span className="heading-word-wrap">
+                <motion.span
+                  className={`heading-word${line.italic ? ' heading-italic-text' : ''}`}
+                  initial={{ y: '130%', scale: 0.9, opacity: 0, filter: 'blur(7px)' }}
+                  animate={ctaInView ? { y: 0, scale: 1, opacity: 1, filter: 'blur(0px)' } : {}}
+                  transition={{
+                    duration: 0.75,
+                    delay: i * 0.15 + j * 0.1 + 0.15,
+                    ease: AWWWARDS_EASE,
+                  }}
+                >
+                  {word}
+                </motion.span>
+              </span>
+              {j < line.words.length - 1 && ' '}
+            </Fragment>
+          ))}
+        </span>
+      ))}
+    </h2>
+  )
+})
+
+CTAHeading.displayName = 'CTAHeading'
+
+// Main Footer component.
+const Footer = memo(function Footer() {
+  const footerRef = useRef(null)
+  const navRef = useRef(null)
+  const bottomRef = useRef(null)
+  const navInView = useInView(navRef, { once: true, amount: 0.15 })
+  const bottomInView = useInView(bottomRef, { once: true, amount: 0.5 })
+  const shouldReduceMotion = useReducedMotion()
+
+  const [localTime, setLocalTime] = useState('')
+  const [scrollProgress, setScrollProgress] = useState(0)
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date()
+      setLocalTime(
+        now.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZoneName: 'short',
+        })
+      )
+    }
+    updateTime()
+    const id = setInterval(updateTime, 60000)
+
+    const onScroll = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0
+      setScrollProgress(progress)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+
+    return () => {
+      clearInterval(id)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [])
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
+  const scrollToSection = useCallback((e, href) => {
+    if (!href?.startsWith('#')) return
+    e.preventDefault()
+    const target = document.querySelector(href)
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [])
+
+  const circumference = 2 * Math.PI * 15.5
+
+  const { scrollYProgress: footerRevealProgress } = useScroll({
+    target: footerRef,
+    offset: ['start 100%', 'start 30%'],
+  })
+  const y = useTransform(footerRevealProgress, [0, 0.72, 1], ['24vh', '3vh', '0vh'])
+  const width = useTransform(footerRevealProgress, [0, 0.82, 1], ['90%', '98%', '100%'])
+  const borderRadius = useTransform(footerRevealProgress, [0, 0.82, 1], ['64px 64px 0 0', '28px 28px 0 0', '0px'])
+  const boxShadow = useTransform(
+    footerRevealProgress,
+    [0, 1],
+    ['0 -22px 80px rgba(17, 16, 14, 0.14)', '0 0 0 rgba(17, 16, 14, 0)']
+  )
+
+  return (
+    <motion.footer
+      ref={footerRef}
+      className="footer-root"
+      style={
+        shouldReduceMotion
+          ? undefined
+          : {
+              y,
+              width,
+              borderRadius,
+              boxShadow,
+            }
+      }
+    >
+      <ParticleField />
+
+      <div className="footer-reveal">
+        {/* CTA Section */}
+        <div className="footer-cta">
+          <div className="footer-cta-inner">
+            <CTAHeading />
+            <AwwwardsButton
+              href="mailto:hello@rudhramenterprises.com"
+              variant="ivory"
+              size="lg"
             >
-              <span className="footer-cta-text">Start</span>
-              <ArrowIcon className="footer-cta-arrow" />
-            </motion.div>
-            <motion.a 
-              href="mailto:hello@rudhram.com" 
-              className="footer-email"
-              variants={itemVariants}
-            >
-              hello@rudhram.com
-            </motion.a>
+              Start a Conversation
+            </AwwwardsButton>
           </div>
         </div>
 
-        {/* Section 2: Venture Ledger (Accordion) */}
-        <motion.div className="venture-ledger" variants={itemVariants}>
-          {ventures.map((venture) => (
-            <VentureRow
-              key={venture.id}
-              venture={venture}
-              isActive={activeVenture === venture.id}
-              onClick={setActiveVenture}
-            />
-          ))}
-        </motion.div>
+        {/* Marquee */}
+        <Marquee />
 
-        {/* Section 3: Wordmark */}
-        <motion.div 
-          className="footer-wordmark-container" 
-          variants={itemVariants}
-          style={{ y: wordmarkY }}
-        >
-          <div className="trishul-container">
-            <TrishulLineIcon />
-          </div>
-          <h1 className="footer-wordmark">
-            RUDHRAM
-            <span className="footer-wordmark-solid">RUDHRAM</span>
-          </h1>
-          <span className="footer-enterprises">ENTERPRISES</span>
-        </motion.div>
-
-        {/* Section 4: Utility Strip */}
-        <motion.div className="footer-bottom" variants={itemVariants}>
-          <div className="footer-philosophy">
-            <SunburstIcon className="sunburst-icon" />
-            <span>Inspiring / Innovative / Impeccable</span>
-          </div>
-          
-          <div className="footer-copyright">
-            © 2026 Rudhram Enterprises. All rights reserved.
-          </div>
-
-          <div className="footer-links">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a>
-            <a href="/privacy" className="footer-link">Privacy</a>
-            <div className="back-to-top-container">
-              <button 
-                className="back-to-top-btn" 
-                onClick={scrollToTop}
-                aria-label="Back to top"
+        {/* Navigation Grid */}
+        <nav ref={navRef} className="footer-nav" aria-label="Footer navigation">
+          <motion.div
+            className="footer-nav-col brand-col"
+            initial={{ y: 40, opacity: 0 }}
+            animate={navInView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.6, ease: EASE_OUT }}
+          >
+            <h4>About</h4>
+            <p>
+              Rudhram Group is a venture-building institution dedicated to creating, nurturing,
+              and scaling transformative businesses across diverse industries.
+            </p>
+            <div className="social-links">
+              <MagneticArea
+                as="a"
+                href="https://instagram.com"
+                className="social-link"
+                aria-label="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <ScrollToTopRing progress={scrollProgress} />
-              </button>
+                <InstagramIcon />
+              </MagneticArea>
+              <MagneticArea
+                as="a"
+                href="https://linkedin.com"
+                className="social-link"
+                aria-label="LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkedInIcon />
+              </MagneticArea>
+              <MagneticArea
+                as="a"
+                href="https://twitter.com"
+                className="social-link"
+                aria-label="Twitter"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TwitterIcon />
+              </MagneticArea>
             </div>
-          </div>
-        </motion.div>
-      </motion.div>
-    </footer>
-  );
-});
+          </motion.div>
 
-export default Footer;
+          {NAV_COLUMNS.map((col, colIdx) => (
+            <motion.div
+              key={col.title}
+              className="footer-nav-col"
+              initial={{ y: 40, opacity: 0 }}
+              animate={navInView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 + colIdx * 0.1, ease: EASE_OUT }}
+            >
+              <h4>{col.title}</h4>
+              <ul>
+                {col.links.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href || '#'}
+                      onClick={link.href?.startsWith('#') ? (e) => scrollToSection(e, link.href) : undefined}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </nav>
+
+        {/* Bottom Bar */}
+        <div ref={bottomRef} className="footer-bottom">
+          <motion.div
+            className="footer-bottom-left"
+            initial={{ y: 20, opacity: 0 }}
+            animate={bottomInView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.6, ease: EASE_OUT }}
+          >
+            <p>&copy; 2026 Rudhram Enterprises. All rights reserved.</p>
+            <div className="time-widget" aria-label={`Local time: ${localTime}`}>
+              <span className="time-dot" />
+              <span>{localTime}</span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="footer-bottom-right"
+            initial={{ y: 20, opacity: 0 }}
+            animate={bottomInView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT }}
+          >
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#terms">Terms of Service</a>
+            <MagneticArea
+              as="button"
+              type="button"
+              className="back-to-top"
+              onClick={scrollToTop}
+              aria-label="Back to top"
+            >
+              <svg viewBox="0 0 36 36" className="progress-ring" aria-hidden="true">
+                <circle className="progress-ring-bg" cx="18" cy="18" r="15.5" />
+                <circle
+                  className="progress-ring-fill"
+                  cx="18" cy="18" r="15.5"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={circumference * (1 - scrollProgress)}
+                  transform="rotate(-90 18 18)"
+                />
+              </svg>
+              <ChevronUpIcon className="chevron-icon" />
+            </MagneticArea>
+          </motion.div>
+        </div>
+      </div>
+    </motion.footer>
+  )
+})
+
+Footer.displayName = 'Footer'
+
+export default Footer

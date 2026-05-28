@@ -1,5 +1,6 @@
 import { useEffect, memo } from 'react'
 import { motion, useSpring, useMotionValue } from 'framer-motion'
+import { LiquidGlassCard } from './ui/liquid-glass'
 
 export const CursorFollow = memo(function CursorFollow({ 
   children, 
@@ -38,7 +39,6 @@ export const CursorFollow = memo(function CursorFollow({
         y,
         pointerEvents: 'none',
         zIndex: 9999,
-        display: show ? 'block' : 'none'
       }}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ 
@@ -47,9 +47,21 @@ export const CursorFollow = memo(function CursorFollow({
       }}
       transition={{ duration: 0.2 }}
     >
-      <div className="rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-ink shadow-2xl bg-white/80 backdrop-blur-xl border border-white/40">
-        {children}
-      </div>
+      <LiquidGlassCard
+        draggable={false}
+        expandable={false}
+        className="bg-white/5 shadow-xl"
+        borderRadius={100}
+        blurIntensity="md"
+        shadowIntensity="md"
+        glowIntensity="md"
+      >
+        <div className="flex h-9 min-w-[100px] items-center justify-center px-5 sm:h-10">
+          <span className="whitespace-nowrap text-[10px] font-extrabold uppercase tracking-[0.25em] text-white mix-blend-difference leading-none translate-y-[0.5px]">
+            {children}
+          </span>
+        </div>
+      </LiquidGlassCard>
     </motion.div>
   )
 })

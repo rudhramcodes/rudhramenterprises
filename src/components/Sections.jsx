@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import { motion } from 'framer-motion'
-import { SectionKicker, MagneticButton, LogoMark } from './ui'
+import { SectionKicker, LogoMark } from './ui'
+import { AwwwardsButton } from './ui/AwwwardsButton'
 import { footerLinks, ventures } from '../data/siteContent'
 
 const maxWidth = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
@@ -184,12 +185,12 @@ export const Contact = memo(function Contact() {
               For partnerships, ventures, collaborations, and strategic enquiries, connect with Rudhram.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <MagneticButton href="mailto:hello@rudhram.com" variant="dark">
+              <AwwwardsButton href="mailto:hello@rudhram.com" variant="ivory">
                 Start a Conversation
-              </MagneticButton>
-              <MagneticButton href="#ventures" variant="ghost-dark">
+              </AwwwardsButton>
+              <AwwwardsButton href="#ventures" variant="bronze-dark">
                 Explore Ventures
-              </MagneticButton>
+              </AwwwardsButton>
             </div>
           </div>
           <form className="reveal relative z-10 grid gap-4">
@@ -252,5 +253,3 @@ const FooterColumn = memo(function FooterColumn({ title, items, getHref }) {
     </div>
   )
 })
-
-

@@ -4,12 +4,12 @@ import { useScrollAnimations } from './hooks/useScrollAnimations'
 import Hero from './components/Hero/Hero'
 import { BrandThesis } from './components/About'
 import { Story } from './components/Story'
-import { VentureConstellation } from './components/VentureConstellation'
+// import { VentureConstellation } from './components/VentureConstellation'
 import VisionariesSection from './components/MouseImageDistortion'
 import { VisionMission } from './components/Sections'
 import Footer from './components/Footer/Footer'
 import { VentureGallery } from './components/VentureGallery/VentureGallery'
-import { Leadership } from './components/Leadership'
+// import { Leadership } from './components/Leadership'
 
 const App = () => {
   useLenisScroll()
@@ -18,7 +18,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <main>
+      <main className="relative z-[2] min-h-screen bg-ivory">
         <Hero />
         <BrandThesis />
         <Story />
