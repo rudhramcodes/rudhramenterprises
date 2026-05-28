@@ -113,12 +113,21 @@ export const Header = memo(function Header() {
         <LiquidGlassCard
           draggable={false}
           expandable={false}
-          className="bg-white/10"
+          className="bg-white/18"
           borderRadius={smallScreen ? 24 : 28}
-          blurIntensity={compact ? 'md' : 'lg'}
+          blurIntensity={compact ? 'lg' : 'xl'}
           shadowIntensity="xl"
           glowIntensity={compact ? 'lg' : 'xl'}
         >
+          <div
+            className="pointer-events-none absolute inset-0 z-20 opacity-[0.2]"
+            style={{
+              borderRadius: smallScreen ? 24 : 28,
+              backgroundImage:
+                'linear-gradient(130deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 44%, rgba(17,16,14,0.08) 100%)',
+            }}
+            aria-hidden="true"
+          />
           <div className="relative z-30 px-4 sm:px-5">
             <div className="flex h-16 w-full items-center justify-between sm:h-[4.5rem]">
             <a className="group flex min-w-28 items-center sm:min-w-36" href="#top" aria-label="Rudhram Enterprises home" onClick={(e) => { e.preventDefault(); resetHoverState(); setMenuOpen(false); window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); window.history.pushState(null, '', '#top') }}>
