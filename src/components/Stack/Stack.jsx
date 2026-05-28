@@ -67,14 +67,22 @@ export default function Stack({
   }, []);
 
   useEffect(() => {
-    if (autoplay && stack.length > 1 && !isPaused) {
+    if (autoplay && !isPaused && stack.length > 1) {
       const interval = setInterval(() => {
-        const topCardId = stack[stack.length - 1].id;
-        sendToBack(topCardId);
+        setStack((current) => {
+          if (current.length <= 1) return current;
+          const topCardId = current[current.length - 1].id;
+          const newStack = [...current];
+          const index = newStack.findIndex((card) => card.id === topCardId);
+          if (index === -1) return current;
+          const [card] = newStack.splice(index, 1);
+          newStack.unshift(card);
+          return newStack;
+        });
       }, autoplayDelay);
       return () => clearInterval(interval);
     }
-  }, [autoplay, autoplayDelay, stack, isPaused, sendToBack]);
+  }, [autoplay, autoplayDelay, isPaused]);
 
   return (
     <div className="rb-stack-container" onMouseEnter={() => pauseOnHover && setIsPaused(true)} onMouseLeave={() => pauseOnHover && setIsPaused(false)}>
