@@ -161,6 +161,8 @@ export default function WebGLPlane({ activeMenu }) {
       indexCount: geo.indices.length,
     }
 
+    let cancelled = false
+
     const imgs = visionaries.map((p) => {
       const img = new Image()
       img.crossOrigin = 'anonymous'
@@ -170,6 +172,7 @@ export default function WebGLPlane({ activeMenu }) {
 
     imgs.forEach((img, i) => {
       img.onload = () => {
+        if (cancelled) return
         const tex = gl.createTexture()
         gl.activeTexture(gl.TEXTURE0)
         gl.bindTexture(gl.TEXTURE_2D, tex)
@@ -200,8 +203,10 @@ export default function WebGLPlane({ activeMenu }) {
     window.addEventListener('resize', resize)
 
     return () => {
+      cancelled = true
       window.removeEventListener('resize', resize)
       if (rafId.current) cancelAnimationFrame(rafId.current)
+      imgs.forEach((img) => { img.onload = null })
       gl.deleteProgram(program)
       gl.deleteVertexArray(vao)
       gl.deleteBuffer(posBuf)
@@ -218,6 +223,8 @@ export default function WebGLPlane({ activeMenu }) {
     const lerp = (a, b, t) => a + (b - a) * t
 
     const loop = () => {
+      if (!glState.current) return
+
       const { gl, program, vao, uDeltaLoc, uScaleLoc, uPositionLoc, uAlphaLoc, indexCount } = state
       const { x, y } = mouse
       const dim = dimension
