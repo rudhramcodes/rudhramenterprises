@@ -2,6 +2,7 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import { CaretLeft } from '@phosphor-icons/react'
 import { SectionKicker } from './ui'
+import { AwwwardsButton } from './ui/AwwwardsButton'
 import GradualBlur from './GradualBlur'
 import { CursorFollow } from './CursorFollow'
 import { useIsDesktop } from '../hooks/useMediaQuery'
@@ -159,22 +160,109 @@ const AboutDetailPage = memo(function AboutDetailPage({ item, onBack }) {
   )
 })
 
+const SWIPE_THRESHOLD = 20
+const AWWWARDS_EASE = [0.16, 1, 0.3, 1]
+
 const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
+  const [activeSlide, setActiveSlide] = useState(0)
+  const pointerStart = useRef({ x: 0, y: 0 })
+  const swipedRef = useRef(false)
+  const animatingRef = useRef(false)
+
+  const goToSlide = useCallback((index) => {
+    const next = Math.max(0, Math.min(ITEM_COUNT - 1, index))
+    if (next === activeSlide || animatingRef.current) return
+    animatingRef.current = true
+    setActiveSlide(next)
+    setTimeout(() => { animatingRef.current = false }, 600)
+  }, [activeSlide])
+
+  const handlePointerDown = useCallback((e) => {
+    pointerStart.current = { x: e.clientX, y: e.clientY }
+    swipedRef.current = false
+  }, [])
+
+  const handlePointerUp = useCallback((e) => {
+    const dx = e.clientX - pointerStart.current.x
+    const dy = e.clientY - pointerStart.current.y
+    const absDx = Math.abs(dx)
+
+    if (absDx > SWIPE_THRESHOLD && absDx > Math.abs(dy)) {
+      swipedRef.current = true
+      goToSlide(dx < 0 ? activeSlide + 1 : activeSlide - 1)
+    }
+  }, [activeSlide, goToSlide])
+
   return (
-    <div className="lg:hidden flex flex-col w-full">
-      {thesisItems.map((item, index) => (
-        <button key={item.title} type="button" onClick={() => onOpenDetails(index)} className="relative h-screen w-full overflow-hidden text-left outline-none focus-visible:ring-2 focus-visible:ring-bronze">
-          <img src={item.image} alt={item.title} className="absolute inset-0 h-full w-full object-cover" />
-          <div className="absolute inset-0 z-30 flex flex-col justify-end px-4 pb-12">
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/20 to-transparent pointer-events-none" />
-            <div className="reveal relative rounded-[2.5rem] p-8 shadow-[0_30px_60px_rgba(0,0,0,0.12)] bg-white/30 backdrop-blur-2xl border border-white/40">
-              <h3 className="font-display font-bold text-[2.6rem] text-ink leading-[0.9] tracking-tighter mb-4">{item.title}</h3>
-              <p className="text-[15px] leading-relaxed font-medium text-ink/80">{item.description}</p>
+    <div className="lg:hidden relative w-full select-none overflow-hidden">
+      <motion.div
+        className="flex will-change-transform"
+        animate={{ x: `-${activeSlide * 100}vw` }}
+        transition={{ duration: 0.55, ease: AWWWARDS_EASE }}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        style={{ touchAction: 'pan-y' }}
+      >
+        {thesisItems.map((item, index) => (
+          <div
+            key={item.title}
+            className="relative flex w-screen flex-shrink-0 flex-col px-4 pt-6"
+            onClick={() => {
+              if (swipedRef.current) {
+                swipedRef.current = false
+                return
+              }
+              onOpenDetails(index)
+            }}
+          >
+            <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-ink/8 bg-paper shadow-[0_8px_30px_rgba(17,16,14,0.08)]">
+              <div className="relative w-full overflow-hidden h-80 sm:h-96 flex-shrink-0">
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${item.image})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/8 via-transparent to-transparent" />
+                <span className="absolute bottom-3 left-4 font-display text-[clamp(1.8rem,6vw,3rem)] font-bold leading-none tracking-tight text-white/15 select-none">
+                  0{index + 1}
+                </span>
+              </div>
+
+              <div className="border-b border-ink/8" />
+
+              <div className="flex flex-col px-5 pb-5 pt-4 sm:px-7">
+                <span className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.22em] text-bronze">
+                  {item.subtitle}
+                </span>
+                <h3 className="mb-2 font-display text-[clamp(1.2rem,4vw,1.65rem)] font-bold leading-[1.08] tracking-tight text-ink">
+                  {item.title}
+                </h3>
+                <p className="text-[clamp(0.8rem,2vw,0.92rem)] leading-[1.6] text-stone">
+                  {item.description}
+                </p>
+                <AwwwardsButton variant="bronze" size="sm" className="mt-3 self-start" onClick={(e) => { e.stopPropagation(); onOpenDetails(index) }}>
+                  Tap to explore
+                </AwwwardsButton>
+              </div>
             </div>
           </div>
-          <GradualBlur target="parent" position="bottom" height="14rem" strength={4} divCount={10} curve="bezier" exponential opacity={0.75} zIndex={20} />
-        </button>
-      ))}
+        ))}
+      </motion.div>
+
+      <div className="flex items-center justify-center gap-2 py-3">
+        {thesisItems.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => goToSlide(i)}
+            className={`h-1.5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              i === activeSlide
+                ? 'w-7 bg-bronze'
+                : 'w-1.5 bg-ink/15'
+            }`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
     </div>
   )
 })
@@ -274,7 +362,7 @@ export const BrandThesis = memo(function BrandThesis() {
         </div>
       </div>
 
-      <div ref={scrollRef} style={{ height: `${ITEM_COUNT * 100}vh` }} className="relative">
+      <div ref={scrollRef} className="relative lg:h-[400vh]">
         <MobileBrandThesis onOpenDetails={openDetails} />
 
         <div className="sticky top-0 hidden h-screen overflow-hidden lg:block">

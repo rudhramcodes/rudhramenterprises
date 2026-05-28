@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
+import { useIsMobile } from '../hooks/useMediaQuery';
 
 import './GradualBlur.css';
 
@@ -100,6 +101,9 @@ const useIntersectionObserver = (ref, shouldObserve = false) => {
 };
 
 function GradualBlur(props) {
+  const isMobile = useIsMobile();
+  if (isMobile) return null;
+
   const containerRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -110,15 +114,14 @@ function GradualBlur(props) {
 
   const responsiveHeight = useResponsiveDimension(config.responsive, config, 'height');
   const responsiveWidth = useResponsiveDimension(config.responsive, config, 'width');
+  const divCount = useResponsiveDimension(config.responsive, config, 'divCount');
 
   const isVisible = useIntersectionObserver(containerRef, config.animated === 'scroll');
 
   const blurDivs = useMemo(() => {
     const divs = [];
     
-    // Performance optimization: cap div count on mobile to reduce GPU layers
-    const isSmall = typeof window !== 'undefined' && window.innerWidth < 1024;
-    const effectiveDivCount = isSmall ? Math.min(config.divCount, 5) : config.divCount;
+    const effectiveDivCount = Math.min(divCount, 5);
     
     const increment = 100 / effectiveDivCount;
     const currentStrength =
