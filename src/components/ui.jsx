@@ -35,5 +35,5 @@ export const MagneticButton = memo(function MagneticButton({ href = '#contact', 
 })
 
 export const LogoMark = memo(function LogoMark({ className = '' }) {
-  return <img className={`block object-contain ${className}`} src="/images/fav-icon.png" alt="" loading="eager" />
+  return <img className={`block object-contain ${className}`} src="/images/fav-icon.webp" alt="" loading="eager" />
 })

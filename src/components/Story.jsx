@@ -96,7 +96,7 @@ const StoryDetail = ({ onClose }) => {
           >
             <motion.img
               layoutId="story-image"
-              src="/images/founders.jpeg"
+              src="/images/founders.webp"
               alt="Shivang Vir and Mukund Barrdoliwala"
               className="h-full w-full object-cover"
               initial={{ scale: 1.02 }}
@@ -386,7 +386,7 @@ export const Story = memo(function Story() {
             <motion.div className="h-[120%] w-full" style={{ y: imgY, scale: imgScale }}>
               <motion.img
                 layoutId="story-image"
-                src="/images/founders.jpeg"
+                src="/images/founders.webp"
                 alt="Shivang Vir and Mukund Barrdoliwala"
                 className="h-full w-full object-cover"
                 loading="lazy"
