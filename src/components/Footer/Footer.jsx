@@ -8,8 +8,9 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
+import { CaretUp } from '@phosphor-icons/react'
 import { AwwwardsButton } from '../ui/AwwwardsButton'
-import { ChevronUpIcon, InstagramIcon, LinkedInIcon, TwitterIcon } from './FooterSVGs'
+import { InstagramIcon, LinkedInIcon, TwitterIcon } from './FooterSVGs'
 import './Footer.css'
 const EASE_OUT = [0.16, 1, 0.3, 1]
 
@@ -455,7 +456,7 @@ const Footer = memo(function Footer() {
                   transform="rotate(-90 18 18)"
                 />
               </svg>
-              <ChevronUpIcon className="chevron-icon" />
+              <CaretUp className="chevron-icon" />
             </MagneticArea>
           </motion.div>
         </div>

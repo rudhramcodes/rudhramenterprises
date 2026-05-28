@@ -209,16 +209,17 @@ export const BrandThesis = memo(function BrandThesis() {
     if (!isDesktop) return
     const { x, y } = mousePosRef.current
     const el = document.elementFromPoint(x, y)
-    if (imageBtnRef.current && imageBtnRef.current.contains(el)) {
+    if (el && imageBtnRef.current && imageBtnRef.current.contains(el)) {
       setIsHoveringImage(true)
     }
   }, [isDesktop])
 
   const openDetails = useCallback((index = activeIndex) => {
+    const safeIndex = Math.min(ITEM_COUNT - 1, Math.max(0, index))
     setIsHoveringImage(false)
-    setDetailIndex(index)
+    setDetailIndex(safeIndex)
     setDetailsOpen(true)
-    window.history.pushState({ aboutDetails: true, detailIndex: index }, '', `#about-${index + 1}`)
+    window.history.pushState({ aboutDetails: true, detailIndex: safeIndex }, '', `#about-${safeIndex + 1}`)
   }, [activeIndex])
 
   const closeDetails = useCallback(() => {
