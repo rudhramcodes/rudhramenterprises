@@ -120,6 +120,20 @@ export const Header = memo(function Header() {
           glowIntensity={compact ? 'lg' : 'xl'}
         >
           <div
+            className="pointer-events-none absolute inset-0 z-10"
+            style={{
+              borderRadius: smallScreen ? 24 : 28,
+              transform: 'scale(1.2)',
+              boxShadow: compact
+                ? '0 14px 32px rgba(17,16,14,0.16), 0 2px 10px rgba(17,16,14,0.1)'
+                : '0 22px 54px rgba(17,16,14,0.18), 0 4px 14px rgba(17,16,14,0.1)',
+              background:
+                'linear-gradient(145deg, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.16) 48%, rgba(17,16,14,0.08) 100%)',
+              opacity: 0.62,
+            }}
+            aria-hidden="true"
+          />
+          <div
             className="pointer-events-none absolute inset-0 z-20 opacity-[0.2]"
             style={{
               borderRadius: smallScreen ? 24 : 28,

@@ -46,9 +46,9 @@ const VARIANTS = {
 };
 
 const SIZES = {
-  sm: { padding: "10px 22px", fontSize: "10px", radius: "14px" },
-  md: { padding: "12px 30px", fontSize: "11.5px", radius: "14px" },
-  lg: { padding: "15px 42px", fontSize: "13px", radius: "16px" },
+  sm: { padY: "10px", padX: "22px", fontSize: "10px", radius: "14px" },
+  md: { padY: "12px", padX: "30px", fontSize: "11.5px", radius: "14px" },
+  lg: { padY: "15px", padX: "42px", fontSize: "13px", radius: "16px" },
 };
 
 const CSS = `
@@ -97,6 +97,16 @@ const CSS = `
 .aww-btn:focus-visible .aww-t2 {
   transform: translateY(0);
 }
+
+@media (max-width: 768px) {
+  .aww-btn {
+    --aww-mobile-pad-y: max(9px, calc(var(--aww-pad-y, 12px) - 2px));
+    --aww-mobile-pad-x: max(16px, calc(var(--aww-pad-x, 28px) - 6px));
+    padding: var(--aww-mobile-pad-y) var(--aww-mobile-pad-x) !important;
+    border-radius: 12px !important;
+    min-height: 40px;
+  }
+}
 `;
 
 let _injected = false;
@@ -134,7 +144,9 @@ export const AwwwardsButton = memo(function AwwwardsButton({
         "--aww-c": v.color,
         "--aww-f": v.fill,
         "--aww-h": v.hover,
-        padding: s.padding,
+        "--aww-pad-y": s.padY,
+        "--aww-pad-x": s.padX,
+        padding: `${s.padY} ${s.padX}`,
         fontSize: s.fontSize,
         position: "relative",
         display: "inline-flex",
