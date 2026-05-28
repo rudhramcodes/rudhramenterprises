@@ -8,7 +8,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { CaretUp } from '@phosphor-icons/react'
+
 import { AwwwardsButton } from '../ui/AwwwardsButton'
 import { InstagramIcon, LinkedInIcon, TwitterIcon } from './FooterSVGs'
 import './Footer.css'
@@ -250,7 +250,6 @@ const Footer = memo(function Footer() {
   const shouldReduceMotion = useReducedMotion()
 
   const [localTime, setLocalTime] = useState('')
-  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
     const updateTime = () => {
@@ -265,30 +264,7 @@ const Footer = memo(function Footer() {
     }
     updateTime()
     const id = setInterval(updateTime, 60000)
-
-    let rafId = null
-    const onScroll = () => {
-      if (rafId !== null) return
-      rafId = requestAnimationFrame(() => {
-        rafId = null
-        const scrollTop = window.scrollY
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight
-        const progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0
-        setScrollProgress(progress)
-      })
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-
-    return () => {
-      clearInterval(id)
-      window.removeEventListener('scroll', onScroll)
-      if (rafId !== null) cancelAnimationFrame(rafId)
-    }
-  }, [])
-
-  const scrollToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    return () => clearInterval(id)
   }, [])
 
   const scrollToSection = useCallback((e, href) => {
@@ -299,8 +275,6 @@ const Footer = memo(function Footer() {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }, [])
-
-  const circumference = 2 * Math.PI * 15.5
 
   const { scrollYProgress: footerRevealProgress } = useScroll({
     target: footerRef,
@@ -445,25 +419,6 @@ const Footer = memo(function Footer() {
           >
             <a href="#privacy">Privacy Policy</a>
             <a href="#terms">Terms of Service</a>
-            <MagneticArea
-              as="button"
-              type="button"
-              className="back-to-top"
-              onClick={scrollToTop}
-              aria-label="Back to top"
-            >
-              <svg viewBox="0 0 36 36" className="progress-ring" aria-hidden="true">
-                <circle className="progress-ring-bg" cx="18" cy="18" r="15.5" />
-                <circle
-                  className="progress-ring-fill"
-                  cx="18" cy="18" r="15.5"
-                  strokeDasharray={circumference}
-                  strokeDashoffset={circumference * (1 - scrollProgress)}
-                  transform="rotate(-90 18 18)"
-                />
-              </svg>
-              <CaretUp className="chevron-icon" />
-            </MagneticArea>
           </motion.div>
         </div>
       </div>
