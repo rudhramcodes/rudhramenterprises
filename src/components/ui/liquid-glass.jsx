@@ -1,6 +1,7 @@
 import { cn } from '../../lib/utils'
 import { motion } from 'motion/react'
 import { useState } from 'react'
+import { LiquidGlassFilter } from './liquid-glass-filter'
 
 const blurClasses = {
   sm: 'backdrop-blur-[4px]',
@@ -87,14 +88,7 @@ export function LiquidGlassCard({
 
   return (
     <>
-      <svg className="hidden">
-        <defs>
-          <filter id="liquid-refraction" x="-10%" y="-10%" width="120%" height="120%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" seed="5" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
-      </svg>
+      <LiquidGlassFilter />
       <MotionComponent
         className={cn(
           `relative ${draggable ? 'cursor-grab active:cursor-grabbing' : ''} ${expandable ? 'cursor-pointer' : ''}`,
