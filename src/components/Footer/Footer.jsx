@@ -218,8 +218,8 @@ const CTAHeading = memo(() => {
               <span className="heading-word-wrap">
                 <motion.span
                   className={`heading-word${line.italic ? ' heading-italic-text' : ''}`}
-                  initial={{ y: '130%', scale: 0.9, opacity: 0, filter: 'blur(7px)' }}
-                  animate={ctaInView ? { y: 0, scale: 1, opacity: 1, filter: 'blur(0px)' } : {}}
+                  initial={{ y: '130%', scale: 0.9, opacity: 0 }}
+                  animate={ctaInView ? { y: 0, scale: 1, opacity: 1 } : {}}
                   transition={{
                     duration: 0.75,
                     delay: i * 0.15 + j * 0.1 + 0.15,
@@ -297,11 +297,11 @@ const Footer = memo(function Footer() {
         shouldReduceMotion
           ? undefined
           : {
-              y,
-              width,
-              borderRadius,
-              boxShadow,
-            }
+            y,
+            width,
+            borderRadius,
+            boxShadow,
+          }
       }
     >
       <ParticleField />
