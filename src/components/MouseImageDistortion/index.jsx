@@ -7,6 +7,7 @@ import { SectionKicker } from '../ui'
 import VariableProximity from '../VariableProximity/VariableProximity'
 import { maxWidth } from '../../lib/layout'
 import FadeIn from '../ui/FadeIn'
+import { useIsDesktop } from '../../hooks/useMediaQuery'
 
 const manifestoLines = [
   'We are builders who began without certainty and learned to create it.',
@@ -33,6 +34,7 @@ export default function VisionariesSection() {
   }, [])
 
   const manifestoRef = useRef(null)
+  const isDesktop = useIsDesktop()
 
   return (
     <section id="visionaries" className="bg-paper pt-16 sm:pt-20 lg:pt-20">
@@ -70,16 +72,9 @@ export default function VisionariesSection() {
 
         <div className="mt-8 border-t border-ink/10 pt-10 sm:mt-14 sm:pt-14">
           <FadeIn>
-            <VariableProximity
-              label={manifestoLines[0]}
-              className="block text-[clamp(1.3rem,3vw,2.7rem)] leading-[1.12] tracking-tight text-ink"
-              containerRef={manifestoRef}
-              radius={150}
-              falloff="linear"
-              fromFontVariationSettings="'wght' 300"
-              toFontVariationSettings="'wght' 900"
-              style={{ display: 'block' }}
-            />
+            <p className="text-[clamp(1.3rem,3vw,2.7rem)] font-display leading-[1.12] tracking-tight text-ink">
+              {manifestoLines[0]}
+            </p>
           </FadeIn>
         </div>
 
@@ -90,16 +85,9 @@ export default function VisionariesSection() {
             </span>
           </FadeIn>
           <FadeIn>
-            <VariableProximity
-              label={manifestoLines[1]}
-              className="block text-[clamp(1.3rem,3vw,2.7rem)] leading-[1.12] tracking-tight text-ink/85"
-              containerRef={manifestoRef}
-              radius={150}
-              falloff="linear"
-              fromFontVariationSettings="'wght' 300"
-              toFontVariationSettings="'wght' 900"
-              style={{ display: 'block' }}
-            />
+            <p className="text-[clamp(1.3rem,3vw,2.4rem)] leading-[1.12] tracking-tight text-ink/85">
+              {manifestoLines[1]}
+            </p>
           </FadeIn>
         </div>
 
@@ -107,16 +95,19 @@ export default function VisionariesSection() {
           <FadeIn>
             <p className="font-display text-[clamp(1.5rem,3.5vw,2.7rem)] leading-[1.15] tracking-tight text-ink">
               We are a system designed{' '}
-              {/* <span className="text-bronze">not to do business once</span> */}
-              <VariableProximity
-                label="not to do business once"
-                className="text-bronze"
-                containerRef={manifestoRef}
-                radius={150}
-                falloff="linear"
-                fromFontVariationSettings="'wght' 300"
-                toFontVariationSettings="'wght' 900"
-              />
+              {isDesktop ? (
+                <VariableProximity
+                  label="not to do business once"
+                  className="text-bronze"
+                  containerRef={manifestoRef}
+                  radius={150}
+                  falloff="linear"
+                  fromFontVariationSettings="'wght' 300"
+                  toFontVariationSettings="'wght' 900"
+                />
+              ) : (
+                <span className="text-bronze">not to do business once</span>
+              )}
               , but to build meaningful businesses,{' '}
               <em className="">again and again</em>
               , for as long as there are real problems that need real solutions.
@@ -126,16 +117,9 @@ export default function VisionariesSection() {
 
         <FadeIn className="mt-10 sm:mt-14">
           <div className="border-l-[2px] border-bronze/50 pl-5 sm:pl-8 italic">
-            <VariableProximity
-              label={manifestoLines[3]}
-              className="block text-[clamp(1rem,2vw,2.6rem)] leading-[1.25] tracking-tight text-stone"
-              containerRef={manifestoRef}
-              radius={150}
-              falloff="linear"
-              fromFontVariationSettings="'wght' 300"
-              toFontVariationSettings="'wght' 900"
-              style={{ display: 'block' }}
-            />
+            <p className="text-[clamp(1rem,2vw,2.6rem)] leading-[1.25] tracking-tight text-stone">
+              {manifestoLines[3]}
+            </p>
           </div>
         </FadeIn>
 
@@ -162,16 +146,22 @@ export default function VisionariesSection() {
         </FadeIn>
 
         <FadeIn delay={0.3} className="mt-12 sm:mt-16">
-          <VariableProximity
-            label="That is who we are."
-            className="block text-[clamp(1.5rem,2vw,2rem)] leading-[1.1] tracking-tight text-ink/25"
-            containerRef={manifestoRef}
-            radius={150}
-            falloff="linear"
-            fromFontVariationSettings="'wght' 300"
-            toFontVariationSettings="'wght' 900"
-            style={{ display: 'block' }}
-          />
+          {isDesktop ? (
+            <VariableProximity
+              label="That is who we are."
+              className="block text-[clamp(1.5rem,2vw,2rem)] leading-[1.1] tracking-tight text-ink/25"
+              containerRef={manifestoRef}
+              radius={150}
+              falloff="linear"
+              fromFontVariationSettings="'wght' 300"
+              toFontVariationSettings="'wght' 900"
+              style={{ display: 'block' }}
+            />
+          ) : (
+            <p className="text-[clamp(1.5rem,2vw,2rem)] leading-[1.1] tracking-tight text-ink/25">
+              That is who we are.
+            </p>
+          )}
         </FadeIn>
       </div>
       <AnimatePresence>
