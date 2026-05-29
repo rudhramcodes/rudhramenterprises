@@ -29,13 +29,16 @@ const VentureRow = memo(function VentureRow({ venture, index }) {
       className="group border-b border-ink/8 transition-colors"
       onMouseEnter={() => setIsActive(true)}
       onMouseLeave={() => setIsActive(false)}
+      onFocus={() => setIsActive(true)}
+      onBlur={() => setIsActive(false)}
+      tabIndex={0}
     >
       <div className={`${styles.project} min-h-[5rem] sm:min-h-[6rem] lg:min-h-[7rem]`}>
         <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
           <span className="hidden text-[10px] font-bold tracking-[0.25em] text-bronze/40 sm:block">
             {num}
           </span>
-          <h3 className="font-display text-[clamp(1.1rem,2.4vw,2.2rem)] leading-none tracking-tight text-ink transition-colors duration-300 group-hover:text-bronze">
+          <h3 className={`font-display text-[clamp(1.1rem,2.4vw,2.2rem)] leading-none tracking-tight transition-colors duration-300 ${isActive ? 'text-bronze' : 'text-ink'}`}>
             {venture.name}
           </h3>
         </div>

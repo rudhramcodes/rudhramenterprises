@@ -5,21 +5,8 @@ import PeopleList from './PeopleList'
 import Modal from './Modal'
 import { SectionKicker } from '../ui'
 import VariableProximity from '../VariableProximity/VariableProximity'
-
-const mx = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
-const ease = [0.22, 1, 0.36, 1]
-
-const FadeIn = ({ children, delay = 0, className = '' }) => (
-  <motion.div
-    className={className}
-    initial={{ opacity: 0, y: 24, filter: 'blur(10px)' }}
-    whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-    transition={{ duration: 0.75, delay, ease }}
-    viewport={{ once: true, amount: 0.25 }}
-  >
-    {children}
-  </motion.div>
-)
+import { maxWidth } from '../../lib/layout'
+import FadeIn from '../ui/FadeIn'
 
 const manifestoLines = [
   'We are builders who began without certainty and learned to create it.',
@@ -49,7 +36,7 @@ export default function VisionariesSection() {
 
   return (
     <section id="visionaries" className="bg-paper pt-16 sm:pt-20 lg:pt-20">
-      <div className={mx}>
+      <div className={maxWidth}>
         <FadeIn className="max-w-5xl">
           <SectionKicker>The Visionaries</SectionKicker>
           <h2 className="font-display text-[clamp(2.4rem,5.5vw,5.4rem)] leading-[0.96] tracking-tight text-ink">
@@ -63,7 +50,7 @@ export default function VisionariesSection() {
         </FadeIn>
       </div>
 
-      <div className={`${mx} mt-12 sm:mt-16`}>
+      <div className={`${maxWidth} mt-12 sm:mt-16`}>
         <FadeIn>
           <PeopleList
             setActiveMenu={handleSetActive}
@@ -74,7 +61,7 @@ export default function VisionariesSection() {
 
       <WebGLPlane activeMenu={activeMenu} />
 
-      <div ref={manifestoRef} className={`${mx} mt-12 sm:mt-18 lg:mt-28`} style={{ position: 'relative' }}>
+      <div ref={manifestoRef} className={`${maxWidth} mt-12 sm:mt-18 lg:mt-28`} style={{ position: 'relative' }}>
         <FadeIn>
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/80 sm:text-[11px]">
             What We Are, In Full

@@ -14,6 +14,7 @@ export default function PeopleList({ setActiveMenu, onPersonClick }) {
             <button
               type="button"
               onClick={() => onPersonClick(person)}
+              aria-label={`Learn more about ${person.name}`}
               className="flex w-full cursor-pointer items-center gap-4 px-3 py-5 text-left outline-none transition-colors duration-300 hover:bg-ink/[0.03] sm:px-4 sm:py-6 lg:px-6 lg:py-7"
             >
               <span className="w-8 shrink-0 font-display text-sm text-ink/25 sm:w-10 sm:text-base">

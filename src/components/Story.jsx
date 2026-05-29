@@ -2,8 +2,8 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion'
 import { CaretLeft } from '@phosphor-icons/react'
-
-const mx = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
+import { maxWidth } from '../lib/layout'
+import FadeIn from './ui/FadeIn'
 const ease = [0.22, 1, 0.36, 1]
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
 
@@ -31,18 +31,6 @@ const phaseText = [
   'Most people do not talk about this phase. They skip past it in the story because it is uncomfortable. But for Rudhram, this phase is not something to be skipped. It is the source of everything.',
   'That shift - from ambition to purpose - changed the nature of what Rudhram was trying to become. The confusion did not become a roadblock. It became a direction.',
 ]
-
-const FadeIn = ({ children, delay = 0, className = '' }) => (
-  <motion.div
-    className={className}
-    initial={{ opacity: 0, y: 24, filter: 'blur(10px)' }}
-    whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-    transition={{ duration: 0.75, delay, ease }}
-    viewport={{ once: true, amount: 0.25 }}
-  >
-    {children}
-  </motion.div>
-)
 
 const StoryDetail = ({ onClose }) => {
   const detailRef = useRef(null)
@@ -117,7 +105,7 @@ const StoryDetail = ({ onClose }) => {
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,16,14,0.02)_0%,rgba(17,16,14,0.28)_48%,rgba(17,16,14,0.86)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_28%,rgba(255,253,248,0.2),transparent_34rem)]" />
 
-          <div className={`${mx} relative z-10 flex min-h-screen flex-col justify-end pb-14 pt-32 sm:pb-20`}>
+          <div className={`${maxWidth} relative z-10 flex min-h-screen flex-col justify-end pb-14 pt-32 sm:pb-20`}>
             <motion.p
               className="mb-4 text-[10px] font-bold uppercase tracking-[0.22em] text-white"
               initial={{ opacity: 0, y: 18, filter: 'blur(8px)' }}
@@ -147,7 +135,7 @@ const StoryDetail = ({ onClose }) => {
           </div>
         </section>
 
-        <section className={`${mx} py-16 sm:py-24 lg:py-32`}>
+        <section className={`${maxWidth} py-16 sm:py-24 lg:py-32`}>
           <div className="grid gap-10 lg:grid-cols-[0.48fr_1.1fr] lg:gap-16">
             <FadeIn className="lg:sticky lg:top-28 lg:self-start">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/80">
@@ -171,7 +159,7 @@ const StoryDetail = ({ onClose }) => {
         </section>
 
         <section className="bg-ivory py-16 sm:py-24 lg:py-32">
-          <div className={`${mx} max-w-4xl`}>
+          <div className={`${maxWidth} max-w-4xl`}>
             <div className="space-y-6 sm:space-y-7">
               {preambleText.map((text, i) => (
                 <FadeIn key={text} delay={0.1 + i * 0.08}>
@@ -191,7 +179,7 @@ const StoryDetail = ({ onClose }) => {
           </div>
         </section>
 
-        <section className={`${mx} py-16 sm:py-24 lg:py-32`}>
+        <section className={`${maxWidth} py-16 sm:py-24 lg:py-32`}>
           <div className="mb-2 flex items-center gap-4">
             <span className="font-display text-[2rem] leading-none text-ink/8 sm:text-[3rem]">
               01
@@ -229,7 +217,7 @@ const StoryDetail = ({ onClose }) => {
         </section>
 
         <section className="bg-ink py-16 text-paper sm:py-24 lg:py-32">
-          <div className={`${mx}`}>
+          <div className={`${maxWidth}`}>
             <div className="mb-2 flex items-center gap-4">
               <span className="font-display text-[2rem] leading-none text-paper/12 sm:text-[3rem]">
                 02
@@ -371,7 +359,7 @@ export const Story = memo(function Story() {
 
   return (
     <section id="story" className="scroll-mt-32 bg-paper pt-16 sm:pt-20 lg:pt-20">
-      <div className={`${mx}`}>
+      <div className={`${maxWidth}`}>
         <FadeIn className="mb-8 flex items-end justify-between gap-6 sm:mb-10">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-bronze/75">
@@ -433,7 +421,7 @@ export const Story = memo(function Story() {
         </motion.button>
       </div>
 
-      <div className={`${mx} mt-6 sm:mt-10 lg:mt-10`}>
+      <div className={`${maxWidth} mt-6 sm:mt-10 lg:mt-10`}>
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
           <div className="max-w-xl space-y-5">
             {shortVersion.map((text, i) => (

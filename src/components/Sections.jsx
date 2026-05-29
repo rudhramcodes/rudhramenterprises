@@ -1,13 +1,8 @@
 import { memo } from 'react'
-import { motion } from 'framer-motion'
 import { SectionKicker, LogoMark } from './ui'
 import { AwwwardsButton } from './ui/AwwwardsButton'
-// import { ventures } from '../data/siteContent'
-
-const maxWidth = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
-const displayTitle = 'font-display text-[clamp(3rem,7vw,7.75rem)] leading-[0.92] tracking-normal text-ink [&>span]:block'
-const sectionLead = 'max-w-3xl text-lg leading-[1.7] text-stone sm:text-xl'
-const sectionShell = 'py-16 sm:py-20 lg:py-36'
+import { maxWidth, displayTitle, sectionLead, sectionShell } from '../lib/layout'
+import FadeIn from './ui/FadeIn'
 const contactFields = ['Name', 'Email']
 const contactOptions = ['Partnership', 'Venture enquiry', 'Collaboration', 'Social impact']
 // const footerContactItems = ['Strategic enquiries', 'Partnerships', 'Collaborations', 'Social impact']
@@ -33,17 +28,6 @@ const missionContent = [
   'Driven by the belief that business must go beyond profit, Rudhram focuses on creating ventures that contribute to society, empower individuals, and deliver lasting value.',
   'Every initiative is approached with a commitment to innovation, excellence, and responsibility. The mission is not only to build successful brands, but to establish a system that consistently creates, nurtures, and scales ventures with purpose \u2014 ensuring that growth is sustainable, impact is real, and every step aligns with a larger vision of building something that truly matters.',
 ]
-
-const FadeIn = ({ children, delay = 0 }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 24 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-    viewport={{ once: true, amount: 0.25 }}
-  >
-    {children}
-  </motion.div>
-)
 
 const VisionBlock = memo(function VisionBlock({ content }) {
   return (
@@ -113,7 +97,7 @@ export const VisionMission = memo(function VisionMission() {
   return (
     <section className="bg-paper pt-16 sm:pt-20 lg:pt-30" id="purpose">
       <div className="mx-auto max-w-[calc(1300px+var(--page-gutter)*2)] px-[var(--page-gutter)]">
-        <FadeIn>
+        <FadeIn duration={0.6} blur={false}>
           <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/60 sm:text-[11px]">
             Our Purpose
           </span>
@@ -125,7 +109,7 @@ export const VisionMission = memo(function VisionMission() {
         </FadeIn>
 
         <div className="mt-4 sm:mt-6 lg:mt-6">
-          <FadeIn delay={0.1}>
+          <FadeIn duration={0.6} blur={false} delay={0.1}>
             <div className="border-t border-ink/8 pt-4 sm:pt-6 lg:pt-6">
               <VisionBlock content={visionContent} />
             </div>
@@ -134,7 +118,7 @@ export const VisionMission = memo(function VisionMission() {
           <div className="my-12 sm:my-16 lg:my-20">
           </div>
 
-          <FadeIn delay={0.15}>
+          <FadeIn duration={0.6} blur={false} delay={0.15}>
             <div className="border-t border-ink/8 pt-10 sm:pt-14 lg:pt-16">
               <MissionBlock content={missionContent} />
             </div>

@@ -6,8 +6,7 @@ import { AwwwardsButton } from './ui/AwwwardsButton'
 import GradualBlur from './GradualBlur'
 import { CursorFollow } from './CursorFollow'
 import { useIsDesktop } from '../hooks/useMediaQuery'
-
-const maxWidth = 'mx-auto max-w-[calc(1500px+var(--page-gutter)*2)] px-[var(--page-gutter)]'
+import { maxWidth } from '../lib/layout'
 
 const thesisItems = [
   {

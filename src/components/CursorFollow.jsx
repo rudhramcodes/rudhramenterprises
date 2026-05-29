@@ -31,6 +31,7 @@ export const CursorFollow = memo(function CursorFollow({
 
   return (
     <motion.div
+      aria-hidden="true"
       style={{
         position: 'fixed',
         top: 0,
