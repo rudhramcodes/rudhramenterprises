@@ -133,23 +133,23 @@ const MobileStackHero = () => {
           <p className="mb-4 text-center text-[9px] font-semibold uppercase tracking-[0.24em] text-[#8F5F2E]">
             Swipe the cards
           </p>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center mt-10">
             <AwwwardsButton
-              className="flex-1"
+              className="w-[75%] h-12"
               href="#ventures"
-              variant="bronze"
-              size="sm"
+              variant="primary"
+              size="lg"
             >
               Explore
             </AwwwardsButton>
-            <AwwwardsButton
+            {/* <AwwwardsButton
               className="flex-1"
               href="#contact"
               variant="ghost-light"
               size="sm"
             >
               Contact
-            </AwwwardsButton>
+            </AwwwardsButton> */}
           </div>
         </div>
       </div>

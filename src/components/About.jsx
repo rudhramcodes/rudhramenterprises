@@ -243,7 +243,7 @@ const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
                 <p className="text-[clamp(0.8rem,2vw,0.92rem)] leading-[1.6] text-stone">
                   {item.description}
                 </p>
-                <AwwwardsButton variant="bronze" size="sm" className="mt-3 self-start" onClick={(e) => { e.stopPropagation(); onOpenDetails(index) }}>
+                <AwwwardsButton variant="primary" size="sm" className="mt-3 self-start" onClick={(e) => { e.stopPropagation(); onOpenDetails(index) }}>
                   Tap to explore
                 </AwwwardsButton>
               </div>

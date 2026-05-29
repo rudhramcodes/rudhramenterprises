@@ -142,68 +142,68 @@ export const Impact = memo(function Impact() {
   )
 })
 
-export const Contact = memo(function Contact() {
-  return (
-    <section id="contact" className="bg-ink py-16 text-paper sm:py-20 lg:py-36">
-      <div
-        className={`${maxWidth} chapter relative overflow-hidden border border-paper/10 p-6 sm:p-10 lg:p-14`}
-      >
-        <LogoMark className="pointer-events-none absolute -right-28 -top-16 h-[28rem] opacity-[0.055] sm:-right-8 sm:-top-8 sm:h-[34rem]" />
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_0.75fr]">
-          <div className="reveal relative z-10">
-            <h2 className="font-display text-[clamp(3rem,14vw,6rem)] leading-[0.88] text-paper lg:text-[clamp(3.8rem,9vw,9rem)]">
-              Let's shape what comes next.
-            </h2>
-            <p className="mt-8 max-w-2xl text-lg leading-[1.65] text-paper/70 sm:text-xl">
-              For partnerships, ventures, collaborations, and strategic enquiries, connect with Rudhram.
-            </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <AwwwardsButton href="mailto:hello@rudhram.com" variant="ivory">
-                Start a Conversation
-              </AwwwardsButton>
-              <AwwwardsButton href="#ventures" variant="bronze-dark">
-                Explore Ventures
-              </AwwwardsButton>
-            </div>
-          </div>
-          <form className="reveal relative z-10 grid gap-4">
-            {contactFields.map((label) => (
-              <label
-                className="grid gap-2 text-xs font-bold uppercase tracking-[0.16em] text-paper/55"
-                key={label}
-              >
-                {label}
-                <input
-                  className="min-h-12 border border-paper/15 bg-paper/5 px-4 text-base normal-case tracking-normal text-paper outline-none transition focus:border-bronze"
-                  type={label === 'Email' ? 'email' : 'text'}
-                />
-              </label>
-            ))}
-            <label className="grid gap-2 text-xs font-bold uppercase tracking-[0.16em] text-paper/55">
-              Interest
-              <select
-                className="min-h-12 border border-paper/15 bg-ink px-4 text-base normal-case tracking-normal text-paper outline-none transition focus:border-bronze"
-                defaultValue=""
-              >
-                <option value="" disabled>Select one</option>
-                {contactOptions.map((option) => (
-                  <option key={option}>{option}</option>
-                ))}
-              </select>
-            </label>
-            <label className="grid gap-2 text-xs font-bold uppercase tracking-[0.16em] text-paper/55">
-              Message
-              <textarea className="min-h-32 border border-paper/15 bg-paper/5 p-4 text-base normal-case tracking-normal text-paper outline-none transition focus:border-bronze" />
-            </label>
-            <button
-              className="min-h-12 border border-bronze bg-bronze px-5 text-sm font-bold text-paper transition hover:bg-bronze-dark"
-              type="button"
-            >
-              Send Enquiry
-            </button>
-          </form>
-        </div>
-      </div>
-    </section>
-  )
-})
+// export const Contact = memo(function Contact() {
+//   return (
+//     <section id="contact" className="bg-ink py-16 text-paper sm:py-20 lg:py-36">
+//       <div
+//         className={`${maxWidth} chapter relative overflow-hidden border border-paper/10 p-6 sm:p-10 lg:p-14`}
+//       >
+//         <LogoMark className="pointer-events-none absolute -right-28 -top-16 h-[28rem] opacity-[0.055] sm:-right-8 sm:-top-8 sm:h-[34rem]" />
+//         <div className="grid gap-12 lg:grid-cols-[0.9fr_0.75fr]">
+//           <div className="reveal relative z-10">
+//             <h2 className="font-display text-[clamp(3rem,14vw,6rem)] leading-[0.88] text-paper lg:text-[clamp(3.8rem,9vw,9rem)]">
+//               Let's shape what comes next.
+//             </h2>
+//             <p className="mt-8 max-w-2xl text-lg leading-[1.65] text-paper/70 sm:text-xl">
+//               For partnerships, ventures, collaborations, and strategic enquiries, connect with Rudhram.
+//             </p>
+//             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+//               <AwwwardsButton href="mailto:hello@rudhram.com" variant="ivory">
+//                 Start a Conversation
+//               </AwwwardsButton>
+//               <AwwwardsButton href="#ventures" variant="bronze-dark">
+//                 Explore Ventures
+//               </AwwwardsButton>
+//             </div>
+//           </div>
+//           <form className="reveal relative z-10 grid gap-4">
+//             {contactFields.map((label) => (
+//               <label
+//                 className="grid gap-2 text-xs font-bold uppercase tracking-[0.16em] text-paper/55"
+//                 key={label}
+//               >
+//                 {label}
+//                 <input
+//                   className="min-h-12 border border-paper/15 bg-paper/5 px-4 text-base normal-case tracking-normal text-paper outline-none transition focus:border-bronze"
+//                   type={label === 'Email' ? 'email' : 'text'}
+//                 />
+//               </label>
+//             ))}
+//             <label className="grid gap-2 text-xs font-bold uppercase tracking-[0.16em] text-paper/55">
+//               Interest
+//               <select
+//                 className="min-h-12 border border-paper/15 bg-ink px-4 text-base normal-case tracking-normal text-paper outline-none transition focus:border-bronze"
+//                 defaultValue=""
+//               >
+//                 <option value="" disabled>Select one</option>
+//                 {contactOptions.map((option) => (
+//                   <option key={option}>{option}</option>
+//                 ))}
+//               </select>
+//             </label>
+//             <label className="grid gap-2 text-xs font-bold uppercase tracking-[0.16em] text-paper/55">
+//               Message
+//               <textarea className="min-h-32 border border-paper/15 bg-paper/5 p-4 text-base normal-case tracking-normal text-paper outline-none transition focus:border-bronze" />
+//             </label>
+//             <button
+//               className="min-h-12 border border-bronze bg-bronze px-5 text-sm font-bold text-paper transition hover:bg-bronze-dark"
+//               type="button"
+//             >
+//               Send Enquiry
+//             </button>
+//           </form>
+//         </div>
+//       </div>
+//     </section>
+//   )
+// })

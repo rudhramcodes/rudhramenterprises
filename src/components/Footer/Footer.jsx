@@ -313,7 +313,7 @@ const Footer = memo(function Footer() {
             <CTAHeading />
             <AwwwardsButton
               href="mailto:hello@rudhramenterprises.com"
-              variant="ivory"
+              variant="primary"
               size="lg"
             >
               Start a Conversation

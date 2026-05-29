@@ -43,6 +43,13 @@ const VARIANTS = {
     hover: "#11100e",
     base: "#2a2621",
   },
+  primary: {
+    border: "#c9a87f",
+    color: "#8f5f2e",
+    fill: "#c9a87f",
+    hover: "#5a3d1e",
+    base: "#f5e7d4",
+  },
 };
 
 const SIZES = {

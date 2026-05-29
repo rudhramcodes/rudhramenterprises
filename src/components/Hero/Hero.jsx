@@ -242,7 +242,7 @@ const Hero = () => {
           <motion.div className="absolute bottom-[52vh] left-1/2 z-10 w-full max-w-[calc(56rem+var(--page-gutter)*2)] -translate-x-1/2 px-[var(--page-gutter)] text-center sm:bottom-[60vh]" style={{ opacity: settleTextOpacity, y: settleTextY }}>
             <h2 className="mb-7 font-display font-bold text-4xl leading-[1] tracking-[-0.04em] text-[#2E2A24] sm:text-5xl sm:leading-[0.95] sm:tracking-[-0.05em] lg:text-7xl">Three standards.<br />One way forward.</h2>
             <div className="flex justify-center">
-              <AwwwardsButton href="#ventures" variant="bronze" size="lg">
+              <AwwwardsButton href="#ventures" variant="primary" size="lg">
                 Explore the Ecosystem
               </AwwwardsButton>
             </div>
