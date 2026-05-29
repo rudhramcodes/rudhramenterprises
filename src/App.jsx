@@ -24,6 +24,7 @@ const VentureGallery = lazy(() =>
     default: m.VentureGallery,
   })),
 )
+const ContactForm = lazy(() => import('./components/ContactForm'))
 const Footer = lazy(() => import('./components/Footer/Footer'))
 
 const LazySection = ({ children }) => (
@@ -55,6 +56,9 @@ const App = () => {
         </LazySection>
         <LazySection>
           <VentureGallery />
+        </LazySection>
+        <LazySection>
+          <ContactForm />
         </LazySection>
       </main>
       <LazySection>
