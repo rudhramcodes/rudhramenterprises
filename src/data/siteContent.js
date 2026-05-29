@@ -4,7 +4,7 @@ export const navItems = [
   { label: 'Visionaries', href: '#visionaries' },
   { label: 'Purpose', href: '#purpose' },
   { label: 'Ventures', href: '#ventures' },
-  // { label: 'Impact', href: '#impact' },
+  {label: 'Contact', href: '#contact' },
 ]
 
 export const pillars = [

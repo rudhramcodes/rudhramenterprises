@@ -58,7 +58,7 @@ function CustomSelect({ value, options, onChange, label }) {
   const selected = options.find((o) => o === value)
 
   return (
-    <div>
+    <div id="contact">
       <label className="block text-[11px] font-bold uppercase tracking-[0.18em] text-stone/55 mb-2">
         Interest
       </label>

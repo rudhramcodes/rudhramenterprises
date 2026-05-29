@@ -43,10 +43,10 @@ const NAV_COLUMNS = [
   {
     title: 'Connect',
     links: [
-      { label: 'Contact Us', href: 'mailto:hello@rudhramenterprises.com' },
-      { label: 'Partner With Us', href: 'mailto:partners@rudhramenterprises.com' },
-      { label: 'Invest', href: 'mailto:invest@rudhramenterprises.com' },
-      { label: 'Press', href: 'mailto:press@rudhramenterprises.com' },
+      { label: 'Contact Us', href: '#contact' },
+      { label: 'Partner With Us', href: '#contact' },
+      { label: 'Invest', href: '#contact' },
+      { label: 'Press', href: '#contact' },
     ],
   },
 ]
