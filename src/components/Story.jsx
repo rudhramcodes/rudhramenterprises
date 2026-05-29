@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion'
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import { CaretLeft } from '@phosphor-icons/react'
 import { maxWidth } from '../lib/layout'
 import FadeIn from './ui/FadeIn'
@@ -449,7 +449,7 @@ export const Story = memo(function Story() {
         {isHovering && !detailOpen && (
           <motion.div
             ref={cursorRef}
-            className="pointer-events-none fixed left-0 top-0 z-[999] hidden h-24 w-24 items-center justify-center rounded-full border border-white/25 bg-bronze lg:flex"
+            className="pointer-events-none fixed left-0 top-0 z-[999] hidden h-24 w-24 items-center justify-center rounded-full border border-[#5a3d1e] bg-[#5a3d1e] lg:flex"
             style={{
               transform: 'translate3d(-999px, -999px, 0) translate(-50%, -50%)',
               willChange: 'transform',
