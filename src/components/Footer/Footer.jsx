@@ -340,7 +340,7 @@ const Footer = memo(function Footer() {
             <div className="social-links">
               <MagneticArea
                 as="a"
-                href="https://instagram.com"
+                href="https://instagram.com/rudhramenterprises"
                 className="social-link"
                 aria-label="Instagram"
                 target="_blank"

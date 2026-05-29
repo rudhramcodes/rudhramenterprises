@@ -204,7 +204,7 @@ export const Header = memo(function Header() {
                 <div className="flex flex-col gap-3.5">
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone/50 sm:text-[11px]">Work With Us</p>
                   <div className="flex flex-row items-center gap-2 sm:gap-3.5">
-                    <motion.a className="group relative block flex-1 sm:flex-initial" href="mailto:hello@rudhram.com" whileTap={{ scale: 0.97 }}>
+                    <motion.a className="group relative block flex-1 sm:flex-initial" href="mailto:hello@rudhramenterprises.com" whileTap={{ scale: 0.97 }}>
                       <LiquidGlassCard
                         draggable={false}
                         expandable={false}
@@ -215,7 +215,7 @@ export const Header = memo(function Header() {
                         glowIntensity="md"
                       >
                         <div className="flex w-full items-center justify-center">
-                          <span className="whitespace-nowrap text-[13px] font-bold tracking-tight text-ink sm:text-[15px]">hello@rudhram.com</span>
+                          <span className="whitespace-nowrap text-[13px] font-bold tracking-tight text-ink sm:text-[15px]">Mail Us</span>
                         </div>
                       </LiquidGlassCard>
                     </motion.a>
