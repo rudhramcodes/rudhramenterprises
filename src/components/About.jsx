@@ -1,12 +1,17 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import { CaretLeft } from '@phosphor-icons/react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SectionKicker } from './ui'
 import { AwwwardsButton } from './ui/AwwwardsButton'
 import GradualBlur from './GradualBlur'
 import { CursorFollow } from './CursorFollow'
 import { useIsDesktop } from '../hooks/useMediaQuery'
 import { maxWidth } from '../lib/layout'
+import { createRevealAnimations } from '../hooks/useScrollAnimations'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const thesisItems = [
   {
@@ -272,9 +277,17 @@ export const BrandThesis = memo(function BrandThesis() {
   const [detailsOpen, setDetailsOpen] = useState(false)
   const [detailIndex, setDetailIndex] = useState(0)
   const isDesktop = useIsDesktop()
+  const aboutRef = useRef(null)
   const scrollRef = useRef(null)
   const imageBtnRef = useRef(null)
   const mousePosRef = useRef({ x: 0, y: 0 })
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      createRevealAnimations(aboutRef.current)
+    }, aboutRef)
+    return () => ctx.revert()
+  }, [])
 
   const { scrollYProgress } = useScroll({ target: scrollRef, offset: ['start start', 'end end'] })
   const stripY = useTransform(scrollYProgress, [0, 1], ['0%', `-${(((ITEM_COUNT - 1) / ITEM_COUNT) * 100).toFixed(4)}%`])
@@ -341,7 +354,7 @@ export const BrandThesis = memo(function BrandThesis() {
   }, [detailsOpen])
 
   return (
-    <section id="about" className="relative bg-paper">
+    <section ref={aboutRef} id="about" className="relative bg-paper">
       {isDesktop && <CursorFollow show={isHoveringImage}>{thesisItems[activeIndex].cursorText}</CursorFollow>}
       <AnimatePresence onExitComplete={checkHoverAfterClose}>
         {detailsOpen && <AboutDetailPage item={thesisItems[detailIndex]} onBack={closeDetails} />}

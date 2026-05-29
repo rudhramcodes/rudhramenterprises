@@ -1,14 +1,36 @@
+import { lazy, Suspense } from 'react'
+
+/* ── Eager: Above-the-fold ── */
 import { Header } from './components/Header'
 import { useLenisScroll } from './hooks/useLenisScroll'
 import { useScrollAnimations } from './hooks/useScrollAnimations'
 import Hero from './components/Hero/Hero'
-import { BrandThesis } from './components/About'
-import { Story } from './components/Story'
-import VisionariesSection from './components/MouseImageDistortion'
-import { VisionMission } from './components/Sections'
-import Footer from './components/Footer/Footer'
-import { VentureGallery } from './components/VentureGallery/VentureGallery'
-// import { Leadership } from './components/Leadership'
+
+/* ── Lazy: Below-the-fold sections ── */
+const BrandThesis = lazy(() =>
+  import('./components/About').then((m) => ({ default: m.BrandThesis })),
+)
+const Story = lazy(() =>
+  import('./components/Story').then((m) => ({ default: m.Story })),
+)
+const VisionariesSection = lazy(() =>
+  import('./components/MouseImageDistortion'),
+)
+const VisionMission = lazy(() =>
+  import('./components/Sections').then((m) => ({ default: m.VisionMission })),
+)
+const VentureGallery = lazy(() =>
+  import('./components/VentureGallery/VentureGallery').then((m) => ({
+    default: m.VentureGallery,
+  })),
+)
+const Footer = lazy(() => import('./components/Footer/Footer'))
+
+const LazySection = ({ children }) => (
+  <Suspense fallback={<div aria-hidden="true" className="min-h-[1px]" />}>
+    {children}
+  </Suspense>
+)
 
 const App = () => {
   useLenisScroll()
@@ -19,16 +41,25 @@ const App = () => {
       <Header />
       <main className="relative z-[2] min-h-screen bg-ivory">
         <Hero />
-        <BrandThesis />
-        <Story />
-        <VisionariesSection />
-        <VisionMission />
-        <VentureGallery />
-        {/* <Leadership /> */}
-        {/* <Contact /> */}
-        {/* <Impact /> */}
+        <LazySection>
+          <BrandThesis />
+        </LazySection>
+        <LazySection>
+          <Story />
+        </LazySection>
+        <LazySection>
+          <VisionariesSection />
+        </LazySection>
+        <LazySection>
+          <VisionMission />
+        </LazySection>
+        <LazySection>
+          <VentureGallery />
+        </LazySection>
       </main>
-      <Footer />
+      <LazySection>
+        <Footer />
+      </LazySection>
     </>
   )
 }
