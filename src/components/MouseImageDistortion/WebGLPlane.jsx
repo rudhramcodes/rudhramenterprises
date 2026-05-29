@@ -217,13 +217,15 @@ export default function WebGLPlane({ activeMenu }) {
   }, [])
 
   useEffect(() => {
+    const canvas = canvasRef.current
     const state = glState.current
-    if (!state) return
+    if (!state || !canvas) return
 
     const lerp = (a, b, t) => a + (b - a) * t
+    let running = true
 
     const loop = () => {
-      if (!glState.current) return
+      if (!running || !glState.current) return
 
       const { gl, program, vao, uDeltaLoc, uScaleLoc, uPositionLoc, uAlphaLoc, indexCount } = state
       const { x, y } = mouseRef.current
@@ -239,6 +241,12 @@ export default function WebGLPlane({ activeMenu }) {
           smoothMouse.current.x = lerp(sx, x, 0.1)
           smoothMouse.current.y = lerp(sy, y, 0.1)
           currentDelta.current = { x: dx, y: -dy }
+        }
+
+        // Skip GPU work when fully transparent and no active hover
+        if (currentAlpha.current < 0.01 && targetAlpha.current === 0) {
+          rafId.current = requestAnimationFrame(loop)
+          return
         }
 
         const clipX = (smoothMouse.current.x / dim.width) * 2 - 1
@@ -270,8 +278,31 @@ export default function WebGLPlane({ activeMenu }) {
       rafId.current = requestAnimationFrame(loop)
     }
 
+    // Pause rAF when canvas scrolls out of view, resume when back in
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!rafId.current) {
+            running = true
+            rafId.current = requestAnimationFrame(loop)
+          }
+        } else {
+          running = false
+          if (rafId.current) {
+            cancelAnimationFrame(rafId.current)
+            rafId.current = null
+          }
+        }
+      },
+      { threshold: 0 }
+    )
+    observer.observe(canvas)
+
     rafId.current = requestAnimationFrame(loop)
+
     return () => {
+      running = false
+      observer.disconnect()
       if (rafId.current) cancelAnimationFrame(rafId.current)
     }
   }, [])
