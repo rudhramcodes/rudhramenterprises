@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 code_review_report.txt
 audit-assets-and-links.md
+.env

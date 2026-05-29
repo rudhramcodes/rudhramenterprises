@@ -26,7 +26,7 @@ const FIELDS = [
   { label: 'Email', type: 'email', placeholder: 'your@email.com' },
 ]
 
-const OPTIONS = ['Partnership', 'Venture enquiry', 'Collaboration', 'Social impact']
+const OPTIONS = ['Partnership', 'Venture inquiry', 'Collaboration', 'Social impact']
 
 const INITIAL = { Name: '', Email: '', Interest: '', Message: '' }
 
@@ -310,7 +310,7 @@ const ContactForm = memo(function ContactForm() {
                 <span className="text-bronze">We&rsquo;ll be in touch.</span>
               </h2>
               <p className="mt-6 text-base leading-[1.7] text-stone sm:text-lg">
-                We review every enquiry personally and will respond within 48 hours.
+                We review every inquiry personally and will respond within 48 hours.
               </p>
               <div className="mt-10">
                 <AwwwardsButton
@@ -349,7 +349,7 @@ const ContactForm = memo(function ContactForm() {
               <span className="text-bronze">what comes next.</span>
             </h2>
             <p className="mt-6 max-w-md text-base leading-[1.7] text-stone sm:text-lg">
-              For partnerships, ventures, collaborations, and strategic enquiries — connect with
+              For partnerships, ventures, collaborations, and strategic inquiries — connect with
               Rudhram.
             </p>
           </FadeIn>
@@ -469,7 +469,7 @@ const ContactForm = memo(function ContactForm() {
                     size="pill"
                     disabled={submitting}
                   >
-                    {submitting ? 'Sending…' : 'Send Enquiry'}
+                    {submitting ? 'Sending…' : 'Send Inquiry'}
                   </AwwwardsButton>
                 </motion.div>
               </div>

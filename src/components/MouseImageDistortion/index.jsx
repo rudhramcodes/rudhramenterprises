@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import WebGLPlane from './WebGLPlane'
 import PeopleList from './PeopleList'
 import Modal from './Modal'

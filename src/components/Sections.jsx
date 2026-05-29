@@ -4,7 +4,7 @@ import { AwwwardsButton } from './ui/AwwwardsButton'
 import { maxWidth, displayTitle, sectionLead, sectionShell } from '../lib/layout'
 import FadeIn from './ui/FadeIn'
 const contactFields = ['Name', 'Email']
-const contactOptions = ['Partnership', 'Venture enquiry', 'Collaboration', 'Social impact']
+const contactOptions = ['Partnership', 'Venture inquiry', 'Collaboration', 'Social impact']
 
 const visionContent = [
   'Rudhram Enterprises envisions becoming a pioneering force that continuously transforms ideas into impactful ventures. It aims to create a future where innovation is not driven by trends, but by real-world needs and purposeful thinking.',
