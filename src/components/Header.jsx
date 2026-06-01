@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { LiquidGlassCard } from './ui/liquid-glass'
 import { navItems } from '../data/siteContent'
@@ -35,6 +36,7 @@ export const Header = memo(function Header() {
   const pressTimerRef = useRef(null)
   const headerRef = useRef(null)
   const navRef = useRef(null)
+  const navigate = useNavigate()
 
   const resetHoverState = useCallback(() => {
     setHoveredNavIndex(null)
@@ -54,6 +56,12 @@ export const Header = memo(function Header() {
     event.preventDefault()
     resetHoverState()
     setMenuOpen(false)
+
+    if (window.location.pathname !== '/') {
+      navigate('/' + href)
+      return
+    }
+
     window.setTimeout(() => {
       const target = document.querySelector(href)
       if (target) {
@@ -61,7 +69,7 @@ export const Header = memo(function Header() {
         window.history.pushState(null, '', href)
       }
     }, 120)
-  }, [resetHoverState])
+  }, [resetHoverState, navigate])
 
   useEffect(() => {
     const onScroll = () => {
@@ -144,7 +152,7 @@ export const Header = memo(function Header() {
           />
           <div className="relative z-30 px-4 sm:px-5">
             <div className="flex h-16 w-full items-center justify-between sm:h-[4.5rem]">
-            <a className="group flex min-w-28 items-center sm:min-w-36" href="#top" aria-label="Rudhram Enterprises home" onClick={(e) => { e.preventDefault(); resetHoverState(); setMenuOpen(false); window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); window.history.pushState(null, '', '#top') }}>
+            <a className="group flex min-w-28 items-center sm:min-w-36" href="#top" aria-label="Rudhram Enterprises home" onClick={(e) => { e.preventDefault(); resetHoverState(); setMenuOpen(false); if (window.location.pathname !== '/') { navigate('/'); } else { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); window.history.pushState(null, '', '#top'); } }}>
               <img className="h-8 w-auto transition duration-300 ease-out group-hover:opacity-75 group-active:scale-[0.98] sm:h-9" src="/images/logo.png" alt="Rudhram" />
             </a>
 

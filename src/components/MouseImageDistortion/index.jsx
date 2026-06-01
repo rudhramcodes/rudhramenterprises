@@ -63,7 +63,7 @@ export default function VisionariesSection() {
 
       <WebGLPlane activeMenu={activeMenu} />
 
-      <div ref={manifestoRef} className={`${maxWidth} mt-12 sm:mt-18 lg:mt-28`} style={{ position: 'relative' }}>
+      {/* <div ref={manifestoRef} className={`${maxWidth} mt-12 sm:mt-18 lg:mt-28`} style={{ position: 'relative' }}>
         <FadeIn>
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bronze/80 sm:text-[11px]">
             What We Are, In Full
@@ -163,7 +163,7 @@ export default function VisionariesSection() {
             </p>
           )}
         </FadeIn>
-      </div>
+      </div> */}
       <AnimatePresence>
         {selectedPerson && (
           <Modal person={selectedPerson} onClose={handleCloseModal} />

@@ -1,4 +1,5 @@
 import { memo, useState, useEffect, useRef, useCallback, Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import {
   motion,
   useInView,
@@ -10,8 +11,9 @@ import {
 } from 'framer-motion'
 
 import { AwwwardsButton } from '../ui/AwwwardsButton'
-import { InstagramIcon, LinkedInIcon, TwitterIcon } from './FooterSVGs'
+import { InstagramIcon, LinkedInIcon, TwitterIcon, FacebookIcon } from './FooterSVGs'
 import './Footer.css'
+
 const EASE_OUT = [0.16, 1, 0.3, 1]
 
 const MARQUEE_ITEMS = [
@@ -23,21 +25,25 @@ const NAV_COLUMNS = [
   {
     title: 'Company',
     links: [
-      { label: 'About Us', href: '#about' },
-      { label: 'Our Philosophy', href: '#purpose' },
-      { label: 'Visionaries', href: '#visionaries' },
-      { label: 'Ventures', href: '#ventures' },
+      { label: 'About Us', href: '/#about' },
+      { label: 'Our Story', href: '/#story' },
+      { label: 'Our Philosophy', href: '/#purpose' },
+      { label: 'Visionaries', href: '/#visionaries' },
+      { label: 'Ventures', href: '/#ventures' },
       { label: 'Careers', href: null },
     ],
   },
   {
     title: 'Ventures',
     links: [
-      { label: 'Panigrahna', href: null },
-      { label: 'Aghhori', href: null },
-      { label: 'Design Studio', href: null },
-      { label: 'Tech Infra', href: null },
-      { label: 'Events', href: null },
+      { label: 'Panigrahna', href: "#ventures" },
+      { label: 'Aghhori', href: "#ventures" },
+      { label: 'House of joogi', href: "#ventures" },
+      { label: 'Damrru', href: "#ventures" },
+      { label: 'Tandavs', href: "#ventures" },
+      { label: 'Kapaalik', href: "#ventures" },
+      { label: 'Kalyannam', href: "#ventures" },
+      { label: 'Storage Media Solution', href: "#ventures" },
     ],
   },
   {
@@ -46,7 +52,6 @@ const NAV_COLUMNS = [
       { label: 'Contact Us', href: '#contact' },
       { label: 'Partner With Us', href: '#contact' },
       { label: 'Invest', href: '#contact' },
-      { label: 'Press', href: '#contact' },
     ],
   },
 ]
@@ -268,11 +273,22 @@ const Footer = memo(function Footer() {
   }, [])
 
   const scrollToSection = useCallback((e, href) => {
-    if (!href?.startsWith('#')) return
-    e.preventDefault()
-    const target = document.querySelector(href)
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (!href || href === '#' || href === '/#') {
+      e?.preventDefault()
+      return
+    }
+    e?.preventDefault()
+
+    const isHome = window.location.pathname === '/'
+    const hash = href.startsWith('/#') ? href.slice(1) : href
+
+    if (isHome) {
+      const target = document.querySelector(hash)
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    } else {
+      window.location.href = '/' + hash
     }
   }, [])
 
@@ -348,7 +364,7 @@ const Footer = memo(function Footer() {
               >
                 <InstagramIcon />
               </MagneticArea>
-              <MagneticArea
+              {/* <MagneticArea
                 as="a"
                 href="https://linkedin.com"
                 className="social-link"
@@ -357,10 +373,20 @@ const Footer = memo(function Footer() {
                 rel="noopener noreferrer"
               >
                 <LinkedInIcon />
+              </MagneticArea> */}
+              <MagneticArea
+                as="a"
+                href="https://facebook.com/rudhramenterprises"
+                className="social-link"
+                aria-label="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FacebookIcon />
               </MagneticArea>
               <MagneticArea
                 as="a"
-                href="https://twitter.com"
+                href="https://twitter.com/rudhramgroup"
                 className="social-link"
                 aria-label="Twitter"
                 target="_blank"
@@ -385,7 +411,7 @@ const Footer = memo(function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href || '#'}
-                      onClick={link.href?.startsWith('#') ? (e) => scrollToSection(e, link.href) : undefined}
+                      onClick={link.href?.startsWith('#') || link.href?.startsWith('/#') ? (e) => scrollToSection(e, link.href) : undefined}
                     >
                       {link.label}
                     </a>
@@ -417,8 +443,8 @@ const Footer = memo(function Footer() {
             animate={bottomInView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT }}
           >
-            <a href="#privacy">Privacy Policy</a>
-            <a href="#terms">Terms of Service</a>
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Service</Link>
           </motion.div>
         </div>
       </div>
