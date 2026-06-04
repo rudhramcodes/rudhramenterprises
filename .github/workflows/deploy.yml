@@ -27,6 +27,15 @@ jobs:
         env:
           VITE_API_URL: ${{ secrets.API_URL }}
 
+      - name: Verify API URL in built files
+        run: |
+          if grep -r "localhost:3000" dist/; then
+            echo "ERROR: Built files still contain localhost:3000!"
+            exit 1
+          fi
+          echo "API URL verified - no localhost references found"
+          grep -r "render.com" dist/ || echo "Warning: render.com not found in built files"
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:

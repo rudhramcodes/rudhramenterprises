@@ -6,7 +6,7 @@ import { AwwwardsButton } from './ui/AwwwardsButton'
 import { maxWidth, sectionShell } from '../lib/layout'
 import FadeIn from './ui/FadeIn'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
+const API = import.meta.env.VITE_API_URL
 const EASE = [0.16, 1, 0.3, 1]
 
 /* ── Validation ── */
