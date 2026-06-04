@@ -30,7 +30,7 @@ const NAV_COLUMNS = [
       { label: 'Our Philosophy', href: '/#purpose' },
       { label: 'Visionaries', href: '/#visionaries' },
       { label: 'Ventures', href: '/#ventures' },
-      { label: 'Careers', href: null },
+      // { label: 'Careers', href: null },
     ],
   },
   {
