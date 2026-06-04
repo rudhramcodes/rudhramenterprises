@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import WebGLPlane from './WebGLPlane'
+import MouseFollowModal from './MouseFollowModal'
 import PeopleList from './PeopleList'
 import Modal from './Modal'
 import { SectionKicker } from '../ui'
@@ -18,6 +18,7 @@ const manifestoLines = [
 
 export default function VisionariesSection() {
   const [activeMenu, setActiveMenu] = useState(null)
+  const [modal, setModal] = useState({ active: false, index: 0 })
   const [selectedPerson, setSelectedPerson] = useState(null)
 
   const handleSetActive = useCallback((i) => {
@@ -56,12 +57,13 @@ export default function VisionariesSection() {
         <FadeIn>
           <PeopleList
             setActiveMenu={handleSetActive}
+            setModal={setModal}
             onPersonClick={handlePersonClick}
           />
         </FadeIn>
       </div>
 
-      <WebGLPlane activeMenu={activeMenu} />
+      <MouseFollowModal modal={modal} />
 
       {/* <div ref={manifestoRef} className={`${maxWidth} mt-12 sm:mt-18 lg:mt-28`} style={{ position: 'relative' }}>
         <FadeIn>

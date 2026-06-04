@@ -1,14 +1,20 @@
 import { visionaries } from './data'
 
-export default function PeopleList({ setActiveMenu, onPersonClick }) {
+export default function PeopleList({ setActiveMenu, setModal, onPersonClick }) {
   return (
     <div className="relative z-10">
       <ul>
         {visionaries.map((person, i) => (
           <li
             key={person.id}
-            onMouseEnter={() => setActiveMenu(i)}
-            onMouseLeave={() => setActiveMenu(null)}
+            onMouseEnter={() => {
+              setActiveMenu(i)
+              setModal({ active: true, index: i })
+            }}
+            onMouseLeave={() => {
+              setActiveMenu(null)
+              setModal({ active: false, index: i })
+            }}
             className="group cursor-default"
           >
             <button
