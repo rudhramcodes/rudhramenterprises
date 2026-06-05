@@ -34,13 +34,13 @@ jobs:
             exit 1
           fi
 
-      - name: Deploy via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy via SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_HOST }}
+          host: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          protocol: sftp
           port: 22
-          local-dir: dist/
-          server-dir: /public_html/
+          source: dist/
+          target: /public_html/
+          strip_components: 1
