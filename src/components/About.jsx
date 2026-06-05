@@ -459,13 +459,25 @@ export const BrandThesis = memo(function BrandThesis() {
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
           <div>
             <SectionKicker>About Rudhram Group</SectionKicker>
-            <h2 className="mt-3 font-display font-bold text-[clamp(2.1rem,7vw,4.2rem)] leading-[0.92] tracking-tighter text-ink [&>span]:block reveal">
+            <motion.h2
+              initial={{ opacity: 0, y: 42 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-3 font-display font-bold text-[clamp(2.1rem,7vw,4.2rem)] leading-[0.92] tracking-tighter text-ink [&>span]:block"
+            >
               A venture-building institution, not a company - a system that creates companies.
-            </h2>
+            </motion.h2>
           </div>
-          <p className="max-w-xl text-base text-ink/60 sm:text-lg reveal">
+          <motion.p
+            initial={{ opacity: 0, y: 42 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-xl text-base text-ink/60 sm:text-lg"
+          >
             Rudhram Group transforms real-world problems into meaningful, scalable brands through purpose, discipline, and innovation. It combines values, structured systems, cultural depth, and modern thinking to create long-term value across industries.
-          </p>
+          </motion.p>
         </div>
       </div>
 
