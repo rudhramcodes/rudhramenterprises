@@ -299,7 +299,7 @@ const ContactForm = memo(function ContactForm() {
   /* ── Success screen ── */
   if (submitted) {
     return (
-      <section id="contact" className={`${sectionShell} bg-paper`}>
+      <section id="contact" className={`${sectionShell} bg-paper pt-8 sm:pt-12 lg:pt-36`}>
         <div className={maxWidth}>
           <FadeIn>
             <div className="mx-auto max-w-xl text-center">
@@ -337,7 +337,7 @@ const ContactForm = memo(function ContactForm() {
   }
 
   return (
-    <section id="contact" className={`${sectionShell} bg-paper`}>
+    <section id="contact" className={`${sectionShell} bg-paper pt-8 sm:pt-12 lg:pt-36`}>
       <div className={maxWidth}>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16 xl:gap-24">
           {/* ── Left column ── */}

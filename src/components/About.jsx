@@ -181,20 +181,20 @@ const AboutDetailPage = memo(function AboutDetailPage({ item, onBack }) {
 
 const SWIPE_THRESHOLD = 20
 const AWWWARDS_EASE = [0.16, 1, 0.3, 1]
-const SPRING_SNAP = { type: 'spring', stiffness: 320, damping: 34, restDelta: 0.5 }
+const CARD_SNAP = { type: 'tween', ease: AWWWARDS_EASE, duration: 0.5 }
 
 const ThesisCard = memo(function ThesisCard({ item, index, stepWidth, x, onOpenDetails }) {
   const scale = useTransform(x, [
     -(index + 1) * stepWidth,
     -index * stepWidth,
     -(index - 1) * stepWidth,
-  ], [0.88, 1, 0.88])
+  ], [0.92, 1, 0.92])
 
   const cardY = useTransform(x, [
     -(index + 1) * stepWidth,
     -index * stepWidth,
     -(index - 1) * stepWidth,
-  ], [14, 0, 14])
+  ], [8, 0, 8])
 
   const opacity = useTransform(x, [
     -(index + 1.5) * stepWidth,
@@ -258,7 +258,7 @@ const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
 
   const snapTo = useCallback((index) => {
     const next = Math.max(0, Math.min(ITEM_COUNT - 1, index))
-    animate(x, -next * stepWidth, SPRING_SNAP)
+    animate(x, -next * stepWidth, CARD_SNAP)
     setActiveSlide(next)
   }, [x, stepWidth])
 
@@ -291,7 +291,7 @@ const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
     const boostedX = currentX + boostedOffset
     const snapped = Math.round(-boostedX / stepWidth)
     const next = Math.max(0, Math.min(ITEM_COUNT - 1, snapped))
-    animate(x, -next * stepWidth, SPRING_SNAP)
+    animate(x, -next * stepWidth, CARD_SNAP)
     setActiveSlide(next)
   }, [x, stepWidth])
 
@@ -302,7 +302,7 @@ const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
         style={{ x }}
         drag="x"
         dragConstraints={{ left: maxX, right: 0 }}
-        dragElastic={0.1}
+        dragElastic={0.15}
         onDragEnd={handleDragEnd}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
