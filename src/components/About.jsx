@@ -6,7 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SectionKicker } from './ui'
 import { AwwwardsButton } from './ui/AwwwardsButton'
 import GradualBlur from './GradualBlur'
-import { CursorFollow } from './CursorFollow'
 import { useIsDesktop } from '../hooks/useMediaQuery'
 import { maxWidth } from '../lib/layout'
 import { createRevealAnimations } from '../hooks/useScrollAnimations'
@@ -68,6 +67,22 @@ const ITEM_COUNT = thesisItems.length
 const PANEL_H = 'clamp(460px, calc(100vh - 10rem), 680px)'
 
 const getThesisNumber = (item) => thesisItems.findIndex((thesis) => thesis.title === item.title) + 1
+
+const scaleAnimation = {
+  initial: { scale: 0, x: '-50%', y: '-50%' },
+  enter: {
+    scale: 1,
+    x: '-50%',
+    y: '-50%',
+    transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] },
+  },
+  closed: {
+    scale: 0,
+    x: '-50%',
+    y: '-50%',
+    transition: { duration: 0.4, ease: [0.32, 0, 0.67, 0] },
+  },
+}
 
 const AboutDetailPage = memo(function AboutDetailPage({ item, onBack }) {
   const pageRef = useRef(null)
@@ -281,6 +296,51 @@ export const BrandThesis = memo(function BrandThesis() {
   const scrollRef = useRef(null)
   const imageBtnRef = useRef(null)
   const mousePosRef = useRef({ x: 0, y: 0 })
+  const cursorBgRef = useRef(null)
+  const cursorLabelRef = useRef(null)
+
+  const cursorText = thesisItems[activeIndex]?.cursorText ?? ''
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      createRevealAnimations(aboutRef.current)
+    }, aboutRef)
+    return () => ctx.revert()
+  }, [])
+
+  useEffect(() => {
+    const bgEl = cursorBgRef.current
+    const labelEl = cursorLabelRef.current
+    if (!bgEl || !labelEl) return
+
+    const xMoveBg = gsap.quickTo(bgEl, 'left', {
+      duration: 0.5,
+      ease: 'power3',
+    })
+    const yMoveBg = gsap.quickTo(bgEl, 'top', {
+      duration: 0.5,
+      ease: 'power3',
+    })
+    const xMoveLabel = gsap.quickTo(labelEl, 'left', {
+      duration: 0.45,
+      ease: 'power3',
+    })
+    const yMoveLabel = gsap.quickTo(labelEl, 'top', {
+      duration: 0.45,
+      ease: 'power3',
+    })
+
+    const handleMouseMove = (e) => {
+      const { clientX, clientY } = e
+      xMoveBg(clientX)
+      yMoveBg(clientY)
+      xMoveLabel(clientX)
+      yMoveLabel(clientY)
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -355,7 +415,42 @@ export const BrandThesis = memo(function BrandThesis() {
 
   return (
     <section ref={aboutRef} id="about" className="relative bg-paper">
-      {isDesktop && <CursorFollow show={isHoveringImage}>{thesisItems[activeIndex].cursorText}</CursorFollow>}
+      {isDesktop && (
+        <>
+          <motion.div
+            ref={cursorBgRef}
+            variants={scaleAnimation}
+            initial="initial"
+            animate={isHoveringImage ? 'enter' : 'closed'}
+            className="pointer-events-none fixed left-0 top-0 z-[901] hidden h-12 items-center justify-center rounded-2xl lg:flex"
+            style={{
+              backgroundColor: '#5a3d1e',
+              willChange: 'transform',
+              paddingLeft: '1.5rem',
+              paddingRight: '1.5rem',
+            }}
+          >
+            <span className="invisible whitespace-nowrap text-[14px] font-light">
+              {cursorText}
+            </span>
+          </motion.div>
+          <motion.div
+            ref={cursorLabelRef}
+            variants={scaleAnimation}
+            initial="initial"
+            animate={isHoveringImage ? 'enter' : 'closed'}
+            className="pointer-events-none fixed left-0 top-0 z-[902] hidden h-12 items-center justify-center rounded-full text-[14px] font-light text-white lg:flex"
+            style={{
+              backgroundColor: 'transparent',
+              willChange: 'transform',
+              paddingLeft: '1.5rem',
+              paddingRight: '1.5rem',
+            }}
+          >
+            {cursorText}
+          </motion.div>
+        </>
+      )}
       <AnimatePresence onExitComplete={checkHoverAfterClose}>
         {detailsOpen && <AboutDetailPage item={thesisItems[detailIndex]} onBack={closeDetails} />}
       </AnimatePresence>

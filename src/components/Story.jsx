@@ -1,11 +1,11 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
+import gsap from 'gsap'
 import { CaretLeft } from '@phosphor-icons/react'
 import { maxWidth } from '../lib/layout'
 import FadeIn from './ui/FadeIn'
 const ease = [0.22, 1, 0.36, 1]
-const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
 
 const shortVersion = [
   'We are not a company built by investors, resumes, or a perfect plan. We are a group built by belief - the belief that if you move with purpose, execute with discipline, and refuse to stop, something meaningful will emerge.',
@@ -255,16 +255,26 @@ const StoryDetail = ({ onClose }) => {
   )
 }
 
+const scaleAnimation = {
+  initial: { scale: 0, x: '-50%', y: '-50%' },
+  enter: {
+    scale: 1,
+    x: '-50%',
+    y: '-50%',
+    transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] },
+  },
+  closed: {
+    scale: 0,
+    x: '-50%',
+    y: '-50%',
+    transition: { duration: 0.4, ease: [0.32, 0, 0.67, 0] },
+  },
+}
+
 export const Story = memo(function Story() {
   const imageRef = useRef(null)
-  const rafId = useRef(null)
   const cursorRef = useRef(null)
-  const cursorTextRef = useRef(null)
-
-  // Actual mouse position (no spring — we'll use rAF for butter-smooth follow)
-  const targetPos = useRef({ x: -100, y: -100 })
-  const currentPos = useRef({ x: -100, y: -100 })
-  const velocity = useRef({ x: 0, y: 0 })
+  const cursorLabelRef = useRef(null)
 
   const [isHovering, setIsHovering] = useState(false)
   const [detailOpen, setDetailOpen] = useState(() => window.location.hash === '#story-detail')
@@ -273,6 +283,40 @@ export const Story = memo(function Story() {
   const imgScale = useTransform(scrollYProgress, [0, 1], [1.1, 1.025])
   const imgY = useTransform(scrollYProgress, [0, 1], ['-9%', '9%'])
   const textY = useTransform(scrollYProgress, [0, 1], ['10%', '-14%'])
+
+  useEffect(() => {
+    const cursorEl = cursorRef.current
+    const labelEl = cursorLabelRef.current
+    if (!cursorEl || !labelEl) return
+
+    const xMoveCursor = gsap.quickTo(cursorEl, 'left', {
+      duration: 0.5,
+      ease: 'power3',
+    })
+    const yMoveCursor = gsap.quickTo(cursorEl, 'top', {
+      duration: 0.5,
+      ease: 'power3',
+    })
+    const xMoveLabel = gsap.quickTo(labelEl, 'left', {
+      duration: 0.45,
+      ease: 'power3',
+    })
+    const yMoveLabel = gsap.quickTo(labelEl, 'top', {
+      duration: 0.45,
+      ease: 'power3',
+    })
+
+    const handleMouseMove = (e) => {
+      const { clientX, clientY } = e
+      xMoveCursor(clientX)
+      yMoveCursor(clientY)
+      xMoveLabel(clientX)
+      yMoveLabel(clientY)
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
 
   const openStory = useCallback(() => {
     setIsHovering(false)
@@ -297,63 +341,8 @@ export const Story = memo(function Story() {
     return () => window.removeEventListener('popstate', onPopState)
   }, [])
 
-  // rAF-based cursor animation loop — silky smooth, no jank
-  useEffect(() => {
-    const lerp = (a, b, t) => a + (b - a) * t
-
-    const animate = () => {
-      const prev = { x: currentPos.current.x, y: currentPos.current.y }
-
-      // Smooth follow with lerp — 0.15 gives a nice trailing feel without heavy lag
-      currentPos.current.x = lerp(currentPos.current.x, targetPos.current.x, 0.15)
-      currentPos.current.y = lerp(currentPos.current.y, targetPos.current.y, 0.15)
-
-      // Velocity = difference between frames (smoothed implicitly by lerp)
-      velocity.current.x = currentPos.current.x - prev.x
-      velocity.current.y = currentPos.current.y - prev.y
-
-      const el = cursorRef.current
-      if (el) {
-        const vx = velocity.current.x
-        const vy = velocity.current.y
-        const speed = Math.sqrt(vx * vx + vy * vy)
-
-        // Rotation: angle of movement direction
-        const angle = Math.atan2(vy, vx) * (180 / Math.PI)
-
-        // Stretch: subtle area-preserving deformation
-        // Max stretch 1.35x at high speed — subtle but visible, not over-the-top
-        const maxStretch = 1.35
-        const speedNorm = Math.min(speed / 12, 1) // normalize: 12px/frame = full stretch
-        const stretchAmount = 1 + (maxStretch - 1) * speedNorm
-        const compressAmount = 1 / stretchAmount // area-preserving
-
-        const skewX = clamp(vx * 0.08, -1.6, 1.6)
-        const skewY = clamp(vy * 0.01, -0.8, 0.8)
-
-        el.style.transform = `translate3d(${currentPos.current.x}px, ${currentPos.current.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${stretchAmount}, ${compressAmount}) skew(${skewX}deg, ${skewY}deg)`
-      }
-
-      rafId.current = requestAnimationFrame(animate)
-    }
-
-    rafId.current = requestAnimationFrame(animate)
-    return () => {
-      if (rafId.current) cancelAnimationFrame(rafId.current)
-    }
-  }, [])
-
-  const handleMouseMove = (e) => {
-    targetPos.current = { x: e.clientX, y: e.clientY }
-  }
-
   const handleMouseEnter = (e) => {
     if (e.nativeEvent.pointerType === 'touch') return
-
-    const pos = { x: e.clientX, y: e.clientY }
-    targetPos.current = pos
-    currentPos.current = pos
-    velocity.current = { x: 0, y: 0 }
     setIsHovering(true)
   }
 
@@ -380,7 +369,6 @@ export const Story = memo(function Story() {
           type="button"
           className="group relative block h-[50vh] min-h-[20rem] w-full cursor-pointer overflow-hidden rounded-[10px] bg-ink text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze sm:h-[78vh] sm:min-h-[34rem]"
           onClick={openStory}
-          onMouseMove={handleMouseMove}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={() => setIsHovering(false)}
           transition={{ duration: 0.5, ease }}
@@ -444,65 +432,33 @@ export const Story = memo(function Story() {
         </div>
       </div>
 
-      {/* Story cursor follower — awwwards-level blob with subtle stretch + distort */}
-      <AnimatePresence>
-        {isHovering && !detailOpen && (
-          <motion.div
-            ref={cursorRef}
-            className="pointer-events-none fixed left-0 top-0 z-[999] hidden h-24 w-24 items-center justify-center rounded-full border border-[#5a3d1e] bg-[#5a3d1e] lg:flex"
-            style={{
-              transform: 'translate3d(-999px, -999px, 0) translate(-50%, -50%)',
-              willChange: 'transform',
-              backfaceVisibility: 'hidden',
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span
-              ref={cursorTextRef}
-              className="relative z-10 text-[10px] font-semibold uppercase tracking-[0.18em] text-white select-none"
-              style={{
-                /* Counter-rotate the text so it stays readable while the blob rotates */
-                /* We'll handle this in the rAF loop for perfect sync */
-              }}
-            >
-              View Story
-            </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <motion.div
+        ref={cursorRef}
+        variants={scaleAnimation}
+        initial="initial"
+        animate={isHovering && !detailOpen ? 'enter' : 'closed'}
+        className="pointer-events-none fixed left-0 top-0 z-[901] hidden h-20 w-20 items-center justify-center rounded-full lg:flex"
+        style={{
+          backgroundColor: '#5a3d1e',
+          willChange: 'transform',
+        }}
+      />
 
-      {/* Counter-rotate text inside cursor to keep it readable */}
-      {isHovering && !detailOpen && (
-        <CounterRotateText cursorRef={cursorRef} textRef={cursorTextRef} velocity={velocity} />
-      )}
+      <motion.div
+        ref={cursorLabelRef}
+        variants={scaleAnimation}
+        initial="initial"
+        animate={isHovering && !detailOpen ? 'enter' : 'closed'}
+        className="pointer-events-none fixed left-0 top-0 z-[902] hidden h-20 w-20 items-center justify-center rounded-full text-[14px] font-light text-white lg:flex"
+        style={{
+          backgroundColor: 'transparent',
+          willChange: 'transform',
+        }}
+      >
+        View
+      </motion.div>
 
       <AnimatePresence>{detailOpen && <StoryDetail onClose={closeStory} />}</AnimatePresence>
     </section>
   )
 })
-
-// Tiny helper: counter-rotates the text label so it stays upright while the blob rotates
-function CounterRotateText({ cursorRef, textRef, velocity }) {
-  useEffect(() => {
-    let id
-    const tick = () => {
-      const vx = velocity.current.x
-      const vy = velocity.current.y
-      const angle = Math.atan2(vy, vx) * (180 / Math.PI)
-      const skewX = clamp(vx * 0.08, -1.6, 1.6)
-      const skewY = clamp(vy * 0.01, -0.8, 0.8)
-      if (textRef.current) {
-        // Undo parent rotation + skew so text stays perfectly horizontal and undistorted
-        textRef.current.style.transform = `skew(${-skewY}deg, ${-skewX}deg) rotate(${-angle}deg)`
-      }
-      id = requestAnimationFrame(tick)
-    }
-    id = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(id)
-  }, [velocity, textRef])
-
-  return null
-}
