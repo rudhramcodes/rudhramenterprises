@@ -183,35 +183,33 @@ const SWIPE_THRESHOLD = 20
 const AWWWARDS_EASE = [0.16, 1, 0.3, 1]
 const SPRING_SNAP = { type: 'spring', stiffness: 320, damping: 34, restDelta: 0.5 }
 
-const ThesisCard = memo(function ThesisCard({ item, index, count, x, onOpenDetails }) {
-  const cardWidth = typeof window !== 'undefined' ? window.innerWidth : 375
-
+const ThesisCard = memo(function ThesisCard({ item, index, stepWidth, x, onOpenDetails }) {
   const scale = useTransform(x, [
-    -(index + 1) * cardWidth,
-    -index * cardWidth,
-    -(index - 1) * cardWidth,
+    -(index + 1) * stepWidth,
+    -index * stepWidth,
+    -(index - 1) * stepWidth,
   ], [0.88, 1, 0.88])
 
   const cardY = useTransform(x, [
-    -(index + 1) * cardWidth,
-    -index * cardWidth,
-    -(index - 1) * cardWidth,
+    -(index + 1) * stepWidth,
+    -index * stepWidth,
+    -(index - 1) * stepWidth,
   ], [14, 0, 14])
 
   const opacity = useTransform(x, [
-    -(index + 1.5) * cardWidth,
-    -(index + 0.8) * cardWidth,
-    -(index - 0.8) * cardWidth,
+    -(index + 1.5) * stepWidth,
+    -(index + 0.8) * stepWidth,
+    -(index - 0.8) * stepWidth,
   ], [0.4, 1, 1])
 
   return (
     <motion.div
       style={{ scale, y: cardY, opacity }}
-      className="relative flex w-screen flex-shrink-0 flex-col px-4 pt-6"
+      className="relative flex w-[68vw] max-w-[20rem] flex-shrink-0 flex-col pt-6"
       onClick={() => onOpenDetails(index)}
     >
       <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-ink/8 bg-paper shadow-[0_8px_30px_rgba(17,16,14,0.08)]">
-        <div className="relative w-full overflow-hidden h-80 sm:h-96 flex-shrink-0">
+        <div className="relative w-full overflow-hidden h-56 sm:h-64 flex-shrink-0">
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
             style={{ backgroundImage: `url(${item.image})` }}
@@ -248,18 +246,21 @@ const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
   const pointerStart = useRef({ x: 0, y: 0 })
   const swipedRef = useRef(false)
   const x = useMotionValue(0)
-  const cardWidth = typeof window !== 'undefined' ? window.innerWidth : 375
-  const maxX = -(ITEM_COUNT - 1) * cardWidth
+  const peekRatio = 0.68
+  const gap = 12
+  const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 375
+  const stepWidth = Math.round(viewportWidth * peekRatio + gap)
+  const maxX = -(ITEM_COUNT - 1) * stepWidth
 
   useLayoutEffect(() => {
-    x.set(-activeSlide * cardWidth)
+    x.set(-activeSlide * stepWidth)
   }, [])
 
   const snapTo = useCallback((index) => {
     const next = Math.max(0, Math.min(ITEM_COUNT - 1, index))
-    animate(x, -next * cardWidth, SPRING_SNAP)
+    animate(x, -next * stepWidth, SPRING_SNAP)
     setActiveSlide(next)
-  }, [x, cardWidth])
+  }, [x, stepWidth])
 
   const goToSlide = useCallback((index) => {
     const next = Math.max(0, Math.min(ITEM_COUNT - 1, index))
@@ -280,29 +281,28 @@ const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
 
     if (absDx > SWIPE_THRESHOLD && absDx > Math.abs(dy)) {
       swipedRef.current = true
-      goToSlide(dx < 0 ? activeSlide + 1 : activeSlide - 1)
     }
-  }, [activeSlide, goToSlide])
+  }, [])
 
   const handleDragEnd = useCallback((_, info) => {
     const currentX = x.get()
     const velocity = info.velocity.x
-    const boostedOffset = -velocity * 0.12
+    const boostedOffset = velocity * 0.15
     const boostedX = currentX + boostedOffset
-    const snapped = Math.round(-boostedX / cardWidth)
+    const snapped = Math.round(-boostedX / stepWidth)
     const next = Math.max(0, Math.min(ITEM_COUNT - 1, snapped))
-    animate(x, -next * cardWidth, SPRING_SNAP)
+    animate(x, -next * stepWidth, SPRING_SNAP)
     setActiveSlide(next)
-  }, [x, cardWidth])
+  }, [x, stepWidth])
 
   return (
     <div className="lg:hidden relative w-full select-none overflow-hidden">
       <motion.div
-        className="flex will-change-transform"
+        className="flex gap-3 pl-[16vw] will-change-transform"
         style={{ x }}
         drag="x"
         dragConstraints={{ left: maxX, right: 0 }}
-        dragElastic={0.12}
+        dragElastic={0.1}
         onDragEnd={handleDragEnd}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
@@ -312,12 +312,14 @@ const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
             key={item.title}
             item={item}
             index={index}
-            count={ITEM_COUNT}
+            stepWidth={stepWidth}
             x={x}
             onOpenDetails={onOpenDetails}
           />
         ))}
       </motion.div>
+
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-paper to-transparent" />
 
       <div className="flex items-center justify-center gap-2 py-3">
         {thesisItems.map((_, i) => (
