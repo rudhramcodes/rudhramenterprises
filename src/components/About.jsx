@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
+import { AnimatePresence, animate, motion, useMotionValue, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import { CaretLeft } from '@phosphor-icons/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -181,20 +181,92 @@ const AboutDetailPage = memo(function AboutDetailPage({ item, onBack }) {
 
 const SWIPE_THRESHOLD = 20
 const AWWWARDS_EASE = [0.16, 1, 0.3, 1]
+const SPRING_SNAP = { type: 'spring', stiffness: 320, damping: 34, restDelta: 0.5 }
+
+const ThesisCard = memo(function ThesisCard({ item, index, count, x, onOpenDetails }) {
+  const cardWidth = typeof window !== 'undefined' ? window.innerWidth : 375
+
+  const scale = useTransform(x, [
+    -(index + 1) * cardWidth,
+    -index * cardWidth,
+    -(index - 1) * cardWidth,
+  ], [0.88, 1, 0.88])
+
+  const cardY = useTransform(x, [
+    -(index + 1) * cardWidth,
+    -index * cardWidth,
+    -(index - 1) * cardWidth,
+  ], [14, 0, 14])
+
+  const opacity = useTransform(x, [
+    -(index + 1.5) * cardWidth,
+    -(index + 0.8) * cardWidth,
+    -(index - 0.8) * cardWidth,
+  ], [0.4, 1, 1])
+
+  return (
+    <motion.div
+      style={{ scale, y: cardY, opacity }}
+      className="relative flex w-screen flex-shrink-0 flex-col px-4 pt-6"
+      onClick={() => onOpenDetails(index)}
+    >
+      <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-ink/8 bg-paper shadow-[0_8px_30px_rgba(17,16,14,0.08)]">
+        <div className="relative w-full overflow-hidden h-80 sm:h-96 flex-shrink-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+            style={{ backgroundImage: `url(${item.image})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/8 via-transparent to-transparent" />
+          <span className="absolute bottom-3 left-4 font-display text-[clamp(1.8rem,6vw,3rem)] font-bold leading-none tracking-tight text-white/15 select-none">
+            0{index + 1}
+          </span>
+        </div>
+
+        <div className="border-b border-ink/8" />
+
+        <div className="flex flex-col px-5 pb-5 pt-4 sm:px-7">
+          <span className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.22em] text-bronze">
+            {item.subtitle}
+          </span>
+          <h3 className="mb-2 font-display text-[clamp(1.2rem,4vw,1.65rem)] font-bold leading-[1.08] tracking-tight text-ink">
+            {item.title}
+          </h3>
+          <p className="text-[clamp(0.8rem,2vw,0.92rem)] leading-[1.6] text-stone">
+            {item.description}
+          </p>
+          <AwwwardsButton variant="primary" size="sm" className="mt-3 self-start" onClick={(e) => { e.stopPropagation(); onOpenDetails(index) }}>
+            Tap to explore
+          </AwwwardsButton>
+        </div>
+      </div>
+    </motion.div>
+  )
+})
 
 const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
   const [activeSlide, setActiveSlide] = useState(0)
   const pointerStart = useRef({ x: 0, y: 0 })
   const swipedRef = useRef(false)
-  const animatingRef = useRef(false)
+  const x = useMotionValue(0)
+  const cardWidth = typeof window !== 'undefined' ? window.innerWidth : 375
+  const maxX = -(ITEM_COUNT - 1) * cardWidth
+
+  useLayoutEffect(() => {
+    x.set(-activeSlide * cardWidth)
+  }, [])
+
+  const snapTo = useCallback((index) => {
+    const next = Math.max(0, Math.min(ITEM_COUNT - 1, index))
+    animate(x, -next * cardWidth, SPRING_SNAP)
+    setActiveSlide(next)
+  }, [x, cardWidth])
 
   const goToSlide = useCallback((index) => {
     const next = Math.max(0, Math.min(ITEM_COUNT - 1, index))
-    if (next === activeSlide || animatingRef.current) return
-    animatingRef.current = true
-    setActiveSlide(next)
-    setTimeout(() => { animatingRef.current = false }, 600)
-  }, [activeSlide])
+    if (next === activeSlide) return
+    swipedRef.current = true
+    snapTo(next)
+  }, [activeSlide, snapTo])
 
   const handlePointerDown = useCallback((e) => {
     pointerStart.current = { x: e.clientX, y: e.clientY }
@@ -212,72 +284,53 @@ const MobileBrandThesis = memo(function MobileBrandThesis({ onOpenDetails }) {
     }
   }, [activeSlide, goToSlide])
 
+  const handleDragEnd = useCallback((_, info) => {
+    const currentX = x.get()
+    const velocity = info.velocity.x
+    const boostedOffset = -velocity * 0.12
+    const boostedX = currentX + boostedOffset
+    const snapped = Math.round(-boostedX / cardWidth)
+    const next = Math.max(0, Math.min(ITEM_COUNT - 1, snapped))
+    animate(x, -next * cardWidth, SPRING_SNAP)
+    setActiveSlide(next)
+  }, [x, cardWidth])
+
   return (
     <div className="lg:hidden relative w-full select-none overflow-hidden">
       <motion.div
         className="flex will-change-transform"
-        animate={{ x: `-${activeSlide * 100}vw` }}
-        transition={{ duration: 0.55, ease: AWWWARDS_EASE }}
+        style={{ x }}
+        drag="x"
+        dragConstraints={{ left: maxX, right: 0 }}
+        dragElastic={0.12}
+        onDragEnd={handleDragEnd}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
-        style={{ touchAction: 'pan-y' }}
       >
         {thesisItems.map((item, index) => (
-          <div
+          <ThesisCard
             key={item.title}
-            className="relative flex w-screen flex-shrink-0 flex-col px-4 pt-6"
-            onClick={() => {
-              if (swipedRef.current) {
-                swipedRef.current = false
-                return
-              }
-              onOpenDetails(index)
-            }}
-          >
-            <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-ink/8 bg-paper shadow-[0_8px_30px_rgba(17,16,14,0.08)]">
-              <div className="relative w-full overflow-hidden h-80 sm:h-96 flex-shrink-0">
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${item.image})` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/8 via-transparent to-transparent" />
-                <span className="absolute bottom-3 left-4 font-display text-[clamp(1.8rem,6vw,3rem)] font-bold leading-none tracking-tight text-white/15 select-none">
-                  0{index + 1}
-                </span>
-              </div>
-
-              <div className="border-b border-ink/8" />
-
-              <div className="flex flex-col px-5 pb-5 pt-4 sm:px-7">
-                <span className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.22em] text-bronze">
-                  {item.subtitle}
-                </span>
-                <h3 className="mb-2 font-display text-[clamp(1.2rem,4vw,1.65rem)] font-bold leading-[1.08] tracking-tight text-ink">
-                  {item.title}
-                </h3>
-                <p className="text-[clamp(0.8rem,2vw,0.92rem)] leading-[1.6] text-stone">
-                  {item.description}
-                </p>
-                <AwwwardsButton variant="primary" size="sm" className="mt-3 self-start" onClick={(e) => { e.stopPropagation(); onOpenDetails(index) }}>
-                  Tap to explore
-                </AwwwardsButton>
-              </div>
-            </div>
-          </div>
+            item={item}
+            index={index}
+            count={ITEM_COUNT}
+            x={x}
+            onOpenDetails={onOpenDetails}
+          />
         ))}
       </motion.div>
 
       <div className="flex items-center justify-center gap-2 py-3">
         {thesisItems.map((_, i) => (
-          <button
+          <motion.button
             key={i}
             type="button"
             onClick={() => goToSlide(i)}
-            className={`h-1.5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              i === activeSlide
-                ? 'w-7 bg-bronze'
-                : 'w-1.5 bg-ink/15'
-            }`}
+            className="h-1.5 rounded-full bg-ink/15"
+            animate={{
+              width: i === activeSlide ? '1.75rem' : '0.375rem',
+              backgroundColor: i === activeSlide ? '#B37839' : 'rgba(17,16,14,0.15)',
+            }}
+            transition={{ duration: 0.4, ease: AWWWARDS_EASE }}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
