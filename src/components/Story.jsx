@@ -86,7 +86,7 @@ const StoryDetail = ({ onClose }) => {
       </motion.button>
 
       <article>
-        <section className="relative min-h-screen overflow-hidden bg-ink">
+        <section className="relative h-[40vh] sm:min-h-screen overflow-hidden bg-ink">
           <motion.div
             layoutId="story-image-shell"
             className="absolute inset-0 overflow-hidden"
@@ -96,7 +96,7 @@ const StoryDetail = ({ onClose }) => {
               layoutId="story-image"
               src="/images/founders.webp"
               alt="Shivang Vir and Mukund Barrdoliwala"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover object-[40%] sm:object-center"
               initial={{ scale: 1.02 }}
               animate={{ scale: 1 }}
               transition={{ duration: 1.65, ease }}
@@ -367,7 +367,7 @@ export const Story = memo(function Story() {
         <motion.button
           ref={imageRef}
           type="button"
-          className="group relative block h-[35vh] min-h-[14rem] w-full cursor-pointer overflow-hidden rounded-[10px] bg-ink text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze sm:h-[78vh] sm:min-h-[34rem]"
+          className="group relative block h-[30vh] min-h-[14rem] w-full cursor-pointer overflow-hidden rounded-2xl md:rounded-4xl bg-ink text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze sm:h-[78vh] sm:min-h-[34rem]"
           onClick={openStory}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={() => setIsHovering(false)}
@@ -396,7 +396,7 @@ export const Story = memo(function Story() {
             className="absolute bottom-0 left-0 right-0 p-5 sm:p-10 lg:p-14"
             style={{ y: textY }}
           >
-            <p className="max-w-4xl font-display text-[clamp(1.2rem,3.3vw,4rem)] leading-[1.15] text-paper/92 sm:leading-[1.02]">
+            <p className="hidden md:block max-w-4xl font-display text-[clamp(1.2rem,3.3vw,4rem)] leading-[1.15] text-paper/92 sm:leading-[1.02]">
               In 2021, Shivang Vir and Mukund Barrdoliwala moved to Mumbai. Not with a clear
               destination. Not with a proven model. With belief.
             </p>
