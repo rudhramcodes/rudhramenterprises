@@ -350,7 +350,7 @@ const Footer = memo(function Footer() {
           >
             <h4>About</h4>
             <p>
-              Rudhram Group is a venture-building institution dedicated to creating, nurturing,
+              Rudhram Enterprises is a venture-building institution dedicated to creating, nurturing,
               and scaling transformative businesses across diverse industries.
             </p>
             <div className="social-links">

@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const thesisItems = [
   {
-    title: 'What Rudhram Group Represents',
+    title: 'What Rudhram Enterprises Represents',
     subtitle: 'Fearless vision',
     description: 'A way of thinking shaped by experience, transformation, and rooted strength.',
     detailTitle: 'Fearless vision, transformation, and rooted strength.',
@@ -26,19 +26,19 @@ const thesisItems = [
     cursorText: 'What we represents'
   },
   {
-    title: 'Why Rudhram Group Exists',
+    title: 'Why Rudhram Enterprises Exists',
     subtitle: 'Purpose beyond profit',
     description: 'To build structured ventures that solve real problems and create meaningful value.',
     detailTitle: 'Because the world needs businesses with purpose.',
     detailCopy: [
-      'Rudhram Group exists because the world does not need more businesses without purpose. It needs structured ventures that create meaningful value, improve lives, and build long-term impact.',
+      'Rudhram Enterprises exists because the world does not need more businesses without purpose. It needs structured ventures that create meaningful value, improve lives, and build long-term impact.',
       'Its existence is driven by responsibility: to observe real needs, understand them deeply, and build what truly matters with discipline, values, and modern capability.',
     ],
     image: '/images/skill-hands.webp',
     cursorText: 'Why we exists'
   },
   {
-    title: 'What Sets Rudhram Group Apart',
+    title: 'What Sets Rudhram Enterprises Apart',
     subtitle: 'Systems that create',
     description: 'Rudhram does not focus on one business. It builds systems that consistently create businesses.',
     detailTitle: 'Not one company, but a system for creating companies.',
@@ -513,7 +513,7 @@ export const BrandThesis = memo(function BrandThesis() {
       <div className={`${maxWidth} pt-8 pb-8 sm:pt-10 sm:pb-10 lg:pt-20 lg:pb-12`}>
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
           <div>
-            <SectionKicker>About Rudhram Group</SectionKicker>
+            <SectionKicker>About Rudhram Enterprises</SectionKicker>
             <motion.h2
               initial={{ opacity: 0, y: 42 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -531,7 +531,7 @@ export const BrandThesis = memo(function BrandThesis() {
             transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-xl text-base text-ink/60 sm:text-lg"
           >
-            Rudhram Group transforms real-world problems into meaningful, scalable brands through purpose, discipline, and innovation. It combines values, structured systems, cultural depth, and modern thinking to create long-term value across industries.
+            Rudhram Enterprises transforms real-world problems into meaningful, scalable brands through purpose, discipline, and innovation. It combines values, structured systems, cultural depth, and modern thinking to create long-term value across industries.
           </motion.p>
         </div>
       </div>

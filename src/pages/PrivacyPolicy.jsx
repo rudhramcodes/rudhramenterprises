@@ -33,7 +33,7 @@ const PrivacyPolicy = memo(() => (
         <header className="policy-header">
           <h1>Privacy Policy</h1>
           <p>
-            How Rudhram Group collects, uses, and protects your personal
+            How Rudhram Enterprises collects, uses, and protects your personal
             information across our ventures and platforms.
           </p>
           <div className="policy-meta">
@@ -80,7 +80,7 @@ const PrivacyPolicy = memo(() => (
 
           <Section title="3. Data Sharing & Disclosure">
             <p>
-              We respect your privacy. Rudhram Group does not sell your personal
+              We respect your privacy. Rudhram Enterprises does not sell your personal
               information to third parties. We may share information only in the
               following circumstances:
             </p>

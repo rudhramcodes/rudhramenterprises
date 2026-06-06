@@ -367,7 +367,7 @@ export const Story = memo(function Story() {
         <motion.button
           ref={imageRef}
           type="button"
-          className="group relative block h-[50vh] min-h-[20rem] w-full cursor-pointer overflow-hidden rounded-[10px] bg-ink text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze sm:h-[78vh] sm:min-h-[34rem]"
+          className="group relative block h-[35vh] min-h-[14rem] w-full cursor-pointer overflow-hidden rounded-[10px] bg-ink text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze sm:h-[78vh] sm:min-h-[34rem]"
           onClick={openStory}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={() => setIsHovering(false)}
@@ -384,7 +384,7 @@ export const Story = memo(function Story() {
                 layoutId="story-image"
                 src="/images/founders.webp"
                 alt="Shivang Vir and Mukund Barrdoliwala"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-[40%]"
                 loading="lazy"
               />
             </motion.div>

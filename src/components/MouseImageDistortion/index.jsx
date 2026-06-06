@@ -246,7 +246,7 @@ export default function VisionariesSection() {
           <SectionKicker>The Visionaries</SectionKicker>
           <h2 className="font-display text-[clamp(2.4rem,5.5vw,5.4rem)] leading-[0.96] tracking-tight text-ink">
             The Visionaries Behind{' '} <br />
-            <span className="text-bronze">Rudhram Group</span>
+            <span className="text-bronze">Rudhram Enterprises</span>
           </h2>
           <p className="mt-6 max-w-3xl text-base leading-[1.7] text-stone sm:text-lg">
             No meaningful thing is built by one person, or even two. Rudhram is not an exception

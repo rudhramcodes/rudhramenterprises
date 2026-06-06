@@ -34,7 +34,7 @@ const TermsOfService = memo(() => (
           <h1>Terms of Service</h1>
           <p>
             These terms govern your access to and use of the services,
-            websites, and ventures operated by Rudhram Group.
+            websites, and ventures operated by Rudhram Enterprises.
           </p>
           <div className="policy-meta">
             <span>Last updated: June 1, 2026</span>
@@ -46,7 +46,7 @@ const TermsOfService = memo(() => (
           <Section title="1. Acceptance of Terms">
             <p>
               By accessing or using any website, platform, or service operated by{' '}
-              <strong>Rudhram Group</strong> (&ldquo;Rudhram,&rdquo;
+              <strong>Rudhram Enterprises</strong> (&ldquo;Rudhram,&rdquo;
               &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), you
               agree to be bound by these Terms of Service (&ldquo;Terms&rdquo;).
               If you do not agree, please refrain from using our services.
@@ -63,7 +63,7 @@ const TermsOfService = memo(() => (
 
           <Section title="2. Services Overview">
             <p>
-              Rudhram Group is a venture-building institution that creates,
+              Rudhram Enterprises is a venture-building institution that creates,
               nurtures, and scales transformative businesses across diverse
               industries including ceremonial experiences, creative and cultural
               expression, lifestyle and community, sound and performance, movement
@@ -82,7 +82,7 @@ const TermsOfService = memo(() => (
             <p>
               All content, materials, trademarks, logos, brand identities,
               designs, and intellectual property displayed across Rudhram
-              platforms and ventures are owned by or licensed to Rudhram Group.
+              platforms and ventures are owned by or licensed to Rudhram Enterprises.
               This includes but is not limited to:
             </p>
             <ul>
@@ -110,7 +110,7 @@ const TermsOfService = memo(() => (
           <Section title="5. Third-Party Links & Services">
             <p>
               Our platforms may contain links to third-party websites or services
-              that are not owned or controlled by Rudhram Group. We are not
+              that are not owned or controlled by Rudhram Enterprises. We are not
               responsible for the content, privacy practices, or terms of any
               third-party services. We encourage you to review their terms
               independently.
@@ -119,7 +119,7 @@ const TermsOfService = memo(() => (
 
           <Section title="6. Limitation of Liability">
             <p>
-              To the fullest extent permitted by applicable law, Rudhram Group
+              To the fullest extent permitted by applicable law, Rudhram Enterprises
               shall not be liable for any indirect, incidental, special,
               consequential, or punitive damages arising out of or relating to
               your use of our services, platforms, or ventures. Our total
@@ -129,7 +129,7 @@ const TermsOfService = memo(() => (
 
             <div className="policy-callout">
               <p>
-                <strong>Important:</strong> Rudhram Group provides its services on
+                <strong>Important:</strong> Rudhram Enterprises provides its services on
                 an &ldquo;as is&rdquo; and &ldquo;as available&rdquo; basis. We
                 make no representations or warranties of any kind, express or
                 implied, regarding the operation or availability of our services.
