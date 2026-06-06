@@ -68,7 +68,7 @@ const StoryDetail = ({ onClose }) => {
       data-lenis-prevent
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.36, ease } }}
+      exit={{ opacity: 0, transition: { duration: 0.25, ease: [0.32, 0, 0.67, 0] } }}
       style={{ WebkitOverflowScrolling: 'touch' }}
     >
       <motion.button
@@ -77,10 +77,10 @@ const StoryDetail = ({ onClose }) => {
         aria-label="Back to story preview"
         onClick={handleBack}
         onPointerUp={handleBack}
-        style={{ cursor: 'pointer', pointerEvents: 'auto' }}
-        initial={{ opacity: 0, y: -12, filter: 'blur(8px)' }}
+        style={{ cursor: 'pointer', pointerEvents: 'auto', willChange: 'transform' }}
+        initial={{ opacity: 0, y: -10, filter: 'blur(4px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        transition={{ duration: 0.55, delay: 0.32, ease }}
+        transition={{ duration: 0.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
       >
         <CaretLeft size={20} />
       </motion.button>
@@ -90,16 +90,16 @@ const StoryDetail = ({ onClose }) => {
           <motion.div
             layoutId="story-image-shell"
             className="absolute inset-0 overflow-hidden"
-            transition={{ layout: { duration: 1.45, ease } }}
+            transition={{ layout: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } }}
           >
             <motion.img
               layoutId="story-image"
               src="/images/founders.webp"
               alt="Shivang Vir and Mukund Barrdoliwala"
               className="h-full w-full object-cover object-[40%] sm:object-center"
-              initial={{ scale: 1.02 }}
+              initial={{ scale: 1.04 }}
               animate={{ scale: 1 }}
-              transition={{ duration: 1.65, ease }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             />
           </motion.div>
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,16,14,0.02)_0%,rgba(17,16,14,0.28)_48%,rgba(17,16,14,0.86)_100%)]" />
@@ -108,26 +108,26 @@ const StoryDetail = ({ onClose }) => {
           <div className={`${maxWidth} relative z-10 flex min-h-screen flex-col justify-end pb-14 pt-32 sm:pb-20`}>
             <motion.p
               className="mb-4 text-[10px] font-bold uppercase tracking-[0.22em] text-white"
-              initial={{ opacity: 0, y: 18, filter: 'blur(8px)' }}
+              initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 0.7, delay: 0.48, ease }}
+              transition={{ duration: 0.5, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
             >
               Our Story / Mumbai 2021
             </motion.p>
             <motion.h2
               className="max-w-4xl font-display text-[clamp(2.6rem,6vw,7rem)] leading-[0.9] text-paper"
-              initial={{ opacity: 0, y: 34, filter: 'blur(12px)' }}
+              initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 0.92, delay: 0.6, ease }}
+              transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               The beginning was not certainty.
               <span className="text-bronze">It was conviction.</span>
             </motion.h2>
             <motion.p
               className="mt-6 max-w-2xl font-display text-lg leading-snug text-paper/84 sm:text-xl lg:text-2xl"
-              initial={{ opacity: 0, y: 26, filter: 'blur(10px)' }}
+              initial={{ opacity: 0, y: 18, filter: 'blur(5px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 0.78, delay: 0.82, ease }}
+              transition={{ duration: 0.55, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
               In 2021, Shivang Vir and Mukund Barrdoliwala moved to Mumbai. Not with a clear
               destination. Not with a proven model. With belief.
@@ -280,9 +280,9 @@ export const Story = memo(function Story() {
   const [detailOpen, setDetailOpen] = useState(() => window.location.hash === '#story-detail')
 
   const { scrollYProgress } = useScroll({ target: imageRef, offset: ['start end', 'end start'] })
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1.1, 1.025])
-  const imgY = useTransform(scrollYProgress, [0, 1], ['-9%', '9%'])
-  const textY = useTransform(scrollYProgress, [0, 1], ['10%', '-14%'])
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1.08, 1.02])
+  const imgY = useTransform(scrollYProgress, [0, 1], ['-5%', '5%'])
+  const textY = useTransform(scrollYProgress, [0, 1], ['6%', '-8%'])
 
   useEffect(() => {
     const cursorEl = cursorRef.current
@@ -377,9 +377,9 @@ export const Story = memo(function Story() {
           <motion.div
             layoutId="story-image-shell"
             className="absolute inset-0 overflow-hidden"
-            transition={{ layout: { duration: 1.45, ease } }}
+            transition={{ layout: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } }}
           >
-            <motion.div className="h-[120%] w-full" style={{ y: imgY, scale: imgScale }}>
+            <motion.div className="h-[120%] w-full" style={{ y: imgY, scale: imgScale, willChange: 'transform' }}>
               <motion.img
                 layoutId="story-image"
                 src="/images/founders.webp"
