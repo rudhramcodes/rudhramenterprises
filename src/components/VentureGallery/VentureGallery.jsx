@@ -87,9 +87,12 @@ export const VentureGallery = memo(function VentureGallery() {
           <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] leading-[0.96] tracking-tight text-ink">
             Ventures
           </h2>
-          <p className="mt-4 max-w-xl text-base leading-[1.6] text-stone sm:text-lg">
+          {/* <p className="mt-4 max-w-xl text-base leading-[1.6] text-stone sm:text-lg">
             Eight distinct ventures, each built around a belief, a craft, or a cultural need.
-          </p>
+          </p> */}
+          <h3 className="mt-3 max-w-2xl text-sm leading-relaxed text-stone/60 sm:text-base">
+            Rudhram Enterprises operates as a venture-building institution and startup incubator, creating transformative businesses across ceremonial experiences, creative expression, lifestyle, sound, movement, design, celebration, and technology infrastructure in India.
+          </h3>
         </motion.div>
 
         <div className="mt-12 sm:mt-16 lg:mt-20">
@@ -97,6 +100,18 @@ export const VentureGallery = memo(function VentureGallery() {
             <VentureRow key={venture.name} venture={venture} index={index} />
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.25 }}
+          className="mt-12 pt-8 sm:mt-16 sm:pt-10"
+        >
+          <p className="max-w-3xl text-sm leading-relaxed text-stone/50 sm:text-base">
+            Each venture within the Rudhram ecosystem is designed to solve specific real-world challenges. From Panigrahna's ceremonial experiences to Storage Media Solution's technology infrastructure, our ventures represent a comprehensive approach to building meaningful businesses that create lasting impact across India.
+          </p>
+        </motion.div>
       </div>
     </section>
   )

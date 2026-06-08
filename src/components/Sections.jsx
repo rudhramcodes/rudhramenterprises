@@ -18,6 +18,11 @@ const missionContent = [
   'Every initiative is approached with a commitment to innovation, excellence, and responsibility. The mission is not only to build successful brands, but to establish a system that consistently creates, nurtures, and scales ventures with purpose \u2014 ensuring that growth is sustainable, impact is real, and every step aligns with a larger vision of building something that truly matters.',
 ]
 
+const purposeKeywords = [
+  'As a venture-building institution in Mumbai, Rudhram Enterprises is dedicated to transforming cultural depth into modern innovation. Our purpose-driven approach ensures every venture — from Panigrahna ceremonial experiences to Aghhori creative expression — addresses real-world challenges with meaningful solutions.',
+  'Through our startup incubator and venture studio model, we identify opportunities across ceremonial experiences, creative expression, lifestyle, sound, movement, design, celebration, and technology infrastructure. Each venture is built with purpose, discipline, and a commitment to creating lasting impact in India and beyond.',
+]
+
 const VisionBlock = memo(function VisionBlock({ content }) {
   return (
     <div className="relative overflow-hidden">
@@ -110,6 +115,21 @@ export const VisionMission = memo(function VisionMission() {
           <FadeIn duration={0.6} blur={false} delay={0.15}>
             <div className="border-t border-ink/8 pt-10 sm:pt-14 lg:pt-16">
               <MissionBlock content={missionContent} />
+            </div>
+          </FadeIn>
+
+          <FadeIn duration={0.6} blur={false} delay={0.2}>
+            <div className="mt-12 border-t border-ink/8 pt-10 sm:mt-16 sm:pt-14 lg:mt-20 lg:pt-16">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-bronze sm:text-[11px]">
+                Our Commitment
+              </span>
+              <div className="mt-6 grid gap-6 sm:grid-cols-2 sm:gap-8">
+                {purposeKeywords.map((text, i) => (
+                  <p key={i} className="text-sm leading-[1.7] text-stone sm:text-base">
+                    {text}
+                  </p>
+                ))}
+              </div>
             </div>
           </FadeIn>
         </div>

@@ -232,7 +232,10 @@ const Hero = () => {
               <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#6D5B43] sm:text-[10px] sm:tracking-[0.35em]">Culture · Innovation · Excellence</span>
             </div>
             <h1 className="max-w-5xl font-display font-bold text-[clamp(2.75rem,9vw,8rem)] leading-[0.94] tracking-[-0.06em] text-[#2E2A24] sm:leading-[0.92] sm:tracking-[-0.07em]">Leading, &quot; What&apos;s Next.&quot;</h1>
-            <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#6D5B43]/85 sm:max-w-2xl sm:text-base md:text-base">Rooted in culture, driven by creativity, and sharpened by modern innovation.</p>
+            {/* <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#6D5B43]/85 sm:max-w-2xl sm:text-base md:text-base">Rooted in culture, driven by creativity, and sharpened by modern innovation.</p> */}
+            <h1 className="mt-3 max-w-2xl text-xs leading-relaxed text-[#6D5B43]/60 sm:text-sm">
+              A venture-building institution creating transformative businesses across ceremonial experiences, creative expression, lifestyle, sound, and technology infrastructure in India.
+            </h1>
           </motion.div>
 
           <div className="absolute inset-0 h-full w-full pointer-events-none">

@@ -13,6 +13,11 @@ const shortVersion = [
   'We are builders. Of ideas, systems, ventures, and impact. We are Rudhram.',
 ]
 
+const seoContext = [
+  'Founded in Mumbai in 2021 by Shivang Vir and Mukund Barrdoliwala, Rudhram Enterprises emerged from a shared vision to build a venture-building institution that transforms cultural depth into modern innovation.',
+  'As a startup incubator and venture studio, Rudhram identifies real-world challenges and builds structured ventures to address them — from ceremonial experiences through Panigrahna to creative expression through Aghhori, and technology infrastructure through Storage Media Solution.',
+]
+
 const preambleText = [
   'Before there was a name, a logo, a registered company, or a single rupee of revenue - there were two people sitting with a question they could not yet answer.',
   'What are we building? Why are we doing this? What does this even become?',
@@ -417,6 +422,13 @@ export const Story = memo(function Story() {
                 <p className="text-base leading-[1.75] text-stone sm:text-lg">{text}</p>
               </FadeIn>
             ))}
+            <div className="mt-6 border-t border-ink/8 pt-6">
+              {seoContext.map((text, i) => (
+                <FadeIn key={text} delay={0.3 + i * 0.08}>
+                  <p className="text-sm leading-[1.7] text-stone/70 sm:text-base">{text}</p>
+                </FadeIn>
+              ))}
+            </div>
           </div>
           <FadeIn delay={0.25} className="self-center">
             <blockquote className="relative border-l-[3px] border-bronze pl-5 sm:pl-7">

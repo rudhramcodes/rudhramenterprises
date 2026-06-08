@@ -524,15 +524,20 @@ export const BrandThesis = memo(function BrandThesis() {
               A venture-building institution, not a company - a system that creates companies.
             </motion.h2>
           </div>
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 42 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-xl text-base text-ink/60 sm:text-lg"
+            className="max-w-xl space-y-4"
           >
-            Rudhram Enterprises transforms real-world problems into meaningful, scalable brands through purpose, discipline, and innovation. It combines values, structured systems, cultural depth, and modern thinking to create long-term value across industries.
-          </motion.p>
+            {/* <p className="text-base text-ink/60 sm:text-lg">
+              Rudhram Enterprises transforms real-world problems into meaningful, scalable brands through purpose, discipline, and innovation. It combines values, structured systems, cultural depth, and modern thinking to create long-term value across industries.
+            </p> */}
+            <p className="text-sm leading-relaxed text-ink/45 sm:text-base">
+              Based in Mumbai, India, Rudhram is a startup incubator and venture studio that identifies real-world challenges and builds structured ventures to address them. Our ecosystem includes Panigrahna, Aghhori, House of Joggi, Damrru, Tandavs, Kapaalik, Kalyannam, and Storage Media Solution — each venture designed to solve specific problems in ceremonial experiences, creative expression, lifestyle, sound, movement, design, celebration, and technology infrastructure.
+            </p>
+          </motion.div>
         </div>
       </div>
 

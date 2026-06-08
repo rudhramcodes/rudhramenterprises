@@ -352,6 +352,9 @@ const ContactForm = memo(function ContactForm() {
               For partnerships, ventures, collaborations, and strategic inquiries — connect with
               Rudhram.
             </p>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-stone/60 sm:text-base">
+              Whether you&rsquo;re interested in our ventures like Panigrahna, Aghhori, or House of Joggi, exploring partnership opportunities, or seeking to collaborate with a venture-building institution in Mumbai — we&rsquo;d love to hear from you.
+            </p>
           </FadeIn>
 
           {/* ── Right column ── */}
