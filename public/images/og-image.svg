@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5F0E8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EDE5D8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <circle cx="100" cy="100" r="300" fill="#B37839" opacity="0.08"/>
+  <circle cx="1100" cy="530" r="250" fill="#B37839" opacity="0.06"/>
+  
+  <text x="600" y="250" font-family="Georgia, serif" font-size="72" font-weight="bold" fill="#2E2A24" text-anchor="middle">RUDHRAM</text>
+  <text x="600" y="320" font-family="Georgia, serif" font-size="48" fill="#2E2A24" text-anchor="middle">ENTERPRISES</text>
+  
+  <line x1="450" y1="360" x2="750" y2="360" stroke="#B37839" stroke-width="2"/>
+  
+  <text x="600" y="420" font-family="Arial, sans-serif" font-size="24" fill="#6D5B43" text-anchor="middle">Culture · Innovation · Excellence</text>
+  
+  <text x="600" y="480" font-family="Arial, sans-serif" font-size="18" fill="#8B7355" text-anchor="middle">Venture Building Institution</text>
+</svg>

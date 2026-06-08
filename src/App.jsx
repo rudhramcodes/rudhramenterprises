@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 
 import { Header } from './components/Header'
+import SEO from './components/SEO'
 import { useLenisScroll } from './hooks/useLenisScroll'
 import { useScrollAnimations } from './hooks/useScrollAnimations'
 import Hero from './components/Hero/Hero'
@@ -40,6 +41,7 @@ const HomePage = () => {
 
   return (
     <>
+      <SEO path="/" />
       <Header />
       <main className="relative z-[2] min-h-screen bg-ivory">
         <Hero />

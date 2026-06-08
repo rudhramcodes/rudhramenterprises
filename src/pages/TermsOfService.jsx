@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { Header } from '../components/Header'
+import SEO from '../components/SEO'
 import Footer from '../components/Footer/Footer'
 import './PolicyPages.css'
 
@@ -22,6 +23,7 @@ Section.displayName = 'PolicySection'
 
 const TermsOfService = memo(() => (
   <>
+    <SEO path="/terms" />
     <Header />
     <main className="policy-page">
       <div className="policy-page-inner">
